@@ -1,4 +1,5 @@
 magnetizer
 ==========
 
-Proyecto super secreto de joao
+Joao's super secret project
+---------------------------
