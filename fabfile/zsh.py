@@ -1,5 +1,6 @@
 from fabric.api import task, run, env, put
 from fabric.colors import green
+from fabric.context_managers import settings, hide
 
 from deb_handler import apt_install
 
@@ -14,8 +15,12 @@ def install():
     apt_install('zsh-lovers')
 
     # set as default shell for the user
-    cmd = 'chsh -s /bin/zsh %s' % env.user
-    run(cmd)
+    print(green('Re-enter your password to set zsh as default.'))
+    with settings(hide('warnings'), warn_only=True):
+        cmd = 'chsh -s /bin/zsh %s' % env.user
+        while True:  # prompt password until success
+            if not run(cmd).failed:
+                break
 
     # zsh configuration file
     put('fabfile/templates/zshrc', '.zshrc')
