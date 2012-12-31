@@ -6,3 +6,6 @@ sudo apt-get install -y python-pip
 
 # fabric installation through pip
 sudo pip install fabric
+
+# list the available commands
+fab -l
