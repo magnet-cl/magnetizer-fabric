@@ -18,6 +18,6 @@ def install():
     run(cmd)
 
     # zsh configuration file
-    put('templates/zshrc', '.zshrc')
+    put('fabfile/templates/zshrc', '.zshrc')
 
     print(green('If the shell does not change, restart your session.'))
