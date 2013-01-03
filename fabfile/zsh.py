@@ -1,5 +1,5 @@
 from fabric.api import task, run, env, put
-from fabric.colors import green
+from fabric.colors import green, red
 from fabric.context_managers import settings, hide
 
 from deb_handler import apt_install
@@ -21,6 +21,8 @@ def install():
         while True:  # prompt password until success
             if not run(cmd).failed:
                 break
+            else:
+                print(red('Wrong password, try again.'))
 
     # zsh configuration file
     put('fabfile/templates/zshrc', '.zshrc')
