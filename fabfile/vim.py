@@ -2,13 +2,16 @@ from fabric.api import task, run, sudo
 from fabric.colors import green, red
 from fabric.contrib.files import exists
 
-from deb_handler import apt_install
+from deb_handler import apt_install, apt_update
 from git import git_clone
 
 
 @task
 def install():
     """ Installs and configures vim """
+    # update apt index
+    apt_update()
+
     # install vim
     apt_install('vim')
 

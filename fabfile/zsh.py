@@ -2,12 +2,15 @@ from fabric.api import task, run, env, put
 from fabric.colors import green, red
 from fabric.context_managers import settings, hide
 
-from deb_handler import apt_install
+from deb_handler import apt_install, apt_update
 
 
 @task
 def install():
     """ Installs and sets zsh as default shell """
+    # update apt index
+    apt_update()
+
     # install zsh
     apt_install('zsh')
 

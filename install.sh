@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 # pre-requisites installation
-sudo apt-get install --assume-yes openssh-server
-sudo apt-get install --assume-yes python-pip
+sudo apt-get update
+sudo apt-get install -y openssh-server
+sudo apt-get install -y python-pip
 
 # fabric installation through pip
 sudo pip install fabric
