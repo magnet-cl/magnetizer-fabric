@@ -468,6 +468,11 @@ if [[ -f ~/.git-flow-completion.zsh ]]; then
     source ~/.git-flow-completion.zsh
 fi
 
+# fabric autocomplete
+if [[ -e ~/.zsh_fab ]]; then
+    . ~/.zsh_fab
+fi
+
 # aliases
 if [[ -f ~/.zsh_aliases ]]; then
     source ~/.zsh_aliases

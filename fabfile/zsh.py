@@ -27,4 +27,7 @@ def install():
     # zsh configuration file
     put('fabfile/templates/zshrc', '.zshrc')
 
+    # zsh fabric autocomplete
+    put('fabfile/templates/zsh_fab', '.zsh_fab')
+
     print(green('If the shell does not change, restart your session.'))
