@@ -469,11 +469,16 @@ if [[ -f ~/.git-flow-completion.zsh ]]; then
 fi
 
 # fabric autocomplete
-if [[ -e ~/.zsh_fab ]]; then
+if [[ -f ~/.zsh_fab ]]; then
     . ~/.zsh_fab
 fi
 
 # aliases
 if [[ -f ~/.zsh_aliases ]]; then
     source ~/.zsh_aliases
+fi
+
+# add ~/bin to PATH
+if [[ -d ~/bin ]]; then
+    export PATH=$PATH:~/bin
 fi
