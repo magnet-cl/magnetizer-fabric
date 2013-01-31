@@ -1,219 +1,27 @@
-# ~/.zshrc: executed by zsh for non-login shells.
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
 
-#############################################################################
-# CONFIGURATIONS
-#############################################################################
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="miloshadzic"
+
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
+
+# Plugins
+plugins=(%(plugins)s)
+
+source $ZSH/oh-my-zsh.sh
+
+# Customize to your needs...
 
 # keep history file between sessions
 DIRSTACKSIZE=15
 HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE=~/.zsh_history
-
-# time command output as bash output
-TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S'
-
-# Make the behavior of M-b and M-f to jump over each word separated by a '/'
-# (more like bash)
-WORDCHARS=''
-
-if [[ -f ~/.dircolors ]]; then
-    eval `dircolors -b ~/.dircolors`
-fi
-
-# Use emacs keybindings even if our EDITOR is set to vi
-bindkey -e
-
-bindkey "\e[5~" beginning-of-history # PageUp
-bindkey "\e[6~" end-of-history # PageDown
-bindkey "\e[2~" quoted-insert # Ins
-bindkey "\e[3~" delete-char # Del
-
-# urxvt
-bindkey "\e[1~" beginning-of-line # Home
-bindkey "\e[7~" beginning-of-line # Home
-bindkey "\e[4~" end-of-line # End
-bindkey "\e[8~" end-of-line # End
-
-# xterm
-bindkey "\e[H" beginning-of-line # Home
-bindkey "\e[F" end-of-line # End
-
-bindkey '[1;5D' emacs-backward-word
-bindkey '[1;5C' emacs-forward-word
-bindkey 'Od' emacs-backward-word
-bindkey 'Oc' emacs-forward-word
-
-bindkey '[1;3D' backward-word
-bindkey '[1;3C' forward-word
-
-# Only past commands beginning with the current input would have been shown
-bindkey "" history-search-backward
-bindkey "" history-search-forward
-bindkey "[A" history-search-backward
-bindkey "[B" history-search-forward
-
-
-#############################################################################
-# OPTIONS                       {{{1
-#############################################################################
-
-# Changing directories
-  setopt AUTO_CD
-  setopt AUTO_PUSHD
-  setopt PUSHD_IGNORE_DUPS 
-  setopt PUSHD_MINUS
-  setopt PUSHD_SILENT
-
-# Completion
-  setopt ALWAYS_TO_END
-  setopt AUTO_LIST
-  setopt AUTO_MENU
-  setopt AUTO_PARAM_SLASH
-  setopt COMPLETE_IN_WORD 
-  setopt LIST_AMBIGUOUS
-  setopt LIST_PACKED
-  setopt LIST_ROWS_FIRST
-  setopt LIST_TYPES
-unsetopt MENU_COMPLETE
-
-# Expansion and globbing
-  setopt EXTENDED_GLOB
-  setopt MARK_DIRS
-  setopt NUMERIC_GLOB_SORT
-
-# History
-  setopt APPEND_HISTORY
-unsetopt BANG_HIST
-unsetopt EXTENDED_HISTORY
-  setopt HIST_EXPIRE_DUPS_FIRST
-  setopt HIST_FIND_NO_DUPS
-  setopt HIST_IGNORE_ALL_DUPS
-  setopt HIST_IGNORE_DUPS
-  setopt HIST_IGNORE_SPACE
-unsetopt HIST_NO_FUNCTIONS
-  setopt HIST_NO_STORE
-  setopt HIST_REDUCE_BLANKS
-  setopt HIST_SAVE_NO_DUPS
-  setopt HIST_VERIFY
-  setopt INC_APPEND_HISTORY
-  setopt SHARE_HISTORY
-
-# Input/Output
-unsetopt CORRECT
-unsetopt CORRECT_ALL
-unsetopt FLOW_CONTROL
-  setopt HASH_CMDS
-  setopt INTERACTIVE_COMMENTS
-  setopt PRINT_EIGHT_BIT
-unsetopt RM_STAR_SILENT 
-unsetopt RM_STAR_WAIT
-  setopt SHORT_LOOPS
-
-# Job control
-  setopt AUTO_RESUME
-unsetopt BG_NICE 
-  setopt CHECK_JOBS
-unsetopt HUP
-  setopt LONG_LIST_JOBS 
-  setopt NOTIFY 
-
-# Prompting
-  setopt PROMPT_SUBST
-
-# Zle
-unsetopt BEEP
-
-
-#############################################################################
-# FUNCTIONS
-#############################################################################
-
-function screen ()
-{
-    export SCREEN_PREV_TERM=$TERM
-    export SCREEN_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
-    /usr/bin/screen "$@"
-    unset SCREEN_LD_LIBRARY_PATH SCREEN_PREV_TERM
-}
-
-
-function open()
-{
-    if [[ $# -eq 0 ]]; then
-        xdg-open . 1>/dev/null 2>&1
-    else
-        for i in "$@"; do
-            xdg-open "$i" 1>/dev/null 2>&1
-        done
-    fi
-}
-
-
-function see_file()
-{
-    nl=`wc -l "$1" | cut -d' ' -f1`
-    if [[ $nl -gt $(( LINES - 2 )) ]]; then
-        less -R "$1"
-    else
-        cat "$1"
-    fi
-}
-
-
-function color_diff()
-{
-    /usr/bin/diff -u "$@" > /tmp/diff.tmp
-    nl=`wc -l /tmp/diff.tmp | cut -d' ' -f1`
-    if [[ $nl -gt $(( LINES - 2 )) ]]; then
-        cat /tmp/diff.tmp | colordiff | less -R
-    else
-        cat /tmp/diff.tmp | colordiff
-    fi
-}
-
-
-function bak()
-{
-    for i in "$@"; do
-        name=`basename "$i"`
-        cp -a "$name"{,.bak}
-    done
-}
-
-
-function unbak()
-{
-    for i in "$@"; do
-        #rename 's/\.bak//' "$i"
-        if [[ -e "$i".bak ]]; then
-            rm -rf "$i"
-            mv "$i".bak "$i"
-        fi
-    done 
-}
-
-
-#############################################################################
-# ALIASES
-#############################################################################
-
-alias ls='ls --group-directories-first -v -h --color=auto'
-alias dir='dir --color=auto'
-alias vdir='vdir --color=auto'
-alias mm='echo hola ctm'
-
-alias grep='grep --color=auto -n'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
-
-# recursive copy and remove
-alias rf='rm -rf'
-alias cr='cp -r'
 
 # more verbose file utilities
 alias mv="mv -vi"
@@ -222,217 +30,15 @@ alias rm="rm -v"
 alias chmod="chmod -v"
 alias chown="chown -v"
 
-
-alias cal="ncal -M -C"
-
-alias dv='dirs -v'
-
-# applications
-alias rr="ranger"
-alias ed="ed -p '> '"
-alias mc="mc . ."
-alias nautilus="nautilus --no-desktop"
-alias x="xterm &"
-alias ezrc="vim ~/.zshrc"
-alias evrc="vim ~/.vimrc"
-alias szrc=". ~/.zshrc"
-alias catd='cat > /dev/null'
-
-# files
-alias cdiff='color_diff'
-alias diff='color_diff'
-alias sf='see_file'
-alias see='see_file'
-
-#############################################################################
-# COMPLETION
-#############################################################################
-
-autoload -Uz compinit
-compinit
-
-_force_rehash() {
-    (( CURRENT == 1 )) && rehash
-    return 1    # Because we didn't really complete anything
-}
-
-zstyle ':completion:*' completer _oldlist _expand _force_rehash _complete _match
-
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' menu select=long
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' special-dirs true
-zstyle ':completion:*' use-compctl false
-
-zstyle ':completion:*:kill:*' menu yes select
-zstyle ':completion:*:kill:*' force-list always
-
-zstyle ':completion:*:approximate:*' max-errors 1 numeric
-zstyle ':completion:*:functions' ignored-patterns '_*'
-zstyle ':completion:*:manuals' separate-sections true
-zstyle ':completion:*:match:*' original only
-
-zstyle ':completion:*:*:javac:*' files '*.java'
-zstyle ':completion:*:*:less:*' ignored-patterns '*.(o|a|so|dvi|fig|out|class|pdf|ps)'
-zstyle ':completion:*:*:tar:*' files '*.tar|*.tgz|*.tz|*.tar.Z|*.tar.bz2|*.tZ|*.tar.gz'
-zstyle ':completion:*:*:gvim:*' ignored-patterns '*.(o|a|so|aux|dvi|swp|fig|bbl|blg|bst|idx|ind|out|spl|toc|class|pdf|ps)'
-zstyle ':completion:*:*:vim:*' ignored-patterns '*.(o|a|so|aux|dvi|swp|fig|bbl|blg|bst|idx|ind|out|spl|toc|class|pdf|ps)'
-zstyle ':completion:*:*:zless:*' ignored-patterns '*.(o|a|so|dvi|fig|out|class|pdf|ps)'
-
-zstyle ':completion:*:*:gvim:*' file-patterns '*(^*):non-executables' '*(-/):directories' '%p:globbed-files'
-zstyle ':completion:*:*:vim:*' file-patterns '*(^*):non-executables' '*(-/):directories' '%p:globbed-files'
-
-zstyle ':completion:*:(rm|kill|diff):*' ignore-line yes
-
-zstyle ':completion:*:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-
-zstyle ':completion:*:*:pacman:*' menu yes select
-
-#############################################################################
-# SETUP
-#############################################################################
-
-# restore $LD_LIBRARY_PATH when screen is used
-if [ ! -z $SCREEN_LD_LIBRARY_PATH ]; then
-    export LD_LIBRARY_PATH=$SCREEN_LD_LIBRARY_PATH
+# dircolors
+if [[ -f ~/.dircolors ]]; then
+    eval `dircolors -b ~/.dircolors`
 fi
-
-
-
-#############################################################################
-# COLORS
-#############################################################################
-
-# pictures
-LS_COLORS=$LS_COLORS:'*.eps=01;35'
-
-LS_COLORS=$LS_COLORS:'*.cbz=00;35'
-LS_COLORS=$LS_COLORS:'*.cbr=00;35'
-LS_COLORS=$LS_COLORS:'*.png=00;35'
-LS_COLORS=$LS_COLORS:'*.jpg=00;35'
-LS_COLORS=$LS_COLORS:'*.jpeg=00;35'
-LS_COLORS=$LS_COLORS:'*.gif=00;35'
-
-# videos
-LS_COLORS=$LS_COLORS:'*.mov=04;36'
-LS_COLORS=$LS_COLORS:'*.3gp=04;36'
-LS_COLORS=$LS_COLORS:'*.mpg=04;36'
-LS_COLORS=$LS_COLORS:'*.mpeg=04;36'
-LS_COLORS=$LS_COLORS:'*.mkv=04;36'
-LS_COLORS=$LS_COLORS:'*.mp4=04;36'
-LS_COLORS=$LS_COLORS:'*.vob=04;36'
-LS_COLORS=$LS_COLORS:'*.wmv=04;36'
-LS_COLORS=$LS_COLORS:'*.asf=04;36'
-LS_COLORS=$LS_COLORS:'*.avi=04;36'
-LS_COLORS=$LS_COLORS:'*.flv=04;36'
-
-# documents
-#LS_COLORS=$LS_COLORS:'*.xls=00;33'
-#LS_COLORS=$LS_COLORS:'*.doc=00;33'
-#LS_COLORS=$LS_COLORS:'*.ppt=00;33'
-#LS_COLORS=$LS_COLORS:'*.xlsx=00;33'
-#LS_COLORS=$LS_COLORS:'*.docx=00;33'
-#LS_COLORS=$LS_COLORS:'*.pptx=00;33'
-#LS_COLORS=$LS_COLORS:'*.rft=00;33'
-#LS_COLORS=$LS_COLORS:'*.ods=00;33'
-#LS_COLORS=$LS_COLORS:'*.odg=00;33'
-#LS_COLORS=$LS_COLORS:'*.odp=00;33'
-#LS_COLORS=$LS_COLORS:'*.odt=00;33'
-
-LS_COLORS=$LS_COLORS:'*.pdf=00;33'
-LS_COLORS=$LS_COLORS:'*.ps=00;33'
-LS_COLORS=$LS_COLORS:'*.djvu=00;33'
-LS_COLORS=$LS_COLORS:'*.chm=00;33'
-
-#LS_COLORS=$LS_COLORS:'*.o=01;30'
-
-# ROOT
-LS_COLORS=$LS_COLORS:'*.root=01;31'
-
-export LS_COLORS
-
-# less colors for man pages
-export LESS_TERMCAP_mb=$'\e[01;34m'       # begin blinking
-export LESS_TERMCAP_md=$'\e[01;34m'       # begin bold
-export LESS_TERMCAP_me=$'\e[0m'           # end mode
-export LESS_TERMCAP_so=$'\e[01;40;33m'    # begin standout-mode - info box
-export LESS_TERMCAP_se=$'\e[0m'           # end standout-mode
-export LESS_TERMCAP_us=$'\e[01;31m'       # begin underline
-export LESS_TERMCAP_ue=$'\e[0m'           # end underline
-
-
-#############################################################################
-# PROMPT
-#############################################################################
-
-# Use colors
-autoload -U colors zsh/terminfo
-colors
-
-for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-    eval PR_$color='%{$fg[${(L)color}]%}'
-done
-
-PR_NO_COLOR="%{$terminfo[sgr0]%}"
-
-# Git support
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' stagedstr "${PR_GREEN}●"
-zstyle ':vcs_info:*' unstagedstr "${PR_YELLOW}●"
-zstyle ':vcs_info:*' check-for-changes true
-#zstyle ':vcs_info:*' enable git
-
-precmd ()
-{
-    if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]] {
-        zstyle ':vcs_info:*' formats \
-            "${PR_YELLOW}(%b%c%u) "
-        zstyle ':vcs_info:*' actionformats \
-            "${PR_YELLOW}(%b%c%u${PR_NO_COLOR}|${PR_YELLOW}%a) "
-    } else {
-        zstyle ':vcs_info:*' formats \
-            "${PR_YELLOW}(%b%c%u${PR_RED}●${PR_YELLOW}) "
-        zstyle ':vcs_info:*' actionformats \
-            "${PR_YELLOW}(%b%c%u${PR_RED}●${PR_NO_COLOR}|${PR_YELLOW}%a) "
-    }
-    vcs_info
-}
-
-# Set the prompt
-USER_HOST=${PR_WHITE}[${PR_GREEN}%n${PR_WHITE}@${PR_GREEN}%m${PR_WHITE}]
-PROMPT='${USER_HOST} ${vcs_info_msg_0_}${PR_NO_COLOR}$ '
-RPROMPT='${PR_RED}%~%f'
-
-if (ps aux | grep $PPID | grep -q vim); then
-    VIM_PROMPT=${PR_WHITE}[${PR_RED}VIM_SHELL${PR_WHITE}]
-    PROMPT='${VIM_PROMPT} ${PR_YELLOW}${vcs_info_msg_0_}${PR_NO_COLOR}$ '
-fi
-
-if [[ $UID == 0 ]]; then
-    USER_HOST=${PR_WHITE}[${PR_CYAN}%n${PR_WHITE}@${PR_CYAN}%m${PR_WHITE}]
-    PROMPT='${USER_HOST} ${PR_YELLOW}${vcs_info_msg_0_}${PR_NO_COLOR}$ '
-    RPROMPT='${PR_RED}%~%f'
-fi
-
-export EDITOR='vim'
 
 # cdargs
 if [[ -e /usr/share/doc/cdargs/examples/cdargs-bash.sh ]]; then
     . /usr/share/doc/cdargs/examples/cdargs-bash.sh
 fi
-
-
-# grep recursive though all
-function grepr(){
-    grep "$*" -Ir *
-}
 
 # cd + virtualenv activation + ls
 function cd() {
@@ -446,6 +52,11 @@ function cd() {
         if [[ -f $GIT_DIR/../.env/bin/activate ]]
         then
             . $GIT_DIR/../.env/bin/activate
+        else
+            if [[ $VIRTUAL_ENV != "" ]]
+            then
+                deactivate
+            fi
         fi
     else
         if [[ $VIRTUAL_ENV != "" ]]
@@ -455,30 +66,26 @@ function cd() {
     fi
 
     # optional ls
-    ls
+    # ls
 }
 
-# git-smart
-alias gup='git smart-pull'
-alias gm='git smart-merge'
-alias gl='git smart-log'
-
-# git flow
-if [[ -f ~/.git-flow-completion.zsh ]]; then
-    source ~/.git-flow-completion.zsh
-fi
+# grep recursive through all
+function grepr(){
+    grep "$*" -Ir *
+}
 
 # fabric autocomplete
 if [[ -f ~/.zsh_fab ]]; then
     . ~/.zsh_fab
 fi
 
-# aliases
-if [[ -f ~/.zsh_aliases ]]; then
-    source ~/.zsh_aliases
-fi
+# default user (prompt)
+DEFAULT_USER=%(user)s
 
-# add ~/bin to PATH
-if [[ -d ~/bin ]]; then
-    export PATH=$PATH:~/bin
-fi
+zstyle ':completion:*' special-dirs true
+
+# default editor
+export EDITOR=%(default_editor)s
+
+# disable correction
+unsetopt correct_all

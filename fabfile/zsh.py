@@ -1,8 +1,11 @@
-from fabric.api import task, run, env, put
+from fabric.api import task, run, env, put, prompt
 from fabric.colors import green, red
 from fabric.context_managers import settings, hide
+from fabric.contrib.files import upload_template
+from re import match
 
 from deb_handler import apt_install, apt_update
+from git import git_clone
 
 
 @task
@@ -27,8 +30,32 @@ def install():
             else:
                 print(red('Wrong password, try again.'))
 
-    # zsh configuration file
-    put('fabfile/templates/zshrc', '.zshrc')
+    # install oh-my-zsh
+    git_clone('git://github.com/robbyrussell/oh-my-zsh.git', '~/.oh-my-zsh')
+
+    # zsh configuration file: plugins
+    plugins = []
+    recommended_plugins = (['git', 'github', 'git-flow', 'heroku',
+                           'last-working-dir', 'pip', 'autojump',
+                            'command-not-found', 'debian', 'encode64',
+                            'vagrant', 'ruby'])
+    recommended_plugins.sort()
+    for plugin in recommended_plugins:
+        input = prompt('Would you like to use the %s plugin?'
+                       % plugin, default='Y')
+        if match('Y|y', input):
+            plugins.append(plugin)
+    plugins = ' '.join(plugins)
+
+    # zsh configuration file: default editor
+    editor = prompt('Please specify your default editor', default='vim')
+
+    context = {
+        'plugins': plugins,
+        'default_editor': editor,
+        'user': env.user
+    }
+    upload_template('fabfile/templates/zshrc', '.zshrc', context=context)
 
     # zsh fabric autocomplete
     put('fabfile/templates/zsh_fab', '.zsh_fab')
