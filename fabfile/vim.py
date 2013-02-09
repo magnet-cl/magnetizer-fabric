@@ -2,7 +2,8 @@ from fabric.api import task, run, sudo
 from fabric.colors import green, red
 from fabric.contrib.files import exists
 
-from deb_handler import apt_install, apt_update
+from fabtools.deb import update_index
+from fabtools.deb import is_installed, install as deb_install
 from git import git_clone
 
 
@@ -10,10 +11,11 @@ from git import git_clone
 def install():
     """ Installs and configures vim """
     # update apt index
-    apt_update()
+    update_index()
 
     # install vim
-    apt_install('vim')
+    if not is_installed('vim'):
+        deb_install('vim')
 
     # backup vim configuration folder
     if exists('.vim'):
@@ -33,12 +35,12 @@ def install():
 
     # install required packages by plugins
     print(green('Installing plugins dependencies.'))
-    apt_install('exuberant-ctags')  # ctags
-    apt_install('ack-grep')  # better grep
-    apt_install('pyflakes')  # python flake
+    # ctags, better grep, python flake, latex, C/C++ omnicompletion
+    plugins = ['exuberant-ctags', 'ack-grep', 'pyflakes', 'lacheck', 'clang']
+    for plugin in plugins:
+        if not is_installed(plugin):
+            deb_install(plugin)
     sudo('pip install flake8')  # python flake+pep8
-    apt_install('lacheck')  # latex
-    apt_install('clang')  # C/C++ omnicompletion
 
     # installation script
     print(green('Installing Vim_config.'))

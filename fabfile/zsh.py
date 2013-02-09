@@ -4,7 +4,8 @@ from fabric.context_managers import settings, hide
 from fabric.contrib.files import upload_template
 from re import match
 
-from deb_handler import apt_install, apt_update
+from fabtools.deb import update_index
+from fabtools.deb import is_installed, install as deb_install
 from git import git_clone
 
 
@@ -12,13 +13,15 @@ from git import git_clone
 def install():
     """ Installs and sets zsh as default shell """
     # update apt index
-    apt_update()
+    update_index()
 
     # install zsh
-    apt_install('zsh')
+    if not is_installed('zsh'):
+        deb_install('zsh')
 
     # install zsh examples
-    apt_install('zsh-lovers')
+    if not is_installed('zsh-lovers'):
+        deb_install('zsh-lovers')
 
     # set as default shell for the user
     print(green('Re-enter your password to set zsh as default.'))
