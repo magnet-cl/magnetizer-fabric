@@ -3,22 +3,26 @@ from fabric.colors import green, red
 from fabric.contrib.files import exists, append
 from re import search
 
-from deb_handler import apt_install, apt_update
+from fabtools.deb import update_index
+from fabtools.deb import is_installed, install as deb_install
 
 
 @task
 def install():
     """ Installs and configures ruby 1.9.3 """
     # update apt index
-    apt_update()
+    update_index(quiet=False)
 
     # rvm requirements
-    dependencies = ('build-essential openssl libreadline6 libreadline6-dev '
-                    'curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev '
-                    'libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf '
-                    'libc6-dev ncurses-dev automake libtool bison subversion '
-                    'pkg-config')
-    apt_install(dependencies)
+    dependencies = ['build-essential', 'openssl', 'libreadline6',
+                    'libreadline6-dev', 'curl', 'git-core', 'zlib1g',
+                    'zlib1g-dev', 'libssl-dev', 'libyaml-dev',
+                    'libsqlite3-dev', 'sqlite3', 'libxml2-dev', 'libxslt-dev',
+                    'autoconf', 'libc6-dev', 'ncurses-dev', 'automake',
+                    'libtool', 'bison', 'subversion', 'pkg-config']
+    for dependency in dependencies:
+        if not is_installed(dependency):
+            deb_install(dependency)
 
     # rvm installation
     cmd = 'curl -L https://get.rvm.io | bash -s stable'

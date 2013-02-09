@@ -11,7 +11,7 @@ from git import git_clone
 def install():
     """ Installs and configures vim """
     # update apt index
-    update_index()
+    update_index(quiet=False)
 
     # install vim
     if not is_installed('vim'):
