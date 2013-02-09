@@ -13,7 +13,7 @@ from git import git_clone
 def install():
     """ Installs and sets zsh as default shell """
     # update apt index
-    update_index()
+    update_index(quiet=False)
 
     # install zsh
     if not is_installed('zsh'):

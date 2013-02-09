@@ -11,7 +11,7 @@ from fabtools.deb import is_installed, install as deb_install
 def install():
     """ Installs and configures ruby 1.9.3 """
     # update apt index
-    update_index()
+    update_index(quiet=False)
 
     # rvm requirements
     dependencies = ['build-essential', 'openssl', 'libreadline6',
