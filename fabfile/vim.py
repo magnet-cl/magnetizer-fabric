@@ -31,7 +31,7 @@ def install():
 
     # clone vim_config repository
     print(green('Cloning Vim_config repository.'))
-    git_clone('git://github.com/jslopez/Vim_config.git', '.vim')
+    git_clone('git://github.com/magnet-cl/Vim_config.git', '.vim')
 
     # install required packages by plugins
     print(green('Installing plugins dependencies.'))
