@@ -6,7 +6,7 @@ from re import match
 
 from fabtools.deb import update_index
 from fabtools.deb import is_installed, install as deb_install
-from git import git_clone
+from git import git_clone, git_install
 
 
 @task
@@ -33,6 +33,8 @@ def install():
             else:
                 print(red('Wrong password, try again.'))
 
+    # install git if is not available
+    git_install()
     # install oh-my-zsh
     git_clone('git://github.com/robbyrussell/oh-my-zsh.git', '~/.oh-my-zsh')
 

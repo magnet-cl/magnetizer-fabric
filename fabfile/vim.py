@@ -4,7 +4,7 @@ from fabric.contrib.files import exists
 
 from fabtools.deb import update_index
 from fabtools.deb import is_installed, install as deb_install
-from git import git_clone
+from git import git_clone, git_install
 
 
 @task
@@ -31,6 +31,8 @@ def install():
 
     # clone vim_config repository
     print(green('Cloning Vim_config repository.'))
+    # install git if is not available
+    git_install()
     git_clone('git://github.com/magnet-cl/Vim_config.git', '.vim')
 
     # install required packages by plugins
