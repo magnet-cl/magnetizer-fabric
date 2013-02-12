@@ -1,9 +1,12 @@
-from fabric.api import task, run, sudo
+from fabric.api import task, run
 from fabric.colors import green, red
 from fabric.contrib.files import exists
 
 from fabtools.deb import update_index
 from fabtools.deb import is_installed, install as deb_install
+from fabtools.python import is_pip_installed, install_pip
+from fabtools.python import install as py_install
+from fabtools.python import is_installed as py_is_installed
 from git import git_clone, git_install
 
 
@@ -42,7 +45,11 @@ def install():
     for plugin in plugins:
         if not is_installed(plugin):
             deb_install(plugin)
-    sudo('pip install flake8')  # python flake+pep8
+    # install pip if is not available
+    if not is_pip_installed():
+        install_pip()
+    if not py_is_installed('flake8'):
+        py_install('flake8', use_sudo=True)  # python flake+pep8
 
     # installation script
     print(green('Installing Vim_config.'))
