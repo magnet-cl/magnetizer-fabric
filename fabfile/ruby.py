@@ -1,10 +1,10 @@
 from fabric.api import task, run, prefix
 from fabric.colors import green, red
 from fabric.contrib.files import exists, append
+from fabtools.deb import update_index
 from re import search
 
-from fabtools.deb import update_index
-from fabtools.deb import is_installed, install as deb_install
+from utils import deb_install_if_not_installed
 
 
 @task
@@ -21,8 +21,7 @@ def install():
                     'autoconf', 'libc6-dev', 'ncurses-dev', 'automake',
                     'libtool', 'bison', 'subversion', 'pkg-config']
     for dependency in dependencies:
-        if not is_installed(dependency):
-            deb_install(dependency)
+        deb_install_if_not_installed(dependency)
 
     # rvm installation
     cmd = 'curl -L https://get.rvm.io | bash -s stable'

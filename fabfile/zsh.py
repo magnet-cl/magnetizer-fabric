@@ -2,11 +2,11 @@ from fabric.api import task, run, env, put, prompt
 from fabric.colors import green, red
 from fabric.context_managers import settings, hide
 from fabric.contrib.files import upload_template
+from fabtools.deb import update_index
 from re import match
 
-from fabtools.deb import update_index
-from fabtools.deb import is_installed, install as deb_install
 from git import git_clone, git_install
+from utils import deb_install_if_not_installed
 
 
 @task
@@ -16,12 +16,10 @@ def install():
     update_index(quiet=False)
 
     # install zsh
-    if not is_installed('zsh'):
-        deb_install('zsh')
+    deb_install_if_not_installed('zsh')
 
     # install zsh examples
-    if not is_installed('zsh-lovers'):
-        deb_install('zsh-lovers')
+    deb_install_if_not_installed('zsh-lovers')
 
     # set as default shell for the user
     print(green('Re-enter your password to set zsh as default.'))

@@ -3,11 +3,12 @@ from fabric.colors import green, red
 from fabric.contrib.files import exists
 
 from fabtools.deb import update_index
-from fabtools.deb import is_installed, install as deb_install
 from fabtools.python import is_pip_installed, install_pip
 from fabtools.python import install as py_install
 from fabtools.python import is_installed as py_is_installed
+
 from git import git_clone, git_install
+from utils import deb_install_if_not_installed
 
 
 @task
@@ -17,8 +18,7 @@ def install():
     update_index(quiet=False)
 
     # install vim
-    if not is_installed('vim'):
-        deb_install('vim')
+    deb_install_if_not_installed('vim')
 
     # backup vim configuration folder
     if exists('.vim'):
@@ -43,8 +43,7 @@ def install():
     # ctags, better grep, python flake, latex, C/C++ omnicompletion
     plugins = ['exuberant-ctags', 'ack-grep', 'pyflakes', 'lacheck', 'clang']
     for plugin in plugins:
-        if not is_installed(plugin):
-            deb_install(plugin)
+        deb_install_if_not_installed(plugin)
     # install pip if is not available
     if not is_pip_installed():
         install_pip()

@@ -1,5 +1,6 @@
 from fabric.api import run
-from fabtools.deb import is_installed, install as deb_install
+
+from utils import deb_install_if_not_installed
 
 
 def git_clone(url, path):
@@ -10,5 +11,4 @@ def git_clone(url, path):
 
 def git_install():
     """ Utility method that installs git if is not available. """
-    if not is_installed('git'):
-        deb_install('git')
+    deb_install_if_not_installed('git')
