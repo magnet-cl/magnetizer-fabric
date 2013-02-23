@@ -17,6 +17,11 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+# ~/bin in PATH
+if [[ -d ~/bin ]]; then
+    export PATH=$PATH:~/bin
+fi
+
 # keep history file between sessions
 DIRSTACKSIZE=15
 HISTSIZE=10000000
