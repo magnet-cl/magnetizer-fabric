@@ -1,4 +1,4 @@
-from fabric.api import task, run
+from fabric.api import task, run, cd
 from fabric.colors import green, red
 from fabric.contrib.files import exists
 
@@ -7,7 +7,7 @@ from fabtools.python import is_pip_installed, install_pip
 from fabtools.python import install as py_install
 from fabtools.python import is_installed as py_is_installed
 
-from git import git_clone, git_install
+from git import git_clone, git_install, git_pull
 import utils
 
 
@@ -79,3 +79,15 @@ def restore_backup():
         run(cmd)
     else:
         print(red('vimrc-bkp file not found.'))
+
+
+@task
+def update():
+    """ Updates vim repository and plugins. """
+    # git pull
+    with cd('.vim'):
+        git_pull()
+
+    # plugins update
+    cmd = 'vim +NeoBundleUpdate +qa!'
+    run(cmd)
