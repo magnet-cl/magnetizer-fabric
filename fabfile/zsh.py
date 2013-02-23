@@ -6,7 +6,7 @@ from fabtools.deb import update_index
 from re import match
 
 from git import git_clone, git_install
-from utils import deb_install_if_not_installed
+import utils
 
 
 @task
@@ -16,10 +16,10 @@ def install():
     update_index(quiet=False)
 
     # install zsh
-    deb_install_if_not_installed('zsh')
+    utils._deb.install('zsh')
 
     # install zsh examples
-    deb_install_if_not_installed('zsh-lovers')
+    utils._deb.install('zsh-lovers')
 
     # set as default shell for the user
     print(green('Re-enter your password to set zsh as default.'))

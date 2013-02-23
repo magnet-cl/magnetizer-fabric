@@ -4,7 +4,7 @@ from fabric.contrib.files import exists, append
 from fabtools.deb import update_index
 from re import search
 
-from utils import deb_install_if_not_installed
+import utils
 
 
 @task
@@ -21,7 +21,7 @@ def install():
                     'autoconf', 'libc6-dev', 'ncurses-dev', 'automake',
                     'libtool', 'bison', 'subversion', 'pkg-config']
     for dependency in dependencies:
-        deb_install_if_not_installed(dependency)
+        utils._deb.install(dependency)
 
     # rvm installation
     cmd = 'curl -L https://get.rvm.io | bash -s stable'

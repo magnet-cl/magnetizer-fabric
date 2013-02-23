@@ -8,7 +8,7 @@ from fabtools.python import install as py_install
 from fabtools.python import is_installed as py_is_installed
 
 from git import git_clone, git_install
-from utils import deb_install_if_not_installed
+import utils
 
 
 @task
@@ -18,7 +18,7 @@ def install():
     update_index(quiet=False)
 
     # install vim
-    deb_install_if_not_installed('vim')
+    utils._deb.install('vim')
 
     # backup vim configuration folder
     if exists('.vim'):
@@ -43,7 +43,7 @@ def install():
     # ctags, better grep, python flake, latex, C/C++ omnicompletion
     plugins = ['exuberant-ctags', 'ack-grep', 'pyflakes', 'lacheck', 'clang']
     for plugin in plugins:
-        deb_install_if_not_installed(plugin)
+        utils._deb.install(plugin)
     # install pip if is not available
     if not is_pip_installed():
         install_pip()
