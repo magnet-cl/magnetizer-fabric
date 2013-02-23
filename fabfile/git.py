@@ -9,6 +9,12 @@ def git_clone(url, path):
     run(cmd)
 
 
+def git_pull():
+    """ Git pull. """
+    cmd = 'git pull'
+    run(cmd)
+
+
 def git_install():
     """ Utility method that installs git if is not available. """
     deb_install_if_not_installed('git')
