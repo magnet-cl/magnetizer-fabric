@@ -64,15 +64,21 @@ def install():
     # zsh fabric autocomplete
     put('fabfile/templates/zsh_fab', '.zsh_fab')
 
+    # upload custom themes
+    themes()
+
     print(green('If the shell does not change, restart your session.'))
 
 
 @task
 def update():
-    """ Updates oh-my-zsh. """
+    """ Updates oh-my-zsh and custom themes. """
     # update oh-my-zsh
     cmd = '/usr/bin/env ZSH=~/.oh-my-zsh /bin/sh ~/.oh-my-zsh/tools/upgrade.sh'
     run(cmd)
+
+    # update custom themes
+    themes()
 
 
 @task
