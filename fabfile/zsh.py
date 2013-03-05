@@ -4,6 +4,7 @@ from fabric.context_managers import settings, hide
 from fabric.contrib.files import upload_template
 from fabtools.deb import update_index
 from re import match
+from os import listdir
 
 from git import git_clone, git_install
 import utils
@@ -72,3 +73,17 @@ def update():
     # update oh-my-zsh
     cmd = '/usr/bin/env ZSH=~/.oh-my-zsh /bin/sh ~/.oh-my-zsh/tools/upgrade.sh'
     run(cmd)
+
+
+@task
+def themes():
+    """ Uploads custom themes for oh-my-zsh. """
+    themes_folder = 'fabfile/zsh-themes'
+    destination_folder = '~/.oh-my-zsh/themes'
+
+    for theme in listdir(themes_folder):
+        print('Uploading %s...' % theme)
+        put('%s/%s' % (themes_folder, theme), destination_folder)
+
+    print(green('To set your zsh theme, you must change the ZSH_THEME '
+                'environment variable in ~/.zshrc'))
