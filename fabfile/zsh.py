@@ -2,8 +2,8 @@ from fabric.api import task, run, env, put, prompt
 from fabric.colors import green, red
 from fabric.context_managers import settings, hide
 from fabric.contrib.files import upload_template, exists
+from fabric.contrib.console import confirm
 from fabtools.deb import update_index
-from re import match
 from os import listdir
 
 from git import git_clone, git_install
@@ -45,9 +45,7 @@ def install():
                             'vagrant', 'ruby'])
     recommended_plugins.sort()
     for plugin in recommended_plugins:
-        input = prompt('Would you like to use the %s plugin?'
-                       % plugin, default='Y')
-        if match('Y|y', input):
+        if confirm('Would you like to use the %s plugin?' % plugin):
             plugins.append(plugin)
     plugins = ' '.join(plugins)
 
