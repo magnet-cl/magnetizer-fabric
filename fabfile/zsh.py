@@ -64,3 +64,11 @@ def install():
     put('fabfile/templates/zsh_fab', '.zsh_fab')
 
     print(green('If the shell does not change, restart your session.'))
+
+
+@task
+def update():
+    """ Updates oh-my-zsh. """
+    # update oh-my-zsh
+    cmd = '/usr/bin/env ZSH=~/.oh-my-zsh /bin/sh ~/.oh-my-zsh/tools/upgrade.sh'
+    run(cmd)
