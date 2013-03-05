@@ -1,7 +1,7 @@
 from fabric.api import task, run, env, put, prompt
 from fabric.colors import green, red
 from fabric.context_managers import settings, hide
-from fabric.contrib.files import upload_template
+from fabric.contrib.files import upload_template, exists
 from fabtools.deb import update_index
 from re import match
 from os import listdir
@@ -85,7 +85,11 @@ def update():
 def themes():
     """ Uploads custom themes for oh-my-zsh. """
     themes_folder = 'fabfile/zsh-themes'
-    destination_folder = '~/.oh-my-zsh/themes'
+    destination_folder = '~/.oh-my-zsh/themes/magnet'
+
+    if not exists(destination_folder):
+        cmd = 'mkdir %s' % destination_folder
+        run(cmd)
 
     for theme in listdir(themes_folder):
         print('Uploading %s...' % theme)
