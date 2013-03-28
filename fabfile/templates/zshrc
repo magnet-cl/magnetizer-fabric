@@ -34,6 +34,10 @@ alias cp="cp -vai"
 alias rm="rm -v"
 alias chmod="chmod -v"
 alias chown="chown -v"
+# aliases
+if [[ -f ~/.zsh/aliases.zsh ]]; then
+    . ~/.zsh/aliases.zsh
+fi
 
 # dircolors
 if [[ -f ~/.dircolors ]]; then
@@ -70,8 +74,7 @@ function cd() {
         fi
     fi
 
-    # optional ls
-    # ls
+    ls
 }
 
 # grep recursive through all
