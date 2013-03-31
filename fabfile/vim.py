@@ -41,7 +41,8 @@ def install():
     # install required packages by plugins
     print(green('Installing plugins dependencies.'))
     # ctags, better grep, python flake, latex, C/C++ omnicompletion
-    plugins = ['exuberant-ctags', 'ack-grep', 'pyflakes', 'lacheck', 'clang']
+    plugins = ['exuberant-ctags', 'ack-grep', 'pyflakes', 'lacheck', 'clang',
+               'rhino']
     for plugin in plugins:
         utils._deb.install(plugin)
     # install pip if is not available
