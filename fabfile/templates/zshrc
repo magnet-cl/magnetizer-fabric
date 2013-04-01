@@ -97,7 +97,8 @@ function grepr(){
         esac
     done
 
-    grep ${*: 1:$COUNT-1} -Ir ${*: $COUNT} *
+    QUERY=${*: $COUNT}
+    grep ${*: 1:$COUNT-1} -Ir "$QUERY" *
     #grep --exclude=\*.{sh,py,js,css} -Ir "test" *
 }
 
