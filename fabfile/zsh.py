@@ -5,6 +5,7 @@ from fabric.contrib.files import upload_template, exists
 from fabric.contrib.console import confirm
 from fabtools.deb import update_index
 from os import listdir
+from os.path import join
 
 from git import git_clone, git_install
 import utils
@@ -62,8 +63,8 @@ def install():
     # zsh fabric autocomplete
     put('fabfile/templates/zsh_fab', '.zsh_fab')
 
-    # upload custom themes
-    themes()
+    # upload custom files
+    upload_custom_files()
 
     print(green('If the shell does not change, restart your session.'))
 
@@ -75,23 +76,32 @@ def update():
     cmd = '/usr/bin/env ZSH=~/.oh-my-zsh /bin/sh ~/.oh-my-zsh/tools/upgrade.sh'
     run(cmd)
 
-    # update custom themes
-    themes()
+    # update custom files
+    upload_custom_files()
 
 
 @task
-def themes():
-    """ Uploads custom themes for oh-my-zsh. """
+def upload_custom_files():
+    """ Uploads custom files for oh-my-zsh. """
     themes_folder = 'fabfile/zsh-themes'
-    destination_folder = '~/.oh-my-zsh/themes/magnet'
+    plugins_folder = 'fabfile/zsh-plugins'
+    destination_folder = '~/.oh-my-zsh/custom'
 
-    if not exists(destination_folder):
-        cmd = 'mkdir %s' % destination_folder
-        run(cmd)
-
+    # custom themes
     for theme in listdir(themes_folder):
         print('Uploading %s...' % theme)
         put('%s/%s' % (themes_folder, theme), destination_folder)
 
     print(green('To set your zsh theme, you must change the ZSH_THEME '
                 'environment variable in ~/.zshrc'))
+
+    # custom plugins
+    for plugin in listdir(plugins_folder):
+        plugin_subfolder = plugin.split('.')[0]
+        destination_folder = join(destination_folder, "plugins",
+                                  plugin_subfolder)
+        if not exists(destination_folder):
+            cmd = 'mkdir -p %s' % destination_folder
+            run(cmd)
+        print('Uploading %s...' % plugin)
+        put('%s/%s' % (plugins_folder, plugin), destination_folder)
