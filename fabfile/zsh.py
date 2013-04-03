@@ -38,35 +38,8 @@ def install():
     # install oh-my-zsh
     git_clone('git://github.com/robbyrussell/oh-my-zsh.git', '~/.oh-my-zsh')
 
-    # zsh configuration file: plugins
-    plugins = []
-    recommended_plugins = (['git', 'github', 'git-flow', 'heroku',
-                           'last-working-dir', 'pip', 'autojump',
-                            'command-not-found', 'debian', 'encode64',
-                            'vagrant', 'ruby', 'colored-man'])
-    recommended_plugins.sort()
-    for plugin in recommended_plugins:
-        if confirm('Would you like to use the %s plugin?' % plugin):
-            plugins.append(plugin)
-    plugins = ' '.join(plugins)
-
-    # zsh configuration file: default editor
-    editor = prompt('Please specify your default editor', default='vim')
-
-    context = {
-        'plugins': plugins,
-        'default_editor': editor,
-        'user': env.user
-    }
-    upload_template('fabfile/templates/zshrc', '.zshrc', context=context)
-
-    # zsh fabric autocomplete
-    put('fabfile/templates/zsh_fab', '.zsh_fab')
-
-    # upload custom files
-    upload_custom_files()
-
-    print(green('If the shell does not change, restart your session.'))
+    # zsh configuration
+    configure()
 
 
 @task
@@ -104,3 +77,38 @@ def upload_custom_files():
             run(cmd)
         print('Uploading %s...' % plugin)
         put('%s/%s' % (plugins_folder, plugin), destination_folder)
+
+
+@task
+def configure():
+    """ Configures the zshrc file. """
+
+    # plugins configuration
+    plugins = []
+    recommended_plugins = (['git', 'github', 'git-flow', 'heroku',
+                           'last-working-dir', 'pip', 'autojump',
+                            'command-not-found', 'debian', 'encode64',
+                            'vagrant', 'ruby', 'colored-man'])
+    recommended_plugins.sort()
+    for plugin in recommended_plugins:
+        if confirm('Would you like to use the %s plugin?' % plugin):
+            plugins.append(plugin)
+    plugins = ' '.join(plugins)
+
+    # default editor
+    editor = prompt('Please specify your default editor', default='vim')
+
+    context = {
+        'plugins': plugins,
+        'default_editor': editor,
+        'user': env.user
+    }
+    upload_template('fabfile/templates/zshrc', '.zshrc', context=context)
+
+    # zsh fabric autocomplete
+    put('fabfile/templates/zsh_fab', '.zsh_fab')
+
+    # upload custom files
+    upload_custom_files()
+
+    print(green('If the shell does not change, restart your session.'))
