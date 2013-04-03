@@ -85,12 +85,12 @@ def upload_custom_files():
     """ Uploads custom files for oh-my-zsh. """
     themes_folder = 'fabfile/zsh-themes'
     plugins_folder = 'fabfile/zsh-plugins'
-    destination_folder = '~/.oh-my-zsh/custom'
+    custom_folder = '~/.oh-my-zsh/custom'
 
     # custom themes
     for theme in listdir(themes_folder):
         print('Uploading %s...' % theme)
-        put('%s/%s' % (themes_folder, theme), destination_folder)
+        put('%s/%s' % (themes_folder, theme), custom_folder)
 
     print(green('To set your zsh theme, you must change the ZSH_THEME '
                 'environment variable in ~/.zshrc'))
@@ -98,8 +98,7 @@ def upload_custom_files():
     # custom plugins
     for plugin in listdir(plugins_folder):
         plugin_subfolder = plugin.split('.')[0]
-        destination_folder = join(destination_folder, "plugins",
-                                  plugin_subfolder)
+        destination_folder = join(custom_folder, "plugins", plugin_subfolder)
         if not exists(destination_folder):
             cmd = 'mkdir -p %s' % destination_folder
             run(cmd)
