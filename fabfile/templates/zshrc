@@ -7,6 +7,10 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="miloshadzic-3-path"
 
+# dircolors
+if [[ -f ~/.dircolors ]]; then
+    eval `dircolors -b ~/.dircolors`
+fi
 
 # Ignore duplicate entries in zsh history
 export HISTCONTROL=erasedups
@@ -41,11 +45,6 @@ alias chown="chown -v"
 # aliases
 if [[ -f ~/.zsh/aliases.zsh ]]; then
     . ~/.zsh/aliases.zsh
-fi
-
-# dircolors
-if [[ -f ~/.dircolors ]]; then
-    eval `dircolors -b ~/.dircolors`
 fi
 
 # cdargs
