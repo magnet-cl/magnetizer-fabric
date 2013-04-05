@@ -44,6 +44,8 @@ def install():
 
     # ruby installation
     with prefix(rvm_path):
+        cmd = 'rvm autolibs enable'
+        run(cmd)
         cmd = 'rvm install ruby-1.9.3'
         run(cmd)
         cmd = 'rvm use 1.9.3'
