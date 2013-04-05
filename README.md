@@ -10,6 +10,7 @@ It also comes with other Tools:
 Magnetizer uses python's Fabric Tools to run tasks on remote (and local) machines.
 
 ## Installation
+
 Run `./install.sh`.
 
 ## Usage
@@ -20,16 +21,20 @@ Each task must be ran as follows:
 You need to specify the target machine, so it will ask you for the host in which you wish to run the task and assume your user is you current terminal user.
 
 You can override this behaviour using the H paramter:
+
 `fab -H <user>@<host> <task>`
 
 You can also concatenate commands:
+
 `fab -H <user>@<host> <task1> <task2>`
 
 ### Examples
 To get zsh installed and set as the default shell on your local machine, you should ran:
+
 `fab -H <user>@localhost zsh.install `
 
 A concatenation example could be that you want that your current public key is accepted in your own computer (to speed up magnetizer calls) and install vim comfiguration:
+
 `fab -H <user>@localhost ssh.add_authorized_key vim.install`
 
 ### Available commands
