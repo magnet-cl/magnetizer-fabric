@@ -38,13 +38,13 @@ A concatenation example could be that you want that your current public key is a
 `fab -H <user>@localhost ssh.add_authorized_key vim.install`
 
 ### Available commands
-`ssh.generate_key`: Generate public and private ssh keys.
-`ssh.add_authorized_key`: Adds your local public key to the authorized keys.
-`zsh.install`: Installs zsh, fully configured.
-`zsh.update`: Updates zsh with the latest magnetizer configuration.
-`zsh.themes`: Change the theme of zsh
-`vim.install`: Installs vim, fully configured fo maximum programmer efficiency.
-`vim.update`: Updates vim with the latest magnetizer configuration.
-`vim.restore_backup`: Restores a backup of vim ehh I don't know what it restores, but I bet it is awesome.
-`ruby.install`: Installs ruby
-`ruby.install_rails`: Installs ruby on rails
+*`ssh.generate_key`: Generate public and private ssh keys.
+*`ssh.add_authorized_key`: Adds your local public key to the authorized keys.
+*`zsh.install`: Installs zsh, fully configured.
+*`zsh.update`: Updates zsh with the latest magnetizer configuration.
+*`zsh.themes`: Change the theme of zsh
+*`vim.install`: Installs vim, fully configured fo maximum programmer efficiency.
+*`vim.update`: Updates vim with the latest magnetizer configuration.
+*`vim.restore_backup`: Restores a backup of vim ehh I don't know what it restores, but I bet it is awesome.
+*`ruby.install`: Installs ruby
+*`ruby.install_rails`: Installs ruby on rails
