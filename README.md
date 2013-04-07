@@ -6,17 +6,19 @@ http://magnet-cl.github.io/magnetizer/
 At Magnet we use Magnetizer to quickly setup the terminal in local and remote Linux machines. This includes a complete configuration of zsh, vim.
 It also comes with other tools:
 
-    * SSH: Super easily generate and add ssh keys to a remote host
+* SSH: Super easily generate and add ssh keys to a remote host
 * Ruby: Install Ruby and Ruby on Rails with 
 
-    Magnetizer uses python's Fabric tools to run tasks on remote (and local) machines.
+Magnetizer uses python's Fabric tools to run tasks on remote (and local) machines.
 
 ## Installation
 
 Run `./install.sh`.
 
 ## Usage
-You have a list of commands you can execute in you local machine or a remote one. To print the list of available tasks type `fab -l`.
+You have a list of commands you can execute in you local machine or a remote one. To print the list of available tasks type
+
+`fab -l`.
 
 Each task must be ran as follows:
 
@@ -37,7 +39,7 @@ To get zsh installed and set as the default shell on your local machine, you sho
 
 `fab -H <user>@localhost zsh.install `
 
-    A concatenation example could be that you want that your current public key is accepted in your own computer (to speed up Magnetizer calls) and install vim configuration:
+A concatenation example could be that you want that your current public key is accepted in your own computer (to speed up Magnetizer calls) and install vim configuration:
 
 `fab -H <user>@localhost ssh.add_authorized_key vim.install`
 
