@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Magnetizer by magnet-cl</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Magnetizer</h1>
+        <h2></h2>
+
+        <section id="downloads">
+          <a href="https://github.com/magnet-cl/magnetizer/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/magnet-cl/magnetizer/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/magnet-cl/magnetizer" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>Magnetizer</h1>
+
+<h2>Description</h2>
+
+<p>At Magnet we use Magnetizer to quickly setup the terminal in local and remote Linux machines. This includes a complete configuration of zsh, vim.
+It also comes with other tools:</p>
+
+<pre><code>* SSH: Super easily generate and add ssh keys to a remote host
+* Ruby: Install Ruby and Ruby on Rails
+</code></pre>
+
+<p>Magnetizer uses python's Fabric tools to run tasks on remote (and local) machines.</p>
+
+<h2>Installation</h2>
+
+<p>Run <code>./install.sh</code>.</p>
+
+<h2>Usage</h2>
+
+<p>You have a list of commands you can execute in you local machine or a remote one. To print the list of available tasks type</p>
+
+<p><code>fab -l</code>.</p>
+
+<p>Each task must be ran as follows:</p>
+
+<p><code>fab &lt;task&gt;</code></p>
+
+<p>You need to specify the target machine, so it will ask you for the host in which you wish to run the task and assume your user is you current terminal user.</p>
+
+<p>You can override this behaviour using the H parameter:</p>
+
+<p><code>fab -H &lt;user&gt;@&lt;host&gt; &lt;task&gt;</code></p>
+
+<p>You can also concatenate commands:</p>
+
+<p><code>fab -H &lt;user&gt;@&lt;host&gt; &lt;task1&gt; &lt;task2&gt;</code></p>
+
+<h3>Examples</h3>
+
+<p>To get zsh installed and set as the default shell on your local machine, you should ran:</p>
+
+<p><code>fab -H &lt;user&gt;@localhost zsh.install</code></p>
+
+<p>A concatenation example could be that you want that your current public key is accepted in your own computer (to speed up Magnetizer calls) and install vim configuration:</p>
+
+<p><code>fab -H &lt;user&gt;@localhost ssh.add_authorized_key vim.install</code></p>
+
+<h3>Available commands</h3>
+
+<pre><code>* ssh.generate_key: Generate public and private ssh keys.
+* ssh.add_authorized_key: Adds your local public key to the authorized keys.
+* zsh.install: Installs zsh, fully configured.
+* zsh.update: Updates zsh with the latest Magnetizer configuration.
+* zsh.themes: Change the theme of zsh
+* vim.install: Installs vim, fully configured fo maximum programmer efficiency.
+* vim.update: Updates vim with the latest Magnetizer configuration.
+* vim.restore_backup: Restores vim to a pre-magnetizer configuration if available.
+* ruby.install: Installs Ruby
+* ruby.install_rails: Installs Ruby on Rails
+</code></pre>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
