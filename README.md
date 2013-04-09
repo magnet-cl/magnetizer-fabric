@@ -6,8 +6,8 @@ http://magnet-cl.github.io/magnetizer/
 At Magnet we use Magnetizer to quickly setup the terminal in local and remote Linux machines. This includes a complete configuration of zsh, vim.
 It also comes with other tools:
 
-* SSH: Super easily generate and add ssh keys to a remote host
-* Ruby: Install Ruby and Ruby on Rails with 
+    * SSH: Super easily generate and add ssh keys to a remote host
+    * Ruby: Install Ruby and Ruby on Rails
 
 Magnetizer uses python's Fabric tools to run tasks on remote (and local) machines.
 
@@ -45,13 +45,13 @@ A concatenation example could be that you want that your current public key is a
 
 ### Available commands
 
-* `ssh.generate_key`: Generate public and private ssh keys.
-* `ssh.add_authorized_key`: Adds your local public key to the authorized keys.
-* `zsh.install`: Installs zsh, fully configured.
-* `zsh.update`: Updates zsh with the latest Magnetizer configuration.
-* `zsh.themes`: Change the theme of zsh
-* `vim.install`: Installs vim, fully configured fo maximum programmer efficiency.
-* `vim.update`: Updates vim with the latest Magnetizer configuration.
-* `vim.restore_backup`: Restores a backup of vim... ehh I don't know what it restores, but I bet it is awesome.
-* `ruby.install`: Installs Ruby
-* `ruby.install_rails`: Installs Ruby on Rails
+    * ssh.generate_key: Generate public and private ssh keys.
+    * ssh.add_authorized_key: Adds your local public key to the authorized keys.
+    * zsh.install: Installs zsh, fully configured.
+    * zsh.update: Updates zsh with the latest Magnetizer configuration.
+    * zsh.themes: Change the theme of zsh
+    * vim.install: Installs vim, fully configured fo maximum programmer efficiency.
+    * vim.update: Updates vim with the latest Magnetizer configuration.
+    * vim.restore_backup: Restores vim to a pre-magnetizer configuration if available.
+    * ruby.install: Installs Ruby
+    * ruby.install_rails: Installs Ruby on Rails
