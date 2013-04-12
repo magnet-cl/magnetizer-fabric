@@ -47,7 +47,7 @@ It also comes with other tools:</p>
 
 <h2>Usage</h2>
 
-<p>You have a list of commands you can execute in you local machine or a remote one. To print the list of available tasks type</p>
+<p>You have a list of commands you can execute in your local machine or a remote one. To print the list of available tasks type:</p>
 
 <p><code>fab -l</code>.</p>
 
@@ -55,7 +55,7 @@ It also comes with other tools:</p>
 
 <p><code>fab &lt;task&gt;</code></p>
 
-<p>You need to specify the target machine, so it will ask you for the host in which you wish to run the task and assume your user is you current terminal user.</p>
+<p>You need to specify the target machine, so it will ask you for the host in which you wish to run the task and assume your user is your current terminal user.</p>
 
 <p>You can override this behaviour using the H parameter:</p>
 
@@ -77,11 +77,11 @@ It also comes with other tools:</p>
 
 <h3>Available commands</h3>
 
-<pre><code>* ssh.generate_key: Generate public and private ssh keys.
+<pre><code>* ssh.generate_key: Generates public and private ssh keys.
 * ssh.add_authorized_key: Adds your local public key to the authorized keys.
 * zsh.install: Installs zsh, fully configured.
 * zsh.update: Updates zsh with the latest Magnetizer configuration.
-* zsh.themes: Change the theme of zsh
+* zsh.configure: Deploys the configuration file asking some preferences.
 * vim.install: Installs vim, fully configured fo maximum programmer efficiency.
 * vim.update: Updates vim with the latest Magnetizer configuration.
 * vim.restore_backup: Restores vim to a pre-magnetizer configuration if available.
