@@ -16,7 +16,7 @@ Magnetizer uses python's Fabric tools to run tasks on remote (and local) machine
 Run `./install.sh`.
 
 ## Usage
-You have a list of commands you can execute in you local machine or a remote one. To print the list of available tasks type
+You have a list of commands you can execute in your local machine or a remote one. To print the list of available tasks type:
 
 `fab -l`.
 
@@ -24,7 +24,7 @@ Each task must be ran as follows:
 
 `fab <task>`
 
-You need to specify the target machine, so it will ask you for the host in which you wish to run the task and assume your user is you current terminal user.
+You need to specify the target machine, so it will ask you for the host in which you wish to run the task and assume your user is your current terminal user.
 
 You can override this behaviour using the H parameter:
 
@@ -45,11 +45,11 @@ A concatenation example could be that you want that your current public key is a
 
 ### Available commands
 
-    * ssh.generate_key: Generate public and private ssh keys.
+    * ssh.generate_key: Generates public and private ssh keys.
     * ssh.add_authorized_key: Adds your local public key to the authorized keys.
     * zsh.install: Installs zsh, fully configured.
     * zsh.update: Updates zsh with the latest Magnetizer configuration.
-    * zsh.themes: Change the theme of zsh
+    * zsh.configure: Deploys the configuration file asking some preferences.
     * vim.install: Installs vim, fully configured fo maximum programmer efficiency.
     * vim.update: Updates vim with the latest Magnetizer configuration.
     * vim.restore_backup: Restores vim to a pre-magnetizer configuration if available.
