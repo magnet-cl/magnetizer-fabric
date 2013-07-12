@@ -20,9 +20,6 @@ def install():
     # install zsh
     utils._deb.install('zsh')
 
-    # install zsh examples
-    utils._deb.install('zsh-lovers')
-
     # set as default shell for the user
     print(green('Re-enter your password to set zsh as default.'))
     with settings(hide('warnings'), warn_only=True):
