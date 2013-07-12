@@ -3,6 +3,7 @@
 # pre-requisites installation
 sudo apt-get update
 sudo apt-get install -y openssh-server
+sudo apt-get install -y python-dev
 sudo apt-get install -y python-pip
 
 # fabric installation through pip
