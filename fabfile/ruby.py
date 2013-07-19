@@ -63,3 +63,28 @@ def install_rails():
             run(cmd)
     else:
         print(red('Ruby is not installed, please run "ruby.install" first.'))
+
+
+@task
+def install_wirble():
+    """ Installs wirble, irb console enhancer. """
+
+    if exists('.rvm/scripts/rvm'):
+        rvm_path = 'source "$HOME/.rvm/scripts/rvm"'
+        with prefix(rvm_path):
+            cmd = 'gem install wirble'
+            run(cmd)
+
+        if not exists('.irbrc'):
+            cmd = 'touch .irbrc'
+            run(cmd)
+
+        wirble_configuration = ("require 'rubygems'\n"
+                                "require 'wirble'\n"
+                                "Wirble.init\n"
+                                "Wirble.colorize")
+
+        append('.irbrc', wirble_configuration)
+
+    else:
+        print(red('Ruby is not installed, please run "ruby.install" first.'))
