@@ -6,9 +6,13 @@ from fabric.contrib.console import confirm
 from fabtools.deb import update_index
 from os import listdir
 from os.path import join
+from os.path import abspath
+from os.path import dirname
 
 from git import git_clone, git_install
 import utils
+
+root_folder = dirname(abspath(__file__))
 
 
 @task
@@ -53,8 +57,9 @@ def update():
 @task
 def upload_custom_files():
     """ Uploads custom files for oh-my-zsh. """
-    themes_folder = 'fabfile/zsh-themes'
-    plugins_folder = 'fabfile/zsh-plugins'
+
+    themes_folder = '{}/zsh-themes'.format(root_folder)
+    plugins_folder = '{}/zsh-plugins'.format(root_folder)
     custom_folder = '~/.oh-my-zsh/custom'
 
     # custom themes
@@ -101,10 +106,11 @@ def configure():
         'default_editor': editor,
         'user': env.user
     }
-    upload_template('fabfile/templates/zshrc', '.zshrc', context=context)
+    upload_template('{}/templates/zshrc'.format(root_folder), '.zshrc',
+                    context=context)
 
     # zsh fabric autocomplete
-    put('fabfile/templates/zsh_fab', '.zsh_fab')
+    put('{}/templates/zsh_fab'.format(root_folder), '.zsh_fab')
 
     # upload custom files
     upload_custom_files()
