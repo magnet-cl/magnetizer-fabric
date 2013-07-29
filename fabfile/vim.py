@@ -47,6 +47,7 @@ def install():
         utils._deb.install(plugin)
     # install pip if is not available
     if not is_pip_installed():
+        utils._deb.install('curl')  # used by pip installation
         install_pip()
     if not py_is_installed('flake8'):
         py_install('flake8', use_sudo=True)  # python flake+pep8
