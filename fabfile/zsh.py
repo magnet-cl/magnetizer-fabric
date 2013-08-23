@@ -36,8 +36,11 @@ def install():
 
     # install git if is not available
     git_install()
+
     # install oh-my-zsh
-    git_clone('git://github.com/robbyrussell/oh-my-zsh.git', '~/.oh-my-zsh')
+    if not exists('~/.oh-my-zsh'):
+        git_clone('git://github.com/robbyrussell/oh-my-zsh.git',
+                  '~/.oh-my-zsh')
 
     # zsh configuration
     configure()
@@ -127,6 +130,8 @@ def install_theme(theme=None):
 def configure():
     """ Configures the zshrc file. """
 
+    install_autojump = False
+
     # plugins configuration
     plugins = []
     recommended_plugins = (['git', 'github', 'git-flow', 'heroku',
@@ -138,6 +143,9 @@ def configure():
     for plugin in recommended_plugins:
         if confirm('Would you like to use the %s plugin?' % plugin):
             plugins.append(plugin)
+            if plugin == "autojump":
+                install_autojump = True
+
     plugins = ' '.join(plugins)
 
     # default editor
@@ -156,5 +164,8 @@ def configure():
 
     # upload custom files
     upload_custom_files()
+
+    if install_autojump:
+        utils._deb.install('autojump')
 
     print(green('If the shell does not change, restart your session.'))
