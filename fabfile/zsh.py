@@ -1,7 +1,7 @@
 from fabric.api import task, run, env, put, prompt
 from fabric.colors import green, red
 from fabric.context_managers import settings, hide
-from fabric.contrib.files import upload_template, exists
+from fabric.contrib.files import upload_template, exists, sed
 from fabric.contrib.console import confirm
 from fabtools.deb import update_index
 from os import listdir
@@ -79,6 +79,48 @@ def upload_custom_files():
             run(cmd)
         print('Uploading %s...' % plugin)
         put('%s/%s' % (plugins_folder, plugin), destination_folder)
+
+
+@task
+def install_theme(theme=None):
+
+    themes = ['powerline', 'miloshadzic-3-path', 'miloshadzic-full-path']
+
+    if theme not in themes:
+        print "Theme not found. Example: zsh.install_them:powerline"
+        print "List of themes: "
+        print "    powerline"
+        print "    miloshadzic-3-path"
+        print "    miloshadzic-full-path"
+
+        return
+
+    upload_custom_files()
+
+    print(green('Setting zsh theme: %s' % theme))
+    sed('~/.zshrc', "^ZSH_THEME=[\"a-zA-Z\d-]*", 'ZSH_THEME="%s"' % theme)
+
+    if theme == "powerline":
+        font_folder = "~/.fonts/"
+        if not exists(font_folder):
+            run('mkdir -p %s' % font_folder)
+
+        print(green('Downloading fonts'))
+        run("wget -O %sPowerlineSymbols.otf 'https://github.com/Lokaltog/"
+            "powerline/raw/develop/font/PowerlineSymbols.otf'" % font_folder)
+
+        font_config_folder = "~/.fonts.conf.d/"
+        if not exists(font_config_folder):
+            run('mkdir -p %s' % font_config_folder)
+
+        print(green('Downloading fonts config file'))
+        file_name = "%s10-powerline-symbols.conf" % font_config_folder
+
+        run("wget -O %s 'https://github.com/Lokaltog/powerline/raw/develop/"
+            "font/10-powerline-symbols.conf'" % file_name)
+
+        print(green('Updating fonts Cache'))
+        run("fc-cache -vf %s" % font_folder)
 
 
 @task
