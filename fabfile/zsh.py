@@ -101,7 +101,8 @@ def install_theme(theme=None):
     upload_custom_files()
 
     print(green('Setting zsh theme: %s' % theme))
-    sed('~/.zshrc', "^ZSH_THEME=[\"a-zA-Z\d-]*", 'ZSH_THEME="%s"' % theme)
+    sed('~/.zshrc', "^ZSH_THEME=[\"][a-zA-Z0-9-]*[\"]", 'ZSH_THEME="%s"' %
+        theme)
 
     if theme == "powerline":
         font_folder = "~/.fonts/"
