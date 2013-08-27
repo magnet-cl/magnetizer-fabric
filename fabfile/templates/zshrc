@@ -7,6 +7,16 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="miloshadzic-3-path"
 
+# local settings
+if [ ! -d ~/.zsh ]; then
+    mkdir ~/.zsh
+fi
+
+if [[ ! -f ~/.zsh/zshrc.zsh ]]; then
+    touch ~/.zsh/zshrc.zsh
+fi
+. ~/.zsh/zshrc.zsh
+
 # dircolors
 if [[ -f ~/.dircolors ]]; then
     eval `dircolors -b ~/.dircolors`
@@ -42,10 +52,12 @@ alias cp="cp -vai"
 alias rm="rm -v"
 alias chmod="chmod -v"
 alias chown="chown -v"
+
 # aliases
-if [[ -f ~/.zsh/aliases.zsh ]]; then
-    . ~/.zsh/aliases.zsh
+if [[ ! -f ~/.zsh/aliases.zsh ]]; then
+    touch ~/.zsh/aliases.zsh
 fi
+. ~/.zsh/aliases.zsh
 
 # cdargs
 if [[ -e /usr/share/doc/cdargs/examples/cdargs-bash.sh ]]; then
