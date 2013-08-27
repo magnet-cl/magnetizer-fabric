@@ -90,7 +90,7 @@ def install_theme(theme=None):
     themes = ['powerline', 'miloshadzic-3-path', 'miloshadzic-full-path']
 
     if theme not in themes:
-        print "Theme not found. Example: zsh.install_them:powerline"
+        print "Theme not found. Example: zsh.install_theme:powerline"
         print "List of themes: "
         print "    powerline"
         print "    miloshadzic-3-path"
