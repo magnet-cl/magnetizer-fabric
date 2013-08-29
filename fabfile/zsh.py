@@ -1,4 +1,4 @@
-from fabric.api import task, run, env, put, prompt
+from fabric.api import task, run, env, put, prompt, cd
 from fabric.colors import green, red
 from fabric.context_managers import settings, hide
 from fabric.contrib.files import upload_template, exists, sed
@@ -110,18 +110,32 @@ def install_theme(theme=None):
             run('mkdir -p %s' % font_folder)
 
         print(green('Downloading fonts'))
-        run("wget -O %sPowerlineSymbols.otf 'https://github.com/Lokaltog/"
-            "powerline/raw/develop/font/PowerlineSymbols.otf'" % font_folder)
 
-        font_config_folder = "~/.fonts.conf.d/"
-        if not exists(font_config_folder):
-            run('mkdir -p %s' % font_config_folder)
+        github_url = "https://github.com/"
+        repo_url = "Lokaltog/powerline-fonts/blob/master/UbuntuMono/"
+        url = "%s%s" % (github_url, repo_url)
 
-        print(green('Downloading fonts config file'))
-        file_name = "%s10-powerline-symbols.conf" % font_config_folder
+        with cd('.fonts'):
+            def download_font(font):
+                file_url = "%s%s" % (url, font.replace(' ', "%20"))
+                file_name = font.replace(' ', "\ ")
+                cmd = "wget -O %s '%s?raw=true'" % (file_name, file_url)
+                run(cmd)
 
-        run("wget -O %s 'https://github.com/Lokaltog/powerline/raw/develop/"
-            "font/10-powerline-symbols.conf'" % file_name)
+            download_font("Ubuntu Mono derivative Powerline Bold Italic.ttf")
+            download_font("Ubuntu Mono derivative Powerline Bold.ttf")
+            download_font("Ubuntu Mono derivative Powerline Italic.ttf")
+            download_font("Ubuntu Mono derivative Powerline.ttf")
+
+        #font_config_folder = "~/.fonts.conf.d/"
+        #if not exists(font_config_folder):
+            # run('mkdir -p %s' % font_config_folder)
+
+        # print(green('Downloading fonts config file'))
+        # file_name = "%s10-powerline-symbols.conf" % font_config_folder
+
+        #run("wget -O %s 'https://github.com/Lokaltog/powerline/raw/develop/"
+         #   "font/10-powerline-symbols.conf'" % file_name)
 
         print(green('Updating fonts Cache'))
         run("fc-cache -vf %s" % font_folder)
