@@ -12,3 +12,6 @@ assert ruby
 
 import rxvt
 assert rxvt
+
+import tmux
+assert tmux
