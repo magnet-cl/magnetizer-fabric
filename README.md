@@ -53,6 +53,8 @@ A concatenation example could be that you want that your current public key is a
     * vim.install: Installs vim, fully configured fo maximum programmer efficiency.
     * vim.update: Updates vim with the latest Magnetizer configuration.
     * vim.restore_backup: Restores vim to a pre-magnetizer configuration if available.
-    * ruby.install: Installs Ruby
-    * ruby.install_rails: Installs Ruby on Rails
-    * ruby.install_wirble: Improves irb console
+    * ruby.install: Installs Ruby.
+    * ruby.install_rails: Installs Ruby on Rails.
+    * ruby.install_wirble: Improves irb console.
+    * tmux.install: Installs and configure tmux.
+    * tmux.configure: Uploads the tmux configuration file.
