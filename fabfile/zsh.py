@@ -127,16 +127,7 @@ def install_theme(theme=None):
             download_font("Ubuntu Mono derivative Powerline Italic.ttf")
             download_font("Ubuntu Mono derivative Powerline.ttf")
 
-        #font_config_folder = "~/.fonts.conf.d/"
-        #if not exists(font_config_folder):
-            # run('mkdir -p %s' % font_config_folder)
-
-        # print(green('Downloading fonts config file'))
-        # file_name = "%s10-powerline-symbols.conf" % font_config_folder
-
-        #run("wget -O %s 'https://github.com/Lokaltog/powerline/raw/develop/"
-         #   "font/10-powerline-symbols.conf'" % file_name)
-
+        utils._deb.install('fontconfig')
         print(green('Updating fonts Cache'))
         run("fc-cache -vf %s" % font_folder)
 
