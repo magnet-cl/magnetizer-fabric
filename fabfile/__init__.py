@@ -15,3 +15,6 @@ assert rxvt
 
 import tmux
 assert tmux
+
+import node
+assert node
