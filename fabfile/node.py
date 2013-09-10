@@ -14,7 +14,7 @@ def install():
     # install node, taken form
     # http://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
     print(green('Installing dependencies'))
-    utils._deb.install('pyton-software-properties')
+    utils._deb.install('python-software-properties')
     utils._deb.install('python')
     utils._deb.install('g++')
     utils._deb.install('make')
