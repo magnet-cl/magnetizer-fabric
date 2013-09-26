@@ -59,7 +59,7 @@ def install_rails():
     if exists('.rvm/scripts/rvm'):
         rvm_path = 'source "$HOME/.rvm/scripts/rvm"'
         with prefix(rvm_path):
-            cmd = 'gem install rails'
+            cmd = 'gem install --no-rdoc --no-ri rails'
             run(cmd)
     else:
         print(red('Ruby is not installed, please run "ruby.install" first.'))
@@ -72,7 +72,7 @@ def install_wirble():
     if exists('.rvm/scripts/rvm'):
         rvm_path = 'source "$HOME/.rvm/scripts/rvm"'
         with prefix(rvm_path):
-            cmd = 'gem install wirble'
+            cmd = 'gem install --no-rdoc --no-ri wirble'
             run(cmd)
 
         if not exists('.irbrc'):
