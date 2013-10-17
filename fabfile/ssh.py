@@ -20,6 +20,12 @@ def add_authorized_key(pub_key_file='.ssh/id_rsa.pub'):
     append('~/.ssh/authorized_keys', pub_key)
 
 
+@task
+def add_user(user):
+    cmd = 'adduser %s' % user
+    run(cmd)
+
+
 def mkdir_ssh():
     """ Helper method to make the ssh directory with proper permissions. """
     cmd = 'mkdir -p -m 0700 .ssh'
