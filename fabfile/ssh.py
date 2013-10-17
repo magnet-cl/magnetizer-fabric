@@ -21,8 +21,11 @@ def add_authorized_key(pub_key_file='.ssh/id_rsa.pub'):
 
 
 @task
-def add_user(user):
-    cmd = 'adduser %s' % user
+def add_user(user, sudo=False):
+    if sudo:
+        cmd = 'adduser %s sudo' % user
+    else:
+        cmd = 'adduser %s' % user
     run(cmd)
 
 
