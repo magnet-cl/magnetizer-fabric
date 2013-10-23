@@ -10,14 +10,31 @@ from git import git_clone, git_install, git_pull
 import utils
 
 
+def install_dependencies():
+    # install vim
+    utils._deb.install('vim')
+
+    # install required packages by plugins
+    print(green('Installing plugins dependencies.'))
+    # ctags, better grep, python flake, C/C++ omnicompletion
+    plugins = ['exuberant-ctags', 'ack-grep', 'pyflakes', 'clang',
+               'rhino']
+    for plugin in plugins:
+        utils._deb.install(plugin)
+
+    # install pip if is not available
+    utils._deb.install('python-pip')
+    if not py_is_installed('flake8'):
+        py_install('flake8', use_sudo=True)  # python flake+pep8
+
+
 @task
 def install():
     """ Installs and configures vim """
     # update apt index
     update_index(quiet=False)
 
-    # install vim
-    utils._deb.install('vim')
+    install_dependencies()
 
     # backup vim configuration folder
     if exists('.vim'):
@@ -36,18 +53,6 @@ def install():
     # install git if is not available
     git_install()
     git_clone('git://github.com/magnet-cl/Vim_config.git', '.vim')
-
-    # install required packages by plugins
-    print(green('Installing plugins dependencies.'))
-    # ctags, better grep, python flake, C/C++ omnicompletion
-    plugins = ['exuberant-ctags', 'ack-grep', 'pyflakes', 'clang',
-               'rhino']
-    for plugin in plugins:
-        utils._deb.install(plugin)
-    # install pip if is not available
-    utils._deb.install('python-pip')
-    if not py_is_installed('flake8'):
-        py_install('flake8', use_sudo=True)  # python flake+pep8
 
     # installation script
     print(green('Installing Vim_config.'))
