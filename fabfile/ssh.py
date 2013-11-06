@@ -21,12 +21,16 @@ def add_authorized_key(pub_key_file='.ssh/id_rsa.pub'):
 
 
 @task
-def add_user(user, sudo=False):
+def add_user(user=None, sudo=False):
+
+    if user is None:
+        print "User not found. Example: ssh.add_user:<username>"
+        return
+
+    run('adduser %s' % user)
+
     if sudo:
-        cmd = 'adduser %s sudo' % user
-    else:
-        cmd = 'adduser %s' % user
-    run(cmd)
+        run('adduser %s sudo' % user)
 
 
 def mkdir_ssh():
