@@ -7,7 +7,7 @@ sudo apt-get install -y python-dev
 sudo apt-get install -y python-pip
 
 # fabric installation through pip
-sudo pip install fabric fabtools
+sudo pip install -U fabric fabtools
 
 # list the available commands
 fab -l

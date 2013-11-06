@@ -18,3 +18,6 @@ assert tmux
 
 import node
 assert node
+
+import nginx
+assert nginx
