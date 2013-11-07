@@ -40,7 +40,7 @@ def sudo_without_password():
     the password to members of the sudoers group
     """
     # replace the configuration
-    search = "%sudo\ \ \ ALL=(ALL\:ALL)\ ALL"
+    search = "%sudo\tALL=(ALL\:ALL)\ ALL"
     replace = "%sudo ALL=(ALL) NOPASSWD: ALL"
     sed_over_sudoers(search, replace)
 
@@ -53,7 +53,7 @@ def sudo_with_password():
     """
     # replace the configuration
     search = "%sudo\ ALL=(ALL)\ NOPASSWD\:\ ALL"
-    replace = "%sudo   ALL=(ALL:ALL) ALL"
+    replace = "%sudo\tALL=(ALL:ALL) ALL"
     sed_over_sudoers(search, replace)
 
 
