@@ -6,6 +6,9 @@ sudo apt-get install -y openssh-server
 sudo apt-get install -y python-dev
 sudo apt-get install -y python-pip
 
+# update pip
+sudo pip install -U pip
+
 # fabric installation through pip
 sudo pip install -U fabric fabtools
 
