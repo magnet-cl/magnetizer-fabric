@@ -21,3 +21,6 @@ assert node
 
 import nginx
 assert nginx
+
+import admin
+assert admin
