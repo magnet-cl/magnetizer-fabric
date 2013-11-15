@@ -9,7 +9,7 @@ import utils
 
 @task
 def install():
-    """ Installs and configures ruby 1.9.3 """
+    """ Installs and configures ruby 2.0.0 """
     # update apt index
     update_index(quiet=False)
 
@@ -46,9 +46,9 @@ def install():
     with prefix(rvm_path):
         cmd = 'rvm autolibs enable'
         run(cmd)
-        cmd = 'rvm install ruby-1.9.3'
+        cmd = 'rvm install ruby-2.0.0-p247'
         run(cmd)
-        cmd = 'rvm use 1.9.3'
+        cmd = 'rvm use 2.0.0-p247'
         run(cmd)
 
 
