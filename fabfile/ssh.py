@@ -61,6 +61,27 @@ def disable_password_authentication():
     service.reload('ssh')
 
 
+@task
+def disable_root_login():
+    """ Disables root login authentication over SSH. """
+    configuration_file = '/etc/ssh/sshd_config'
+
+    if not contains(configuration_file, '^PermitRootLogin no',
+                    escape=False):
+        # patterns
+        before = '^#?PermitRootLogin.*$'
+        after = 'PermitRootLogin no'
+
+        sed(configuration_file, before, after, use_sudo=True)
+
+        print(green('Root login disabled.'))
+
+        # reload configuration
+        service.reload('ssh')
+    else:
+        print(green('Root login already disabled.'))
+
+
 def mkdir_ssh():
     """ Helper method to make the ssh directory with proper permissions. """
     cmd = 'mkdir -p -m 0700 .ssh'
