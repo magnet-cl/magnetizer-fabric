@@ -57,9 +57,6 @@ def disable_password_authentication():
     else:
         print(green('Password authentication already disabled.'))
 
-    # reload configuration
-    service.reload('ssh')
-
 
 @task
 def disable_root_login():
@@ -75,11 +72,14 @@ def disable_root_login():
         sed(configuration_file, before, after, use_sudo=True)
 
         print(green('Root login disabled.'))
-
-        # reload configuration
-        service.reload('ssh')
     else:
         print(green('Root login already disabled.'))
+
+
+@task
+def reload_configuration():
+    """ Reloads SSH configuration. """
+    service.reload('ssh')
 
 
 def mkdir_ssh():
