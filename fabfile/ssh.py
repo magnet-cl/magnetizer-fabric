@@ -41,6 +41,8 @@ def disable_password_authentication():
         sed(configuration_file, before, after, use_sudo=True)
 
         print(green('Pubkey authentication enabled.'))
+    else:
+        print(green('Pubkey authentication already enabled.'))
 
     # disable password authentication
     if not contains(configuration_file, '^PasswordAuthentication no',
@@ -52,6 +54,8 @@ def disable_password_authentication():
         sed(configuration_file, before, after, use_sudo=True)
 
         print(green('Password authentication disabled.'))
+    else:
+        print(green('Password authentication already disabled.'))
 
     # reload configuration
     service.reload('ssh')
