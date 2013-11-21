@@ -56,8 +56,9 @@ def install():
 
     # installation script
     print(green('Installing Vim_config.'))
-    cmd = 'source .vim/install.sh'
-    run(cmd)
+    with cd('.vim'):
+        cmd = 'source install.sh'
+        run(cmd)
 
 
 @task
