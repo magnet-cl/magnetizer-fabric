@@ -12,7 +12,7 @@ from os.path import dirname
 from git import git_clone, git_install
 import utils
 
-root_folder = dirname(abspath(__file__))
+ROOT_FOLDER = dirname(abspath(__file__))
 
 
 @task
@@ -61,8 +61,8 @@ def update():
 def upload_custom_files():
     """ Uploads custom files for oh-my-zsh. """
 
-    themes_folder = '{}/zsh-themes'.format(root_folder)
-    plugins_folder = '{}/zsh-plugins'.format(root_folder)
+    themes_folder = '{}/zsh-themes'.format(ROOT_FOLDER)
+    plugins_folder = '{}/zsh-plugins'.format(ROOT_FOLDER)
     custom_folder = '~/.oh-my-zsh/custom'
 
     # custom themes
@@ -161,11 +161,11 @@ def configure():
         'default_editor': editor,
         'user': env.user
     }
-    upload_template('{}/templates/zshrc'.format(root_folder), '.zshrc',
+    upload_template('{}/templates/zshrc'.format(ROOT_FOLDER), '.zshrc',
                     context=context)
 
     # zsh fabric autocomplete
-    put('{}/templates/zsh_fab'.format(root_folder), '.zsh_fab')
+    put('{}/templates/zsh_fab'.format(ROOT_FOLDER), '.zsh_fab')
 
     # upload custom files
     upload_custom_files()
