@@ -6,13 +6,13 @@ from fabtools.deb import update_index
 from fabtools.python import install as py_install
 from fabtools.python import is_installed as py_is_installed
 
-from git import git_clone, git_install, git_pull
-import utils
+from fabfile.git import git_clone, git_install, git_pull
+from fabfile import utils
 
 
 def install_dependencies():
     # install vim
-    utils._deb.install('vim')
+    utils.deb.install('vim')
 
     # install required packages by plugins
     print(green('Installing plugins dependencies.'))
@@ -20,10 +20,10 @@ def install_dependencies():
     plugins = ['exuberant-ctags', 'ack-grep', 'pyflakes', 'clang',
                'rhino']
     for plugin in plugins:
-        utils._deb.install(plugin)
+        utils.deb.install(plugin)
 
     # install pip if is not available
-    utils._deb.install('python-pip')
+    utils.deb.install('python-pip')
     if not py_is_installed('flake8'):
         py_install('flake8', use_sudo=True)  # python flake+pep8
 

@@ -9,8 +9,8 @@ from os.path import join
 from os.path import abspath
 from os.path import dirname
 
-from git import git_clone, git_install
-import utils
+from fabfile.git import git_clone, git_install
+from fabfile import utils
 
 ROOT_FOLDER = dirname(abspath(__file__))
 
@@ -22,7 +22,7 @@ def install():
     update_index(quiet=False)
 
     # install zsh
-    utils._deb.install('zsh')
+    utils.deb.install('zsh')
 
     # set as default shell for the user
     print(green('Re-enter your password to set zsh as default.'))
@@ -127,7 +127,7 @@ def install_theme(theme=None):
             download_font("Ubuntu Mono derivative Powerline Italic.ttf")
             download_font("Ubuntu Mono derivative Powerline.ttf")
 
-        utils._deb.install('fontconfig')
+        utils.deb.install('fontconfig')
         print(green('Updating fonts Cache'))
         run("fc-cache -vf %s" % font_folder)
 
@@ -171,6 +171,6 @@ def configure():
     upload_custom_files()
 
     if install_autojump:
-        utils._deb.install('autojump')
+        utils.deb.install('autojump')
 
     print(green('If the shell does not change, restart your session.'))

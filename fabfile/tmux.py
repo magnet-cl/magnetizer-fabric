@@ -8,7 +8,7 @@ from fabtools.deb import update_index
 from os.path import abspath
 from os.path import dirname
 
-import utils
+from fabfile import utils
 
 ROOT_FOLDER = dirname(abspath(__file__))
 
@@ -20,10 +20,10 @@ def install():
     update_index(quiet=False)
 
     # install terminal definitions
-    utils._deb.install('ncurses-term')
+    utils.deb.install('ncurses-term')
 
     # install tmux
-    utils._deb.install('tmux')
+    utils.deb.install('tmux')
 
     # upload configuration file
     configure()
