@@ -1,5 +1,10 @@
-from fabric.api import task, run
+from fabric.api import run
+from fabric.api import task
+from fabric.colors import green
 from fabric.contrib.files import append
+from fabric.contrib.files import contains
+from fabric.contrib.files import sed
+from fabtools import service
 
 from os.path import expanduser
 
@@ -21,16 +26,60 @@ def add_authorized_key(pub_key_file='.ssh/id_rsa.pub'):
 
 
 @task
-def add_user(user=None, sudo=False):
+def disable_password_authentication():
+    """ Disables password authentication. """
 
-    if user is None:
-        print "User not found. Example: ssh.add_user:<username>"
-        return
+    configuration_file = '/etc/ssh/sshd_config'
 
-    run('adduser %s' % user)
+    # ensure pubkey authentication is enabled
+    if not contains(configuration_file, '^PubkeyAuthentication yes',
+                    escape=False):
+        # patterns
+        before = '^#?PubkeyAuthentication.*$'
+        after = 'PubkeyAuthentication yes'
 
-    if sudo:
-        run('adduser %s sudo' % user)
+        sed(configuration_file, before, after, use_sudo=True)
+
+        print(green('Pubkey authentication enabled.'))
+    else:
+        print(green('Pubkey authentication already enabled.'))
+
+    # disable password authentication
+    if not contains(configuration_file, '^PasswordAuthentication no',
+                    escape=False):
+        # patterns
+        before = '^#?PasswordAuthentication.*$'
+        after = 'PasswordAuthentication no'
+
+        sed(configuration_file, before, after, use_sudo=True)
+
+        print(green('Password authentication disabled.'))
+    else:
+        print(green('Password authentication already disabled.'))
+
+
+@task
+def disable_root_login():
+    """ Disables root login authentication over SSH. """
+    configuration_file = '/etc/ssh/sshd_config'
+
+    if not contains(configuration_file, '^PermitRootLogin no',
+                    escape=False):
+        # patterns
+        before = '^#?PermitRootLogin.*$'
+        after = 'PermitRootLogin no'
+
+        sed(configuration_file, before, after, use_sudo=True)
+
+        print(green('Root login disabled.'))
+    else:
+        print(green('Root login already disabled.'))
+
+
+@task
+def reload_configuration():
+    """ Reloads SSH configuration. """
+    service.reload('ssh')
 
 
 def mkdir_ssh():

@@ -9,10 +9,10 @@ from os.path import join
 from os.path import abspath
 from os.path import dirname
 
-from git import git_clone, git_install
-import utils
+from fabfile.git import git_clone, git_install
+from fabfile import utils
 
-root_folder = dirname(abspath(__file__))
+ROOT_FOLDER = dirname(abspath(__file__))
 
 
 @task
@@ -22,7 +22,7 @@ def install():
     update_index(quiet=False)
 
     # install zsh
-    utils._deb.install('zsh')
+    utils.deb.install('zsh')
 
     # set as default shell for the user
     print(green('Re-enter your password to set zsh as default.'))
@@ -61,8 +61,8 @@ def update():
 def upload_custom_files():
     """ Uploads custom files for oh-my-zsh. """
 
-    themes_folder = '{}/zsh-themes'.format(root_folder)
-    plugins_folder = '{}/zsh-plugins'.format(root_folder)
+    themes_folder = '{}/zsh-themes'.format(ROOT_FOLDER)
+    plugins_folder = '{}/zsh-plugins'.format(ROOT_FOLDER)
     custom_folder = '~/.oh-my-zsh/custom'
 
     # custom themes
@@ -127,7 +127,7 @@ def install_theme(theme=None):
             download_font("Ubuntu Mono derivative Powerline Italic.ttf")
             download_font("Ubuntu Mono derivative Powerline.ttf")
 
-        utils._deb.install('fontconfig')
+        utils.deb.install('fontconfig')
         print(green('Updating fonts Cache'))
         run("fc-cache -vf %s" % font_folder)
 
@@ -161,16 +161,16 @@ def configure():
         'default_editor': editor,
         'user': env.user
     }
-    upload_template('{}/templates/zshrc'.format(root_folder), '.zshrc',
+    upload_template('{}/templates/zshrc'.format(ROOT_FOLDER), '.zshrc',
                     context=context)
 
     # zsh fabric autocomplete
-    put('{}/templates/zsh_fab'.format(root_folder), '.zsh_fab')
+    put('{}/templates/zsh_fab'.format(ROOT_FOLDER), '.zsh_fab')
 
     # upload custom files
     upload_custom_files()
 
     if install_autojump:
-        utils._deb.install('autojump')
+        utils.deb.install('autojump')
 
     print(green('If the shell does not change, restart your session.'))

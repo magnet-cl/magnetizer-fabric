@@ -3,7 +3,7 @@ from fabric.colors import green
 from fabric.contrib.files import uncomment
 from fabtools import deb
 
-import utils
+from fabfile import utils
 
 
 @task
@@ -15,7 +15,7 @@ def install_passenger():
     deb.add_apt_key(keyid='561F9B9CAC40B2F7', keyserver='keyserver.ubuntu.com')
 
     # add https support for apt
-    utils._deb.install('apt-transport-https')
+    utils.deb.install('apt-transport-https')
 
     # ubuntu 12.04 (precise)
     cmd = ('echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger '
@@ -28,8 +28,8 @@ def install_passenger():
     deb.update_index(quiet=False)
 
     print(green('Installing nginx and passenger'))
-    utils._deb.install('nginx-full')
-    utils._deb.install('passenger')
+    utils.deb.install('nginx-full')
+    utils.deb.install('passenger')
 
     print(green('Activating passenger'))
     uncomment('/etc/nginx/nginx.conf', 'passenger_root', use_sudo=True)

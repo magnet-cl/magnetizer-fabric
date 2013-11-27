@@ -1,23 +1,28 @@
-import ssh
+""" Magnetizer Tasks """
+
+from fabfile import ssh
 assert ssh
 
-import zsh
+from fabfile import zsh
 assert zsh
 
-import vim
+from fabfile import vim
 assert vim
 
-import ruby
+from fabfile import ruby
 assert ruby
 
-import rxvt
+from fabfile import rxvt
 assert rxvt
 
-import tmux
+from fabfile import tmux
 assert tmux
 
-import node
+from fabfile import node
 assert node
 
-import nginx
+from fabfile import nginx
 assert nginx
+
+from fabfile import admin
+assert admin

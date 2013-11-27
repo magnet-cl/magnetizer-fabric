@@ -8,9 +8,9 @@ from fabtools.deb import update_index
 from os.path import abspath
 from os.path import dirname
 
-import utils
+from fabfile import utils
 
-root_folder = dirname(abspath(__file__))
+ROOT_FOLDER = dirname(abspath(__file__))
 
 
 @task
@@ -20,10 +20,10 @@ def install():
     update_index(quiet=False)
 
     # install terminal definitions
-    utils._deb.install('ncurses-term')
+    utils.deb.install('ncurses-term')
 
     # install tmux
-    utils._deb.install('tmux')
+    utils.deb.install('tmux')
 
     # upload configuration file
     configure()
@@ -33,7 +33,7 @@ def install():
     if not exists(destination_folder):
         cmd = 'mkdir {}'.format(destination_folder)
         run(cmd)
-    tmux_script = '{}/templates/tmux.sh'.format(root_folder)
+    tmux_script = '{}/templates/tmux.sh'.format(ROOT_FOLDER)
     put(tmux_script, destination_folder, mode=0775)
 
 
@@ -41,7 +41,7 @@ def install():
 def configure():
     """ Uploads configuration file for tmux. """
 
-    configuration_file = '{}/templates/tmux.conf'.format(root_folder)
+    configuration_file = '{}/templates/tmux.conf'.format(ROOT_FOLDER)
     destination_file = '.tmux.conf'
 
     print(green('Uploading configuration file...'))

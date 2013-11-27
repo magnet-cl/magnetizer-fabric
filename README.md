@@ -45,16 +45,21 @@ A concatenation example could be that you want that your current public key is a
 
 ### Available commands
 
-    * ssh.generate_key: Generates public and private ssh keys.
-    * ssh.add_authorized_key: Adds your local public key to the authorized keys.
-    * zsh.install: Installs zsh, fully configured.
-    * zsh.update: Updates zsh with the latest Magnetizer configuration.
-    * zsh.configure: Deploys the configuration file asking some preferences.
-    * vim.install: Installs vim, fully configured fo maximum programmer efficiency.
-    * vim.update: Updates vim with the latest Magnetizer configuration.
-    * vim.restore_backup: Restores vim to a pre-magnetizer configuration if available.
+    * admin.add_user: Adds user, its group can also be specified.
+    * nginx.install_passenger: Installs nginx with passenger support.
+    * node.install: Installs node.
     * ruby.install: Installs Ruby.
     * ruby.install_rails: Installs Ruby on Rails.
     * ruby.install_wirble: Improves irb console.
-    * tmux.install: Installs and configure tmux.
+    * ssh.add_authorized_key: Adds your local public key to the authorized keys.
+    * ssh.disable_password_authentication: Disables password authentication.
+    * ssh.disable_root_login: Disables root login authentication.
+    * ssh.generate_key: Generates public and private ssh keys.
     * tmux.configure: Uploads the tmux configuration file.
+    * tmux.install: Installs and configure tmux.
+    * vim.install: Installs vim, fully configured fo maximum programmer efficiency.
+    * vim.restore_backup: Restores vim to a pre-magnetizer configuration if available.
+    * vim.update: Updates vim with the latest Magnetizer configuration.
+    * zsh.configure: Deploys the configuration file asking some preferences.
+    * zsh.install: Installs zsh, fully configured.
+    * zsh.update: Updates zsh with the latest Magnetizer configuration.

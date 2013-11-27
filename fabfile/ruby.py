@@ -4,12 +4,12 @@ from fabric.contrib.files import exists, append
 from fabtools.deb import update_index
 from re import search
 
-import utils
+from fabfile import utils
 
 
 @task
 def install():
-    """ Installs and configures ruby 1.9.3 """
+    """ Installs and configures ruby 2.0.0 """
     # update apt index
     update_index(quiet=False)
 
@@ -21,7 +21,7 @@ def install():
                     'autoconf', 'libc6-dev', 'ncurses-dev', 'automake',
                     'libtool', 'bison', 'subversion', 'pkg-config']
     for dependency in dependencies:
-        utils._deb.install(dependency)
+        utils.deb.install(dependency)
 
     # rvm installation
     cmd = 'curl -L https://get.rvm.io | bash -s stable'
@@ -46,9 +46,9 @@ def install():
     with prefix(rvm_path):
         cmd = 'rvm autolibs enable'
         run(cmd)
-        cmd = 'rvm install ruby-1.9.3'
+        cmd = 'rvm install ruby-2.0.0-p247'
         run(cmd)
-        cmd = 'rvm use 1.9.3'
+        cmd = 'rvm use 2.0.0-p247'
         run(cmd)
 
 

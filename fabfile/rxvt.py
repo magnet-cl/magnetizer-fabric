@@ -1,11 +1,12 @@
 from fabric.api import task, run
 from fabtools.files import upload_template
-import utils
+
+from fabfile import utils
 
 
 @task
 def install():
-    utils._deb.install('rxvt-unicode-256color')
+    utils.deb.install('rxvt-unicode-256color')
     print('Uploading .Xresources...')
     upload_template('~/.Xresources', 'rxvt/Xresources')
 
