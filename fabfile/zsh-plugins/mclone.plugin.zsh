@@ -5,7 +5,7 @@
 function mclone(){
     GITHUB_CLONE=false
 
-    usage() { echo "usage: mclone [-g] REPOSITORY";}
+    usage() { echo "usage: mclone [-g] REPOSITORY [DIRECTORY]";}
 
     local OPTIND
 
@@ -26,17 +26,22 @@ function mclone(){
             done
         else
             REPOSITORY=$1
+            DIRECTORY=$2
+            # TODO This no longer allows for parameters to be on any order
+            break
         fi
         shift
     done
 
     if $GITHUB_CLONE ; then
         echo "Cloning from github"
-        echo "git clone git@github.com:magnet-cl/$REPOSITORY.git"
-        git clone git@github.com:magnet-cl/$REPOSITORY.git
+        command="git clone git@github.com:magnet-cl/$REPOSITORY.git $DIRECTORY"   
+        echo $command
+        eval $command
     else
         echo "Cloning from bitbucket"
-        echo "git clone git@bitbucket.org:magnet-cl/$REPOSITORY.git"
-        git clone git@bitbucket.org:magnet-cl/$REPOSITORY.git
+        command="git clone git@bitbucket.org:magnet-cl/$REPOSITORY.git $DIRECTORY"
+        echo $command
+        eval $command
     fi
 }
