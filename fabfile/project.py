@@ -2,6 +2,7 @@ import admin
 import ssh
 import node
 import zsh
+import vim
 
 from fabric.api import task
 
@@ -13,3 +14,4 @@ def set_django_environment():
     admin.sudo_without_password()
     node.install()
     zsh.install()
+    vim.install()
