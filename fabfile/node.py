@@ -8,6 +8,9 @@ from fabfile import utils
 @task
 def install():
     """ Installs node """
+    print(green('Adding ppa:chris-lea/node.js to apt repositories'))
+    run('sudo add-apt-repository ppa:chris-lea/node.js')
+
     # update apt index
     deb.update_index(quiet=False)
 
@@ -18,10 +21,6 @@ def install():
     utils.deb.install('python')
     utils.deb.install('g++')
     utils.deb.install('make')
-
-    print(green('Adding ppa:chris-lea/node.js to apt repositories'))
-    run('sudo add-apt-repository ppa:chris-lea/node.js')
-    deb.update_index(quiet=False)
 
     print(green('Installing nodejs'))
     utils.deb.install('nodejs')
