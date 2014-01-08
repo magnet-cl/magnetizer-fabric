@@ -97,6 +97,9 @@ def restore_backup():
 @task
 def update():
     """ Updates vim repository and plugins. """
+    # plugins dependencies
+    install_dependencies()
+
     # git pull
     with cd('.vim'):
         print(green('Updating .vim folder'))
