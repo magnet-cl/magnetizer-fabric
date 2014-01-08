@@ -10,6 +10,7 @@ from fabfile.git import git_clone, git_install, git_pull
 from fabfile import utils
 
 
+@task
 def install_dependencies():
     # install vim
     utils.deb.install('vim')
