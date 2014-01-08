@@ -99,7 +99,11 @@ def update():
     """ Updates vim repository and plugins. """
     # git pull
     with cd('.vim'):
+        print(green('Updating .vim folder'))
         git_pull()
+
+        print(green('Updating submodules'))
+        run('git submodule update --init')
 
     # plugins update
     cmd = 'vim +NeoBundleUpdate +qa!'
