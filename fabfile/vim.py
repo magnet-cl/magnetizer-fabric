@@ -25,8 +25,15 @@ def install_dependencies():
 
     # install pip if is not available
     utils.deb.install('python-pip')
+
+    # python flake+pep8
     if not py_is_installed('flake8'):
-        py_install('flake8', use_sudo=True)  # python flake+pep8
+        py_install('flake8', use_sudo=True)
+    # google closure linter
+    if not py_is_installed('closure-linter'):
+        closure_url = ('http://closure-linter.googlecode.com/files/'
+                       'closure_linter-latest.tar.gz')
+        py_install(closure_url, use_sudo=True)
 
 
 @task
