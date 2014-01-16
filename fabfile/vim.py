@@ -10,6 +10,7 @@ from fabfile.git import git_clone, git_install, git_pull
 from fabfile import utils
 
 
+@task
 def install_dependencies():
     # install vim
     utils.deb.install('vim')
@@ -24,8 +25,15 @@ def install_dependencies():
 
     # install pip if is not available
     utils.deb.install('python-pip')
+
+    # python flake+pep8
     if not py_is_installed('flake8'):
-        py_install('flake8', use_sudo=True)  # python flake+pep8
+        py_install('flake8', use_sudo=True)
+    # google closure linter
+    if not py_is_installed('closure-linter'):
+        closure_url = ('http://closure-linter.googlecode.com/files/'
+                       'closure_linter-latest.tar.gz')
+        py_install(closure_url, use_sudo=True)
 
 
 @task
@@ -89,9 +97,16 @@ def restore_backup():
 @task
 def update():
     """ Updates vim repository and plugins. """
+    # plugins dependencies
+    install_dependencies()
+
     # git pull
     with cd('.vim'):
+        print(green('Updating .vim folder'))
         git_pull()
+
+        print(green('Updating submodules'))
+        run('git submodule update --init')
 
     # plugins update
     cmd = 'vim +NeoBundleUpdate +qa!'

@@ -8,8 +8,8 @@ from fabtools.user import create
 
 
 @task
-def add_user(user=None, group=None):
-    """ Adds user, group can also be specified. """
+def add_user(user=None, extra_group=None):
+    """ Adds user, an extra group can also be specified. """
 
     if user is None:
         print(red(
@@ -17,7 +17,9 @@ def add_user(user=None, group=None):
         return
 
     if not exists(user):
-        create(name=user, group=group, password=user, shell='/bin/bash')
+        # the default group created is equal to the user
+        create(name=user, group=user, extra_groups=[extra_group],
+               password=user, shell='/bin/bash')
         print(green("User succesfully created."))
     else:
         print(red("User already exists."))
