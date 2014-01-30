@@ -8,7 +8,8 @@ Linux machines. The tasks included are listed in the [available
 commands](#available-commands) section.
 
 Magnetizer uses python's Fabric tools to run tasks on remote (and local)
-machines.
+machines. Since Fabric works over SSH, Magnetizer is configured to load the
+settings present in the ssh config file, for instance, hostname aliases.
 
 ## Installation
 
