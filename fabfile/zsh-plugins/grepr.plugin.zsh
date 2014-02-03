@@ -18,5 +18,5 @@ function grepr(){
     done
 
     QUERY=${*: $COUNT}
-    grep ${*: 1:$COUNT-1} -Ir "$QUERY" *
+    grep ${*: 1:$COUNT-1} -Inr "$QUERY" *
 }
