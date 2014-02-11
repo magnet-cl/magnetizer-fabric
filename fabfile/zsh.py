@@ -1,7 +1,7 @@
 from fabric.api import task, run, env, put, prompt, cd
 from fabric.colors import green, red
 from fabric.context_managers import settings, hide
-from fabric.contrib.files import upload_template, exists, sed
+from fabric.contrib.files import upload_template, exists, sed, contains, append
 from fabric.contrib.console import confirm
 from fabtools.deb import update_index
 from os import listdir
@@ -133,45 +133,53 @@ def install_theme(theme=None):
 
 
 @task
-def configure_plugins(**plugins):
+def install_plugins(*plugins):
     install_autojump = False
-
-    if plugins:
-        for plugin in plugins:
-            if plugin == "autojump":
-                install_autojump = True
-    else:
-        plugins = []
-        recommended_plugins = (['git', 'github', 'git-flow', 'heroku', 'pip',
-                                'autojump', 'command-not-found', 'debian',
-                                'encode64', 'vagrant', 'ruby', 'colored-man',
-                                'grepr', 'mclone', 'cdenv'])
-        recommended_plugins.sort()
-        for plugin in recommended_plugins:
-            if confirm('Would you like to use the %s plugin?' % plugin):
-                plugins.append(plugin)
-                if plugin == "autojump":
-                    install_autojump = True
-
-    plugins = '\n'.join(plugins)
-
-    if install_autojump:
-        utils.deb.install('autojump')
-
-    context = {
-        'plugins': plugins,
-    }
 
     destination_folder = '~/.zsh'
 
     if not exists(destination_folder):
         run('mkdir -p %s' % destination_folder)
 
-    upload_template(
-        '{}/templates/oh-my-zsh-plugins'.format(ROOT_FOLDER),
-        '{}/plugins.zsh'.format(destination_folder),
-        context=context
-    )
+    plugins_file = '{}/plugins.zsh'.format(destination_folder)
+
+    if not exists(plugins_file):
+        upload_template(
+            '{}/templates/oh-my-zsh-plugins'.format(ROOT_FOLDER),
+            '{}/plugins.zsh'.format(destination_folder),
+            context={}
+        )
+
+    plugins_to_install = []
+
+    for plugin in plugins:
+        if plugin == "autojump":
+            install_autojump = True
+
+        if not contains(plugins_file, plugin):
+            plugins_to_install.append(plugin)
+
+    if plugins_to_install:
+        sed(plugins_file, '\)', ' {})'.format(' '.join(plugins_to_install)))
+
+    if install_autojump:
+        utils.deb.install('autojump')
+
+
+@task
+def configure_plugins():
+    plugins = []
+
+    recommended_plugins = (['git', 'github', 'git-flow', 'heroku', 'pip',
+                            'autojump', 'command-not-found', 'debian',
+                            'encode64', 'vagrant', 'ruby', 'colored-man',
+                            'grepr', 'mclone', 'cdenv'])
+    recommended_plugins.sort()
+    for plugin in recommended_plugins:
+        if confirm('Would you like to use the %s plugin?' % plugin):
+            plugins.append(plugin)
+
+    install_plugins(*plugins)
 
 
 @task
