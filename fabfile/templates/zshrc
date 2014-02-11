@@ -29,7 +29,7 @@ export HISTCONTROL=erasedups
 # CASE_SENSITIVE="true"
 
 # Plugins
-plugins=(%(plugins)s)
+source ~/.zsh/plugins.zsh
 
 source $ZSH/oh-my-zsh.sh
 

@@ -26,3 +26,10 @@ assert nginx
 
 from fabfile import admin
 assert admin
+
+""" fabric global configuration """
+
+from fabric.api import env
+
+# support ssh_config
+env.use_ssh_config = True

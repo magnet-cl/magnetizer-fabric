@@ -1,7 +1,7 @@
 from fabric.api import task, run, env, put, prompt, cd
 from fabric.colors import green, red
 from fabric.context_managers import settings, hide
-from fabric.contrib.files import upload_template, exists, sed
+from fabric.contrib.files import upload_template, exists, sed, contains, append
 from fabric.contrib.console import confirm
 from fabtools.deb import update_index
 from os import listdir
@@ -133,13 +133,43 @@ def install_theme(theme=None):
 
 
 @task
-def configure():
-    """ Configures the zshrc file. """
-
+def install_plugins(*plugins):
     install_autojump = False
 
-    # plugins configuration
+    destination_folder = '~/.zsh'
+
+    if not exists(destination_folder):
+        run('mkdir -p %s' % destination_folder)
+
+    plugins_file = '{}/plugins.zsh'.format(destination_folder)
+
+    if not exists(plugins_file):
+        upload_template(
+            '{}/templates/oh-my-zsh-plugins'.format(ROOT_FOLDER),
+            '{}/plugins.zsh'.format(destination_folder),
+            context={}
+        )
+
+    plugins_to_install = []
+
+    for plugin in plugins:
+        if plugin == "autojump":
+            install_autojump = True
+
+        if not contains(plugins_file, plugin):
+            plugins_to_install.append(plugin)
+
+    if plugins_to_install:
+        sed(plugins_file, '\)', ' {})'.format(' '.join(plugins_to_install)))
+
+    if install_autojump:
+        utils.deb.install('autojump')
+
+
+@task
+def configure_plugins():
     plugins = []
+
     recommended_plugins = (['git', 'github', 'git-flow', 'heroku', 'pip',
                             'autojump', 'command-not-found', 'debian',
                             'encode64', 'vagrant', 'ruby', 'colored-man',
@@ -148,16 +178,21 @@ def configure():
     for plugin in recommended_plugins:
         if confirm('Would you like to use the %s plugin?' % plugin):
             plugins.append(plugin)
-            if plugin == "autojump":
-                install_autojump = True
 
-    plugins = ' '.join(plugins)
+    install_plugins(*plugins)
+
+
+@task
+def configure():
+    """ Configures the zshrc file. """
+
+    # plugins configuration
+    configure_plugins()
 
     # default editor
     editor = prompt('Please specify your default editor', default='vim')
 
     context = {
-        'plugins': plugins,
         'default_editor': editor,
         'user': env.user
     }
@@ -169,8 +204,5 @@ def configure():
 
     # upload custom files
     upload_custom_files()
-
-    if install_autojump:
-        utils.deb.install('autojump')
 
     print(green('If the shell does not change, restart your session.'))
