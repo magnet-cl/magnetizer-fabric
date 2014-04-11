@@ -9,7 +9,7 @@ from fabfile import utils
 def install():
     """ Installs node """
     print(green('Adding ppa:chris-lea/node.js to apt repositories'))
-    run('sudo add-apt-repository ppa:chris-lea/node.js')
+    run('sudo add-apt-repository -y ppa:chris-lea/node.js')
 
     # update apt index
     deb.update_index(quiet=False)
