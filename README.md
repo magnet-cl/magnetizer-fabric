@@ -25,6 +25,10 @@ Each task must be ran as follows:
 
 `fab <task>`
 
+You can get the description of a task with the -d parameter:
+
+`fab -d <task>`
+
 You need to specify the target machine, so it will ask you for the host in
 which you wish to run the task and assume your user is your current terminal
 user.
