@@ -77,6 +77,7 @@ provided.
     * admin.add_user: Adds user, its group can also be specified.
     * nginx.install_passenger: Installs nginx with passenger support.
     * node.install: Installs node.
+    * postgresql.install: Installs PostgreSQL and its development packages.
     * ruby.install: Installs Ruby.
     * ruby.install_rails: Installs Ruby on Rails.
     * ruby.install_wirble: Improves irb console.

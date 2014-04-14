@@ -27,6 +27,9 @@ assert nginx
 from fabfile import admin
 assert admin
 
+from fabfile import postgresql
+assert postgresql
+
 """ fabric global configuration """
 
 from fabric.api import env
