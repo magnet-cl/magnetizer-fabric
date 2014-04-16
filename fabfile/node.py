@@ -8,6 +8,9 @@ from fabfile import utils
 @task
 def install():
     """ Installs node """
+    # add-apt-repository dependency
+    utils.deb.install('python-software-properties')
+
     print(green('Adding ppa:chris-lea/node.js to apt repositories'))
     run('sudo add-apt-repository -y ppa:chris-lea/node.js')
 
