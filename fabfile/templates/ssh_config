@@ -1,0 +1,22 @@
+GSSAPIAuthentication no
+ServerAliveInterval 60
+
+# Magnet linode server "barrosluco"
+Host barrosluco
+    hostname 50.116.12.158
+    user magnet
+
+# magnet site
+Host magnet-cl
+    hostname 162.243.140.171
+    user magnet
+
+# Magnet digital ocean server "charquican"
+Host charquican
+    hostname 192.34.61.4
+    user magnet
+
+# Magnet digital ocean server "ajiaco"
+Host ajiaco
+    hostname 107.170.194.52
+    user magnet
