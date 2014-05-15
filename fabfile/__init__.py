@@ -1,4 +1,5 @@
 """ Magnetizer Tasks """
+import os.path
 
 from fabfile import ssh
 assert ssh
@@ -35,4 +36,5 @@ assert postgresql
 from fabric.api import env
 
 # support ssh_config
-env.use_ssh_config = True
+if os.path.isfile('~/ssh.config'):
+    env.use_ssh_config = True

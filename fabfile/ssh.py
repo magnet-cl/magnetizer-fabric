@@ -1,3 +1,4 @@
+from fabric.api import put
 from fabric.api import run
 from fabric.api import task
 from fabric.colors import green
@@ -6,7 +7,9 @@ from fabric.contrib.files import contains
 from fabric.contrib.files import sed
 from fabtools import service
 
-from os.path import expanduser
+import os
+
+ROOT_FOLDER = os.path.dirname(__file__)
 
 
 @task
@@ -21,8 +24,22 @@ def generate_key(output_file='.ssh/id_rsa'):
 def add_authorized_key(pub_key_file='.ssh/id_rsa.pub'):
     """ Adds local ssh pub key to remote authorized keys. """
     mkdir_ssh()
-    pub_key = open('%s/%s' % (expanduser('~'), pub_key_file))
+    pub_key = open('%s/%s' % (os.path.expanduser('~'), pub_key_file))
     append('~/.ssh/authorized_keys', pub_key)
+
+
+@task
+def generate_config_file():
+    """
+    Using the template 'fabfile/templates/ssh_config' file, this new command
+    replaces the ~/.ssh/config_magnet file in the target server and touches
+    the ./.ssh/config_local file. Then it merges them in the ./.ssh/config
+    file.
+    """
+
+    put('{}/templates/ssh_config'.format(ROOT_FOLDER), '~/.ssh/config_magnet')
+    run('touch ~/.ssh/config_local')
+    run('cat ~/.ssh/config_local ~/.ssh/config_magnet > ~/.ssh/config')
 
 
 @task
