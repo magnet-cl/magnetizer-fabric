@@ -20,3 +20,48 @@ Host charquican
 Host ajiaco
     hostname 107.170.194.52
     user magnet
+
+# site on port: 80
+Host myhood.master
+    hostname myhood.cl
+    user magnet
+
+# site on port: 80
+Host myhood.dev
+    hostname 162.216.18.38
+    user magnet
+
+# site on port: 80
+Host speaktion.master
+    hostname speaktion.com
+    user magnet
+
+# site on port: 80
+Host especificadorca
+    hostname especificadorca.cl
+    user magnet
+
+# site on port: 80
+Host ligasiete
+    hostname 190.114.254.202
+    user magnet
+
+# site on port: 80
+Host limops
+    hostname limops.cl
+    user magnet
+
+# site on port: 80
+Host treid
+    hostname 23.239.0.228
+    user magnet
+
+# site on port: 80
+Host wikirin
+    hostname supdevel.wikirin.com
+    user magnet
+
+# site on port: 80
+Host cerrandobrechas
+    hostname 54.207.87.242
+    user magnet
