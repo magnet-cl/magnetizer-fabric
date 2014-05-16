@@ -62,6 +62,21 @@ Host wikirin
     user magnet
 
 # site on port: 80
-Host cerrandobrechas
+Host cerrandobrechas.prod
     hostname 54.207.87.242
+    user magnet
+
+# site on port: 80
+Host cerrandobrechas.dev
+    hostname 54.207.87.242
+    user magnet
+
+# Ajiaco, site on port 9000
+Host comoreciclo
+    hostname 107.170.194.52
+    user magnet
+
+# site on port: 80
+Host inforemate
+    hostname 107.170.15.74
     user magnet
