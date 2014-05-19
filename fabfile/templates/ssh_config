@@ -12,12 +12,15 @@ Host magnet-cl
     user magnet
 
 # Magnet digital ocean server "charquican"
-Host charquican
-    hostname 192.34.61.4
+# ubimovil.staging on port: 3000
+Host charquican ubimovil.staging
+    hostname 162.243.61.107
     user magnet
 
 # Magnet digital ocean server "ajiaco"
-Host ajiaco
+# comoreciclo on port: 9000
+# cerrandobrechas.dev on port: 80
+Host ajiaco comoreciclo cerrandobrechas.dev
     hostname 107.170.194.52
     user magnet
 
@@ -64,16 +67,6 @@ Host wikirin
 # site on port: 80
 Host cerrandobrechas.prod
     hostname 54.207.87.242
-    user magnet
-
-# site on port: 80
-Host cerrandobrechas.dev
-    hostname 107.170.194.52
-    user magnet
-
-# Ajiaco, site on port 9000
-Host comoreciclo
-    hostname 107.170.194.52
     user magnet
 
 # site on port: 80
