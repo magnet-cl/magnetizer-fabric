@@ -99,6 +99,15 @@ def reload_configuration():
     service.reload('ssh')
 
 
+@task
+def services_handshake():
+    """ Handshakes with Github and Bitbucket. """
+    services = ['github.com', 'bitbucket.org']
+
+    for service in services:
+        run('ssh-keyscan -t rsa {} >> ~/.ssh/known_hosts'.format(service))
+
+
 def mkdir_ssh():
     """ Helper method to make the ssh directory with proper permissions. """
     cmd = 'mkdir -p -m 0700 .ssh'
