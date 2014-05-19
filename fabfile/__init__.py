@@ -36,5 +36,6 @@ assert postgresql
 from fabric.api import env
 
 # support ssh_config
-if os.path.isfile('~/ssh.config'):
+ssh_config_file = '{}/.ssh/config'.format(os.path.expanduser('~'))
+if os.path.isfile(ssh_config_file):
     env.use_ssh_config = True
