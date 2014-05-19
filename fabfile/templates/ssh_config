@@ -68,7 +68,7 @@ Host cerrandobrechas.prod
 
 # site on port: 80
 Host cerrandobrechas.dev
-    hostname 54.207.87.242
+    hostname 107.170.194.52
     user magnet
 
 # Ajiaco, site on port 9000
