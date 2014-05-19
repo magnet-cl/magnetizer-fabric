@@ -80,3 +80,23 @@ Host comoreciclo
 Host inforemate
     hostname 107.170.15.74
     user magnet
+
+# site on port: 80
+Host exa
+    hostname 50.116.10.103
+    user magnet
+
+# site on port: 80
+Host autored.prod
+    hostname 198.74.49.242
+    user magnet
+
+# site on port: 80
+Host autored.staging
+    hostname staging.autored.cl
+    user magnet
+
+# site on port: 80
+Host ubimovil.prod
+    hostname 173.255.254.251
+    user magnet
