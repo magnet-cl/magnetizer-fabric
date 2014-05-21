@@ -1,6 +1,7 @@
 from fabric.api import task, sudo
 from fabric.colors import green
 from fabric.contrib.files import uncomment
+from fabric.operations import prompt
 from fabtools import deb
 
 from fabfile import utils
@@ -17,9 +18,23 @@ def install_passenger():
     # add https support for apt
     utils.deb.install('apt-transport-https')
 
+    # We obtain the Ubuntu version name
+    print 'You need to specify the Ubuntu version'
+    p_t = 'Do you wish to see the version names?'
+    p_r = prompt(p_t, default='yes')
+    if (p_r == 'yes'):
+        print('12.04 -> ' + green('Precise', True) + ' Pangolin')
+        print('12.10 -> ' + green('Quantal', True) + ' Quetzal')
+        print('13.04 -> ' + green('Raring', True) + ' Ringtail')
+        print('13.10 -> ' + green('Saucy', True) + ' Salamander')
+        print('14.04 -> ' + green('Trusty', True) + ' Thar')
+    p_t = 'What version are you deploying to? (only first name needed)'
+    version = prompt(p_t, default='Precise')
+    version = version.lower()
+
     # ubuntu 12.04 (precise)
     cmd = ('echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger '
-           'precise main" > /etc/apt/sources.list.d/passenger.list')
+           + version + ' main" > /etc/apt/sources.list.d/passenger.list')
     sudo(cmd)
     cmd = 'sudo chmod 600 /etc/apt/sources.list.d/passenger.list'
     sudo(cmd)
