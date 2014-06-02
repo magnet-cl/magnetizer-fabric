@@ -24,6 +24,12 @@ Host ajiaco comoreciclo cerrandobrechas.dev
     hostname 107.170.194.52
     user magnet
 
+# Magnet digital ocean server "DulceChileno"
+# gantz on port: 80
+Host dulcechileno gantz
+    hostname 107.170.186.125
+    user magnet
+
 # site on port: 80
 Host myhood.master
     hostname myhood.cl
