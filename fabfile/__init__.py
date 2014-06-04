@@ -31,6 +31,9 @@ assert admin
 from fabfile import postgresql
 assert postgresql
 
+from fabfile import redis
+assert redis
+
 """ fabric global configuration """
 
 from fabric.api import env
