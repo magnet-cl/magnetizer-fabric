@@ -60,7 +60,7 @@ def install():
     print(green('Cloning Vim_config repository.'))
     # install git if is not available
     git_install()
-    git_clone('git@github.com:magnet-cl/Vim_config.git', '.vim')
+    git_clone('git://github.com/magnet-cl/Vim_config.git', '.vim')
 
     # installation script
     print(green('Installing Vim_config.'))
