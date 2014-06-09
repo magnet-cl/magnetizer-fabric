@@ -1,4 +1,7 @@
-from fabric.api import task, run, cd
+from fabric.api import cd
+from fabric.api import run
+from fabric.api import sudo
+from fabric.api import task
 from fabric.colors import green, red
 from fabric.contrib.files import exists
 
@@ -25,6 +28,9 @@ def install_dependencies():
 
     # install pip if is not available
     utils.deb.install('python-pip')
+
+    # update pip through pip
+    sudo('pip install --upgrade pip')
 
     # python flake+pep8
     if not py_is_installed('flake8'):
