@@ -36,7 +36,7 @@ def install_passenger():
     cmd = ('echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger '
            + version + ' main" > /etc/apt/sources.list.d/passenger.list')
     sudo(cmd)
-    cmd = 'sudo chmod 600 /etc/apt/sources.list.d/passenger.list'
+    cmd = 'sudo chmod 644 /etc/apt/sources.list.d/passenger.list'
     sudo(cmd)
 
     # update apt index
