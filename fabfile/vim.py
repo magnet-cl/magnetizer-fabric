@@ -1,4 +1,7 @@
-from fabric.api import task, run, cd
+from fabric.api import cd
+from fabric.api import run
+from fabric.api import sudo
+from fabric.api import task
 from fabric.colors import green, red
 from fabric.contrib.files import exists
 
@@ -26,8 +29,12 @@ def install_dependencies():
     # install pip if is not available
     utils.deb.install('python-pip')
 
+    # TODO Check if the command python get-pip.py is better
     # install and upgrade setup tools (that replaced distribute)
     py_install('setuptools', use_sudo=True, upgrade=True)
+
+    # update pip through pip
+    py_install('pip', use_sudo=True, upgrade=True)
 
     # python flake+pep8
     if not py_is_installed('flake8'):
@@ -63,7 +70,7 @@ def install():
     print(green('Cloning Vim_config repository.'))
     # install git if is not available
     git_install()
-    git_clone('git@github.com:magnet-cl/Vim_config.git', '.vim')
+    git_clone('git://github.com/magnet-cl/Vim_config.git', '.vim')
 
     # installation script
     print(green('Installing Vim_config.'))
