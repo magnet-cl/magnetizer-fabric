@@ -26,6 +26,9 @@ def install_dependencies():
     # install pip if is not available
     utils.deb.install('python-pip')
 
+    # install and upgrade setup tools (that replaced distribute)
+    py_install('setuptools', use_sudo=True, upgrade=True)
+
     # python flake+pep8
     if not py_is_installed('flake8'):
         py_install('flake8', use_sudo=True)
