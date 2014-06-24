@@ -1,6 +1,5 @@
 from fabric.api import cd
 from fabric.api import run
-from fabric.api import sudo
 from fabric.api import task
 from fabric.colors import green, red
 from fabric.contrib.files import exists
@@ -29,12 +28,12 @@ def install_dependencies():
     # install pip if is not available
     utils.deb.install('python-pip')
 
+    # update pip through pip
+    py_install('pip', use_sudo=True, upgrade=True)
+
     # TODO Check if the command python get-pip.py is better
     # install and upgrade setup tools (that replaced distribute)
     py_install('setuptools', use_sudo=True, upgrade=True)
-
-    # update pip through pip
-    py_install('pip', use_sudo=True, upgrade=True)
 
     # python flake+pep8
     if not py_is_installed('flake8'):
