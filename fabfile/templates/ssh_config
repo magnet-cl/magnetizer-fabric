@@ -21,7 +21,8 @@ Host charquican ubimovil.staging
 # Magnet digital ocean server "ajiaco"
 # comoreciclo on port: 9000
 # cerrandobrechas.dev on port: 80
-Host ajiaco comoreciclo cerrandobrechas.dev
+# orsan.magnet.cl on port: 80
+Host ajiaco comoreciclo cerrandobrechas.dev orsan
     hostname 107.170.194.52
     user magnet
 
