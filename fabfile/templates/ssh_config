@@ -13,8 +13,7 @@ Host magnet-cl
     user magnet
 
 # Magnet digital ocean server "charquican"
-# ubimovil.staging on port: 3000
-Host charquican ubimovil.staging
+Host charquican
     hostname 162.243.61.107
     user magnet
 
