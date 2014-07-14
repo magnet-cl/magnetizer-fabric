@@ -106,3 +106,8 @@ Host ubimovil.prod
 Host chilectra.testing
     hostname 107.170.115.154
     user magnet
+
+# site on port: 80
+Host orsan.testing
+    hostname 107.170.13.163
+    user magnet
