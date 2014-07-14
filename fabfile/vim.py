@@ -20,8 +20,7 @@ def install_dependencies():
     # install required packages by plugins
     print(green('Installing plugins dependencies.'))
     # ctags, better grep, python flake, C/C++ omnicompletion
-    plugins = ['exuberant-ctags', 'ack-grep', 'pyflakes', 'clang',
-               'rhino']
+    plugins = ['exuberant-ctags', 'ack-grep', 'pyflakes', 'clang']
     for plugin in plugins:
         utils.deb.install(plugin)
 
