@@ -111,3 +111,7 @@ Host chilectra.testing
 Host orsan.testing
     hostname 107.170.13.163
     user magnet
+
+Host casabarros
+    hostname 192.241.181.121
+    user magnet
