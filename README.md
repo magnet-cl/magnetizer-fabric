@@ -75,6 +75,7 @@ provided.
 ## Available commands
 
     * admin.add_user: Adds user, its group can also be specified.
+    * admin.add_swap: Adds a swap partition to the system.
     * nginx.install_passenger: Installs nginx with passenger support.
     * node.install: Installs node.
     * postgresql.install: Installs PostgreSQL and its development packages.
