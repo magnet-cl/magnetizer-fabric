@@ -115,3 +115,7 @@ Host orsan.testing
 Host casabarros
     hostname 192.241.181.121
     user magnet
+
+Host suspiro
+    hostname 162.243.64.250
+    user magnet
