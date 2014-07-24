@@ -1,12 +1,15 @@
+# limit fabric namespace
+__all__ = ['init', 'install_utils']
+
 from fabric.api import env
 from fabric.api import task
 
-import admin
-import node
-import postgresql
-import ssh
-import vim
-import zsh
+from fabfile import admin
+from fabfile import node
+from fabfile import postgresql
+from fabfile import ssh
+from fabfile import vim
+from fabfile import zsh
 
 
 @task
