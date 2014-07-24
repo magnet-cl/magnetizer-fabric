@@ -89,13 +89,15 @@ def install_ruby_version():
 
 
 @task
-def install_rails():
+def install_rails(version=None):
     """ Installs rails. """
 
     if exists('.rvm/scripts/rvm'):
         rvm_path = 'source "$HOME/.rvm/scripts/rvm"'
         with prefix(rvm_path):
             cmd = 'gem install --no-rdoc --no-ri rails'
+            if version:
+                cmd = '{} -v {}'.format(cmd, version)
             run(cmd)
     else:
         print(red('Ruby is not installed, please run "ruby.install" first.'))
