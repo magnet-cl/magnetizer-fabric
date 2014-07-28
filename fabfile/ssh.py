@@ -1,3 +1,4 @@
+from fabric.api import local
 from fabric.api import put
 from fabric.api import run
 from fabric.api import task
@@ -21,10 +22,23 @@ def generate_key(output_file='.ssh/id_rsa'):
 
 
 @task
-def add_authorized_key(pub_key_file='.ssh/id_rsa.pub'):
+def add_authorized_key(pub_key_file='.ssh/id_rsa.pub', key_name=None):
     """ Adds local ssh pub key to remote authorized keys. """
     mkdir_ssh()
-    pub_key = open('%s/%s' % (os.path.expanduser('~'), pub_key_file))
+
+    if key_name:
+        repo = 'git@bitbucket.org/magnet-cl/keygen.git'
+
+        local('git archive --remote=ssh://{} master {} | tar -x'.format(
+            repo, key_name)
+        )
+
+        pub_key = open(key_name)
+        append('~/.ssh/authorized_keys', pub_key)
+        local('rm {}'.format(key_name))
+    else:
+        pub_key = open('%s/%s' % (os.path.expanduser('~'), pub_key_file))
+
     append('~/.ssh/authorized_keys', pub_key)
 
 
@@ -104,8 +118,8 @@ def services_handshake():
     """ Handshakes with Github and Bitbucket. """
     services = ['github.com', 'bitbucket.org']
 
-    for service in services:
-        run('ssh-keyscan -t rsa {} >> ~/.ssh/known_hosts'.format(service))
+    for ser in services:
+        run('ssh-keyscan -t rsa {} >> ~/.ssh/known_hosts'.format(ser))
 
 
 def mkdir_ssh():
