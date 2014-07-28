@@ -1,3 +1,4 @@
+from fabric.api import run
 from fabric.api import sudo
 from fabric.api import task
 from fabric.colors import green
@@ -70,3 +71,45 @@ def sed_over_sudoers(search, replace):
 
     # restore sudoers file
     sudo("mv /etc/sudoers.tmp /etc/sudoers")
+
+
+@task
+def add_swap(size='2G'):
+    """ Adds a swap partition to the system """
+
+    def check_swap():
+        # check if the system already has a swap partition
+        swap_partitions = run('swapon -s | wc -l')
+        if int(swap_partitions) > 1:
+            return True
+
+    if check_swap():
+        print(green('Swap partition already configured.'))
+        return
+
+    # preallocate swapfile
+    cmd = 'fallocate -l {} /swapfile'.format(size)
+    sudo(cmd)
+
+    # adjust permissions
+    cmd = 'chmod 600 /swapfile'
+    sudo(cmd)
+
+    # setup swap space
+    cmd = 'mkswap /swapfile'
+    sudo(cmd)
+
+    # enable swap
+    cmd = 'swapon /swapfile'
+    sudo(cmd)
+
+    # make the swap file permanent
+    fstab_line = '/swapfile   none    swap    sw    0   0'
+    cmd = 'echo "{}" >> /etc/fstab'.format(fstab_line)
+    sudo(cmd)
+
+    if check_swap():
+        print(green('Swap partition successfully configured.'))
+    else:
+        print(red('The configuration did not work, '
+                  'please contact your system administrator.'))

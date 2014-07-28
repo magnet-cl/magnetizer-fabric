@@ -1,5 +1,4 @@
 """ Magnetizer Tasks """
-import os.path
 
 from fabfile import ssh
 assert ssh
@@ -34,11 +33,15 @@ assert postgresql
 from fabfile import redis
 assert redis
 
-""" fabric global configuration """
+from fabfile import vps
+assert vps
+
+""" Fabric global configuration """
 
 from fabric.api import env
+from os import path
 
 # support ssh_config
-ssh_config_file = '{}/.ssh/config'.format(os.path.expanduser('~'))
-if os.path.isfile(ssh_config_file):
+ssh_config_file = '{}/.ssh/config'.format(path.expanduser('~'))
+if path.isfile(ssh_config_file):
     env.use_ssh_config = True
