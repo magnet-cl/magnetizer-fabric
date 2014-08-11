@@ -10,34 +10,35 @@ from fabfile import postgresql
 from fabfile import ssh
 from fabfile import vim
 from fabfile import zsh
+from fabric.colors import blue
 
 
 @task
 def init(admin_user='magnet'):
     """ Initial tasks for the setup of the VPS """
 
-    # set user to root
+    print(blue('set user to root'))
     env.user = 'root'
 
-    # add the magnet user with sudo permissions
+    print(blue('add the magnet user with sudo permissions'))
     admin.add_user(admin_user, 'sudo')
 
-    # allow sudoers without password
+    print(blue('allow sudoers without password'))
     admin.sudo_without_password()
 
-    # disable password authentication over ssh
+    print(blue('disable password authentication over ssh'))
     ssh.disable_password_authentication()
 
-    # disable root login over ssh
+    print(blue('disable root login over ssh'))
     ssh.disable_root_login()
 
-    # change environment user to the admin_user
+    print(blue('change environment user to the admin_user'))
     env.user = admin_user
 
-    # add public ssh key to magnet's authorized keys
+    print(blue("add public ssh key to magnet's authorized keys"))
     ssh.add_authorized_key()
 
-    # reload ssh configuration
+    print(blue('reload ssh configuration'))
     ssh.reload_configuration()
 
 
@@ -45,21 +46,21 @@ def init(admin_user='magnet'):
 def install_utils(admin_user='magnet'):
     """ Installs utilities on the target VPS """
 
-    # set target user
+    print(blue('set target user: {}'.format(admin_user)))
     env.user = admin_user
 
-    # github and bitbucket ssh handshake
+    print(blue('github and bitbucket ssh handshake'))
     ssh.services_handshake()
 
-    # zsh installation
+    print(blue('zsh installation'))
     zsh.install()
 
-    # vim installation
+    print(blue('vim installation'))
     vim.install()
 
-    # postgreSQL installation and role creation
+    print(blue('postgreSQL installation and role creation'))
     postgresql.install()
     postgresql.create_user()
 
-    # nodejs installation
+    print(blue('nodejs installation'))
     node.install()
