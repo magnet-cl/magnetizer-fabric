@@ -20,9 +20,9 @@ Host charquican
 # Magnet digital ocean server "ajiaco"
 # comoreciclo on port: 9000
 # cerrandobrechas.dev on port: 80
-# orsan.magnet.cl on port: 80
+# orsanmq.magnet.cl on port: 80
 # treid.magnet.cl on port: 80
-Host ajiaco comoreciclo cerrandobrechas.dev orsan treid.testing
+Host ajiaco comoreciclo cerrandobrechas.dev orsan.maqueta treid.testing
     hostname 107.170.194.52
     user magnet
 
@@ -107,9 +107,14 @@ Host chilectra.testing
     hostname 107.170.115.154
     user magnet
 
-# site on port: 80
-Host orsan.testing
+# orsan.magnet.cl site on port: 80
+# Digital Ocean Droplet
+Host orsan.development
     hostname 107.170.13.163
+    user magnet
+
+Host orsan.produccion
+    hostname 54.200.13.17
     user magnet
 
 Host casabarros
@@ -119,3 +124,5 @@ Host casabarros
 Host suspiro
     hostname 162.243.64.250
     user magnet
+
+Host 
