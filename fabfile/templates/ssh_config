@@ -127,4 +127,6 @@ Host suspiro
     hostname 162.243.64.250
     user magnet
 
-Host 
+Host malditovinilo
+    hostname 104.131.36.134
+    user magnet
