@@ -13,7 +13,9 @@ Host magnet-cl
     user magnet
 
 # Magnet digital ocean server "charquican"
-Host charquican
+# checklistotp.magnet.cl on port: 80
+# 48h.magnet.cl on port: 80
+Host charquican checklistotp 48h
     hostname 162.243.61.107
     user magnet
 
