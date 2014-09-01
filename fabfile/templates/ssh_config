@@ -1,12 +1,6 @@
 GSSAPIAuthentication no
 ServerAliveInterval 60
 
-# Magnet linode server "barrosluco"
-# limops.testing on port: 80
-Host barrosluco limops.testing
-    hostname 50.116.12.158
-    user magnet
-
 # magnet site
 Host magnet-cl
     hostname 162.243.140.171
