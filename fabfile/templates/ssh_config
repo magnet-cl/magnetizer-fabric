@@ -89,6 +89,10 @@ Host exa
     hostname 50.116.10.103
     user magnet
 
+Host exa.staging
+    hostname 104.131.36.128
+    user magnet
+
 # site on port: 80
 Host autored.prod
     hostname 198.74.49.242
