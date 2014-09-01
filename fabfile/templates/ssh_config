@@ -113,12 +113,14 @@ Host chilectra.testing
     hostname 107.170.115.154
     user magnet
 
-# orsan.magnet.cl site on port: 80
+# orsanstaging.magnet.cl site on port: 80
 # Digital Ocean Droplet
 Host orsan.development
     hostname 107.170.13.163
     user magnet
 
+# orsan.magnet.cl site on port: 80
+# AWS EC2
 Host orsan.produccion
     hostname 54.200.13.17
     user magnet
