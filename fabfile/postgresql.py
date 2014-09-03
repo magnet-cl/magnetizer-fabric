@@ -30,3 +30,6 @@ def create_user():
     """
     cmd = "sudo -u postgres createuser -s {}".format(env.user)
     sudo(cmd)
+
+    cmd = "sudo -u postgres createdb -O {} '{}'".format(env.user, env.user)
+    sudo(cmd)
