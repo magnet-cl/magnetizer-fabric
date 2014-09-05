@@ -38,8 +38,7 @@ def add_authorized_key(pub_key_file='.ssh/id_rsa.pub', key_name=None):
         local('rm {}'.format(key_name))
     else:
         pub_key = open('%s/%s' % (os.path.expanduser('~'), pub_key_file))
-
-    append('~/.ssh/authorized_keys', pub_key)
+        append('~/.ssh/authorized_keys', pub_key)
 
 
 @task
