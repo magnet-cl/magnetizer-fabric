@@ -9,7 +9,7 @@ Host magnet-cl
 # Magnet digital ocean server "charquican"
 # checklistotp.magnet.cl on port: 80
 # 48h.magnet.cl on port: 80
-Host charquican checklistotp 48h
+Host charquican checklistotp 48h.testing
     hostname 162.243.61.107
     user magnet
 
@@ -129,4 +129,8 @@ Host suspiro
 
 Host malditovinilo
     hostname 104.131.36.134
+    user magnet
+
+Host 48h.prod
+    hostname 54.183.119.58
     user magnet
