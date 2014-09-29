@@ -4,6 +4,7 @@ from fabric.api import task
 from fabric.colors import green
 from fabric.colors import red
 
+from fabtools.deb import update_index
 from fabtools.user import exists
 from fabtools.user import create
 
@@ -113,3 +114,16 @@ def add_swap(size='2G'):
     else:
         print(red('The configuration did not work, '
                   'please contact your system administrator.'))
+
+
+@task
+def fix_shellshock():
+    """ Upgrades bash in order to avoid the 'shellshock' vulnerability. """
+
+    # update apt index
+    update_index(quiet=False)
+
+    cmd = 'apt-get install --only-upgrade bash'
+    sudo(cmd)
+
+    print(green('Bash successfully secured.'))
