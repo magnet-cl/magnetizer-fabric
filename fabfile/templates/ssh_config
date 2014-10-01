@@ -23,8 +23,8 @@ Host ajiaco comoreciclo cerrandobrechas.dev orsan.maqueta treid.testing
     user magnet
 
 # Magnet digital ocean server "DulceChileno"
-# gantz on port: 80
-Host dulcechileno gantz
+# ayudameasonreir on port: 80
+Host dulcechileno sonreir
     hostname 107.170.186.125
     user magnet
 
@@ -133,4 +133,8 @@ Host malditovinilo
 
 Host 48h.prod
     hostname 54.183.119.58
+    user magnet
+
+Host gantz
+    hostname 104.131.97.146
     user magnet
