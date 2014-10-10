@@ -143,3 +143,7 @@ Host 48h.prod
 Host gantz
     hostname 104.131.97.146
     user magnet
+
+Host data
+    hostname 104.131.64.183
+    user magnet
