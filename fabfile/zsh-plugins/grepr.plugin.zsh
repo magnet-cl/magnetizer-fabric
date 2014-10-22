@@ -3,20 +3,29 @@
 #   grep --exclude=\*.{sh,py,js,css} -Ir "test" *
 
 function grepr(){
-    COUNT=1
+    query=""
+    params=()
 
+    # go through all parametres, to separate parameters from the query
+    # string
     for s in $*
     do
         case $s in 
+            --django)
+                params+="--exclude-dir=\.env"
+                params+="--exclude-dir=node_modules"
+                params+="--exclude-dir=bower_components"
+                params+="--exclude-dir=fixtures"
+                ;;
             -*)
-                let COUNT+=1
+                # this is a parameter
+                params+=$s
                 ;;
             *) 
-                break
+                query="$query $s"
                 ;; 
         esac
     done
 
-    QUERY=${*: $COUNT}
-    grep ${*: 1:$COUNT-1} -Inr "$QUERY" *
+    grep $params -Inr "$query" .
 }
