@@ -3,7 +3,7 @@
 #   grep --exclude=\*.{sh,py,js,css} -Ir "test" *
 
 function grepr(){
-    query=""
+    query=false
     params=()
 
     # go through all parametres, to separate parameters from the query
@@ -22,10 +22,14 @@ function grepr(){
                 params+=$s
                 ;;
             *) 
-                query="$query $s"
+                if $query ; then
+                    query="$query $s"
+                else
+                    query="$s"
+                fi
                 ;; 
         esac
     done
 
-    grep $params -Inr "$query" .
+    grep $params -Inr "$query" *
 }
