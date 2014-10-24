@@ -8,7 +8,7 @@ from fabfile import utils
 
 
 @task
-def install(version=9.3):
+def install(version=9.4):
     """
     Installs PostgreSQL and its development packages.
 
