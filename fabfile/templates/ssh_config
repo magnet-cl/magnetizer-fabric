@@ -147,3 +147,7 @@ Host gantz
 Host data
     hostname 104.131.64.183
     user magnet
+
+Host microgrids.testing
+    hostname 104.131.180.19
+    user magnet
