@@ -16,6 +16,7 @@ function grepr(){
                 params+="--exclude-dir=node_modules"
                 params+="--exclude-dir=bower_components"
                 params+="--exclude-dir=fixtures"
+                params+="--exclude-dir=CACHE"
                 ;;
             -*)
                 # this is a parameter
