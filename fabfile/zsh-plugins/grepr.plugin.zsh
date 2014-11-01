@@ -23,10 +23,10 @@ function grepr(){
                 params+=$s
                 ;;
             *) 
-                if $query ; then
-                    query="$query $s"
-                else
+                if [ $query = false ] ; then
                     query="$s"
+                else
+                    query="$query $s"
                 fi
                 ;; 
         esac
