@@ -19,9 +19,13 @@ def add_user(user=None, extra_group=None):
         return
 
     if not exists(user):
-        # the default group created is equal to the user
-        create(name=user, group=user, extra_groups=[extra_group],
-               password=user, shell='/bin/bash')
+        # the default group created is equal to the user, the extra_group is
+        # added only if present
+        if extra_group:
+            create(name=user, group=user, extra_groups=[extra_group],
+                   password=user, shell='/bin/bash')
+        else:
+            create(name=user, group=user, password=user, shell='/bin/bash')
         print(green("User succesfully created."))
     else:
         print(red("User already exists."))
