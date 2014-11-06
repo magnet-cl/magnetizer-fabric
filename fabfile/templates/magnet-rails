@@ -1,0 +1,11 @@
+# rails applications
+/home/magnet/*/shared/log/*.log {
+    weekly
+    size 5M
+    missingok
+    rotate 16
+    compress
+    delaycompress
+    notifempty
+    copytruncate
+}

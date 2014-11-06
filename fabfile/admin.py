@@ -1,12 +1,20 @@
+from fabric.api import put
 from fabric.api import run
 from fabric.api import sudo
 from fabric.api import task
 from fabric.colors import green
 from fabric.colors import red
+from fabric.colors import blue
 
 from fabtools.deb import update_index
 from fabtools.user import exists
 from fabtools.user import create
+
+import os
+
+from fabfile import utils
+
+ROOT_FOLDER = os.path.dirname(__file__)
 
 
 @task
@@ -131,3 +139,55 @@ def fix_shellshock():
     sudo(cmd)
 
     print(green('Bash successfully secured.'))
+
+
+@task
+def configure_logrotate(framework=None, skip_installation=False):
+    """ Configures logrotate to listen for a given framework
+
+    Frameworks supported:
+        django
+        rails
+
+    Optionally you can skip the installation of logrotate through the
+    skip_installation parameter.
+
+    """
+
+    if not framework:
+        print(red('Please specify the framework to configure'))
+        print(red('Usage:'))
+        print(red('\tfab admin.configure_logrotate:rails'))
+        print(red('\tfab admin.configure_logrotate:django'))
+        return
+
+    if not utils.arg_to_bool(skip_installation):
+        # update apt index
+        update_index(quiet=False)
+
+        # install logrotate
+        utils.deb.install('logrotate')
+
+    # framework set
+    if framework == 'rails':
+        config_file = 'magnet-rails'
+    elif framework == 'django':
+        config_file = 'magnet-django'
+
+        # create logs directory for django apps avoiding logrotate error
+        cmd = 'mkdir -p logs'
+        run(cmd)
+    else:
+        print(red('Framework not supported'))
+        return
+
+    # upload logrotate config file
+    print(blue('Uploading logrotate config file'))
+    config_file_path = '{}/templates/{}'.format(ROOT_FOLDER, config_file)
+    logrotate_dir = '/etc/logrotate.d/'
+    put(config_file_path, logrotate_dir, use_sudo=True)
+
+    # activate rotation
+    print(blue('Activating logrotate config file'))
+    cmd = 'logrotate -v {}{}'.format(logrotate_dir, config_file)
+    sudo(cmd)

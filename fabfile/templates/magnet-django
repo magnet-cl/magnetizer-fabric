@@ -1,0 +1,11 @@
+# django applications
+/home/magnet/logs/*.log {
+    weekly
+    size 5M
+    missingok
+    rotate 16
+    compress
+    delaycompress
+    notifempty
+    copytruncate
+}
