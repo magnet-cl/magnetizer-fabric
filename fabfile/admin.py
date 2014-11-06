@@ -185,7 +185,11 @@ def configure_logrotate(framework=None, skip_installation=False):
     print(blue('Uploading logrotate config file'))
     config_file_path = '{}/templates/{}'.format(ROOT_FOLDER, config_file)
     logrotate_dir = '/etc/logrotate.d/'
-    put(config_file_path, logrotate_dir, use_sudo=True)
+    put(config_file_path, logrotate_dir, use_sudo=True, mode=0644)
+
+    # change config file owner to root
+    cmd = 'chown root:root {}{}'.format(logrotate_dir, config_file)
+    sudo(cmd)
 
     # activate rotation
     print(blue('Activating logrotate config file'))
