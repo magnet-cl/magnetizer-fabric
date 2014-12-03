@@ -151,3 +151,9 @@ Host data
 Host microgrids.testing
     hostname 104.131.180.19
     user magnet
+
+Host parroquiasantateresita
+    hostname parroquiasantateresita.net
+    port 2222
+    user pst
+#   password qDs9uc8$Tgme
