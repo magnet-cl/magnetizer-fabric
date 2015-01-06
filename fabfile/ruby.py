@@ -25,8 +25,7 @@ def install():
         utils.deb.install(dependency)
 
     # rvm installation
-    cmd = 'curl -L https://get.rvm.io | bash -s stable'
-    run(cmd)
+    install_rvm()
 
     # rvm path added depending on the shell
     rvm_path = 'source "$HOME/.rvm/scripts/rvm"'
@@ -46,6 +45,13 @@ def install():
     # ruby installation
     with prefix(rvm_path):
         install_ruby_version()
+
+
+@task
+def install_rvm():
+    run('gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3')
+    cmd = '\curl -sSL https://get.rvm.io | bash -s stable'
+    run(cmd)
 
 
 @task
