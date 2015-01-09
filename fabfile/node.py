@@ -1,6 +1,6 @@
-from fabric.api import task, run
+from fabric.api import sudo
+from fabric.api import task
 from fabric.colors import green
-from fabtools import deb
 
 from fabfile import utils
 
@@ -8,22 +8,13 @@ from fabfile import utils
 @task
 def install():
     """ Installs node """
-    # add-apt-repository dependency
-    utils.deb.install('python-software-properties')
 
-    print(green('Adding ppa:chris-lea/node.js to apt repositories'))
-    run('sudo add-apt-repository -y ppa:chris-lea/node.js')
-
-    # update apt index
-    deb.update_index(quiet=False)
-
-    # install node, taken form
-    # http://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
-    print(green('Installing dependencies'))
-    utils.deb.install('python-software-properties')
-    utils.deb.install('python')
-    utils.deb.install('g++')
-    utils.deb.install('make')
+    print(green('Running script from NodeSource'))
+    cmd = 'curl -sL https://deb.nodesource.com/setup | bash -'
+    # sudo(cmd)
 
     print(green('Installing nodejs'))
-    utils.deb.install('nodejs')
+    utils.deb.install('nodejs', upgrade=True)
+
+    print(green('Adding support to compile and install native addons'))
+    utils.deb.install('build-essential')
