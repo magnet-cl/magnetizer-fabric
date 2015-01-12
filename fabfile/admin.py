@@ -2,13 +2,15 @@ from fabric.api import put
 from fabric.api import run
 from fabric.api import sudo
 from fabric.api import task
+from fabric.colors import blue
 from fabric.colors import green
 from fabric.colors import red
-from fabric.colors import blue
+from fabric.contrib.files import sed
 
+from fabtools import service
 from fabtools.deb import update_index
-from fabtools.user import exists
 from fabtools.user import create
+from fabtools.user import exists
 
 import os
 
@@ -207,3 +209,25 @@ def configure_timezone(timezone='Etc/UTC'):
     print(blue('Reconfiguring tzdata').format(timezone))
     cmd = 'dpkg-reconfigure --frontend noninteractive tzdata'
     sudo(cmd)
+
+
+@task
+def install_ntp():
+    """ Installs and configures the NTP daemon """
+    # update apt index
+    update_index(quiet=False)
+
+    print(blue('Installing NTP daemon'))
+    utils.deb.install('ntp')
+
+    print(blue('Configuring NTP servers to use US pool zone'))
+    # patterns
+    before = 'ubuntu\.pool\.ntp\.org'
+    after = 'us\.pool\.ntp\.org'
+
+    # ntp configuration file
+    config_file = '/etc/ntp.conf'
+    sed(config_file, before, after, use_sudo=True)
+
+    print(blue('Restarting NTP server'))
+    service.restart('ntp')
