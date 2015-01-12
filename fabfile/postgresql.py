@@ -8,7 +8,7 @@ from fabfile import utils
 
 
 @task
-def install(version=9.4):
+def install():
     """
     Installs PostgreSQL and its development packages.
 
@@ -17,8 +17,8 @@ def install(version=9.4):
     deb.update_index(quiet=False)
 
     print(green('Installing PostgreSQL and its development packages.'))
-    utils.deb.install('postgresql-{}'.format(version))
-    utils.deb.install('postgresql-server-dev-{}'.format(version))
+    utils.deb.install('postgresql')
+    utils.deb.install('postgresql-contrib')
     utils.deb.install('libpq-dev')
 
 
