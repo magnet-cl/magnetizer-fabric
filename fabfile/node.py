@@ -11,7 +11,7 @@ def install():
 
     print(green('Running script from NodeSource'))
     cmd = 'curl -sL https://deb.nodesource.com/setup | bash -'
-    # sudo(cmd)
+    sudo(cmd)
 
     print(green('Installing nodejs'))
     utils.deb.install('nodejs', upgrade=True)
