@@ -44,15 +44,27 @@ def add_authorized_key(pub_key_file='.ssh/id_rsa.pub', key_name=None):
 @task
 def generate_config_file():
     """
-    Using the template 'fabfile/templates/ssh_config' file, this new command
-    replaces the ~/.ssh/config_magnet file in the target server and touches
-    the ./.ssh/config_local file. Then it merges them in the ./.ssh/config
-    file.
-    """
+    Generates an ssh_config file by merging a local config file with a remote
+    file on a private repository.
 
-    put('{}/templates/ssh_config'.format(ROOT_FOLDER), '~/.ssh/config_magnet')
+    """
+    repository = 'git@bitbucket.org/magnet-cl/keygen.git'
+    remote_config_file = 'ssh_config'
+
+    print(green('Getting remote configuration file'))
+    local('git archive --remote=ssh://{} master {} | tar -x'.format(
+        repository, remote_config_file)
+    )
+    remote_config = open(remote_config_file)
+
+    print(green('Merging configuration files into ~/.ssh/config'))
+    put(remote_config, '~/.ssh/config_magnet')
     run('touch ~/.ssh/config_local')
     run('cat ~/.ssh/config_local ~/.ssh/config_magnet > ~/.ssh/config')
+
+    # cleanup
+    remote_config.close()
+    local('rm {}'.format(remote_config_file))
 
 
 @task
