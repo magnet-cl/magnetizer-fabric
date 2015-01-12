@@ -195,3 +195,15 @@ def configure_logrotate(framework=None, skip_installation=False):
     print(blue('Activating logrotate config file'))
     cmd = 'logrotate -v {}{}'.format(logrotate_dir, config_file)
     sudo(cmd)
+
+
+@task
+def configure_timezone(timezone='Etc/UTC'):
+    """ Configures the given timezone as system timezone """
+    print(blue('Setting "{}" as system timezone').format(timezone))
+    cmd = 'echo "{}" > /etc/timezone'.format(timezone)
+    sudo(cmd)
+
+    print(blue('Reconfiguring tzdata').format(timezone))
+    cmd = 'dpkg-reconfigure --frontend noninteractive tzdata'
+    sudo(cmd)
