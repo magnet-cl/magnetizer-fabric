@@ -3,6 +3,7 @@ __all__ = ['init', 'install_utils']
 
 from fabric.api import env
 from fabric.api import task
+from fabric.colors import blue
 
 from fabfile import admin
 from fabfile import node
@@ -10,7 +11,6 @@ from fabfile import postgresql
 from fabfile import ssh
 from fabfile import vim
 from fabfile import zsh
-from fabric.colors import blue
 
 
 @task
@@ -40,6 +40,12 @@ def init(admin_user='magnet'):
 
     print(blue('reload ssh configuration'))
     ssh.reload_configuration()
+
+    print(blue('timezone configuration'))
+    admin.configure_timezone()
+
+    print(blue('NTP installation and configuration'))
+    admin.install_ntp()
 
 
 @task
