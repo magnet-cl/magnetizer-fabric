@@ -47,6 +47,9 @@ def init(admin_user='magnet'):
     print(blue('NTP installation and configuration'))
     admin.install_ntp()
 
+    print(blue('add swap partition'))
+    admin.add_swap()
+
 
 @task
 def install_utils(admin_user='magnet'):
