@@ -18,6 +18,9 @@ function grepr(){
                 params+="--exclude-dir=fixtures"
                 params+="--exclude-dir=CACHE"
                 ;;
+            --em)
+                params+="--exclude-dir=migrations"
+                ;;
             -*)
                 # this is a parameter
                 params+=$s
