@@ -231,3 +231,29 @@ def install_ntp():
 
     print(blue('Restarting NTP server'))
     service.restart('ntp')
+
+
+@task
+def full_upgrade():
+    """
+    Upgrades installed packages to their most recent version, removing or
+    installing packages as necessary.
+
+    """
+    # update apt index
+    update_index(quiet=False)
+
+    # full upgrade
+    cmd = 'aptitude full-upgrade'
+    sudo(cmd)
+
+
+@task
+def safe_upgrade():
+    """ Upgrades installed packages to their most recent version """
+    # update apt index
+    update_index(quiet=False)
+
+    # safe upgrade
+    cmd = 'aptitude safe-upgrade'
+    sudo(cmd)

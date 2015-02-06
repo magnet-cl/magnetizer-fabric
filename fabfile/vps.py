@@ -41,6 +41,9 @@ def init(admin_user='magnet'):
     print(blue('reload ssh configuration'))
     ssh.reload_configuration()
 
+    print(blue('upgrade installed packages'))
+    admin.full_upgrade()
+
     print(blue('timezone configuration'))
     admin.configure_timezone()
 
