@@ -91,6 +91,12 @@ def muni_setup():
     print(blue('Generate the ssh config file to connect to all magnet hosts'))
     ssh.generate_config_file()
 
+    print(blue('upgrade installed packages'))
+    admin.full_upgrade()
+
+    print(blue('NTP installation and configuration'))
+    admin.install_ntp()
+
     install_utils(run('whoami'))
 
     print(blue('install zsh theme: powerline'))
