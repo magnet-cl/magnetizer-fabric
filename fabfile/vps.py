@@ -1,16 +1,19 @@
-# limit fabric namespace
-__all__ = ['init', 'install_utils']
-
-from fabric.api import env
-from fabric.api import task
-from fabric.colors import blue
-
+""" tasks related to the configuration of virtual servers """
 from fabfile import admin
 from fabfile import node
 from fabfile import postgresql
+from fabfile import ruby
 from fabfile import ssh
 from fabfile import vim
 from fabfile import zsh
+
+from fabric.api import env
+from fabric.api import run
+from fabric.api import task
+from fabric.colors import blue
+
+# limit fabric namespace
+__all__ = ['init', 'install_utils', 'muni_setup']
 
 
 @task
@@ -76,3 +79,28 @@ def install_utils(admin_user='magnet'):
 
     print(blue('nodejs installation'))
     node.install()
+
+
+@task
+def muni_setup():
+    """ Installs utilities on the target VPS with a muni flavor"""
+
+    print(blue('Add your own public key to authorized hosts'))
+    ssh.add_authorized_key()
+
+    print(blue('Generate the ssh config file to connect to all magnet hosts'))
+    ssh.generate_config_file()
+
+    install_utils(run('whoami'))
+
+    print(blue('install zsh theme: powerline'))
+    zsh.install_theme('powerline')
+
+    print(blue('install ruby'))
+    ruby.install()
+
+    print(blue('install rails'))
+    ruby.install_rails()
+
+    print(blue('install git-smart'))
+    run('gem install git-smart')

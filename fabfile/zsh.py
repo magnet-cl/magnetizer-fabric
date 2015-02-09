@@ -1,7 +1,7 @@
 from fabric.api import task, run, env, put, prompt, cd
 from fabric.colors import green, red
 from fabric.context_managers import settings, hide
-from fabric.contrib.files import upload_template, exists, sed, contains, append
+from fabric.contrib.files import upload_template, exists, sed, contains
 from fabric.contrib.console import confirm
 from fabtools.deb import update_index
 from os import listdir
