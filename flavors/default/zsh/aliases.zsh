@@ -1,0 +1,1 @@
+alias grepd='grepr --django'

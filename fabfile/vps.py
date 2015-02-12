@@ -110,3 +110,6 @@ def muni_setup():
 
     print(blue('install git-smart'))
     run('gem install git-smart')
+
+    print(blue('install zsh muni flavor'))
+    zsh.install_flavor('muni')

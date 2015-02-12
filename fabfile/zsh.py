@@ -8,6 +8,7 @@ from os import listdir
 from os.path import join
 from os.path import abspath
 from os.path import dirname
+from os.path import basename
 
 from fabfile.git import git_clone, git_install
 from fabfile import utils
@@ -206,3 +207,16 @@ def configure():
     upload_custom_files()
 
     print(green('If the shell does not change, restart your session.'))
+
+
+@task
+def install_flavor(flavor='default'):
+    """ Uploads flavor files for zsh."""
+
+    zsh_flavor_folder = '{}/../flavors/{}/zsh'.format(ROOT_FOLDER, flavor)
+    destination_folder = '~/.zsh'
+
+    # custom themes
+    for flavor_file in listdir(zsh_flavor_folder):
+        print(green('Uploading %s...' % basename(flavor_file)))
+        put('{}/{}'.format(zsh_flavor_folder, flavor_file), destination_folder)
