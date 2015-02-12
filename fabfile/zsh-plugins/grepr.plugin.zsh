@@ -21,8 +21,14 @@ function grepr(){
             --em)
                 params+="--exclude-dir=migrations"
                 ;;
+            --es)
+                params+="--exclude-dir=static"
+                ;;
+            --ev)
+                params+="--exclude-dir=vendor"
+                ;;
             -*)
-                # this is a parameter
+                # this is a parameter for grepr
                 params+=$s
                 ;;
             *) 
