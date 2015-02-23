@@ -8,3 +8,5 @@ function gpp(){
 
 alias gup='git smart-pull'
 alias grepd='grepr --django'
+
+alias ltr='ls -ltr'
