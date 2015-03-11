@@ -1,3 +1,5 @@
+from fabric.api import cd
+from fabric.api import prompt
 from fabric.api import put
 from fabric.api import run
 from fabric.api import sudo
@@ -5,8 +7,10 @@ from fabric.api import task
 from fabric.colors import blue
 from fabric.colors import green
 from fabric.colors import red
+from fabric.contrib.files import exists as path_exists
 from fabric.contrib.files import sed
 
+from fabtools import cron
 from fabtools import service
 from fabtools.deb import update_index
 from fabtools.user import create
@@ -15,6 +19,9 @@ from fabtools.user import exists
 import os
 
 from fabfile import utils
+from fabfile.git import git_clone
+from fabfile.git import git_install
+from fabfile.git import git_pull
 
 ROOT_FOLDER = os.path.dirname(__file__)
 
@@ -257,3 +264,87 @@ def safe_upgrade():
     # safe upgrade
     cmd = 'aptitude safe-upgrade'
     sudo(cmd)
+
+
+@task
+def install_db_backups_manager():
+    """ Installs project py-db-backup """
+
+    if path_exists('py-db-backup'):
+        update_manager = prompt(green('DB backups manager already installed. '
+                                      'Would you like to update it?'),
+                                default='Yes')
+        if update_manager in ('Yes', 'yes', 'Y', 'y'):
+            with cd('py-db-backup'):
+                git_pull()
+
+        return
+
+    # install git if is not available
+    git_install()
+
+    print(green('Cloning py-db-backup repository.'))
+    git_clone('git://github.com/magnet-cl/py-db-backup.git', 'py-db-backup')
+
+    print(green('Installing py-db-backup'))
+    with cd('py-db-backup'):
+        cmd = './install.sh'
+        run(cmd)
+
+
+@task
+def configure_db_backups_manager(config_file=None):
+    """ Generates the config file for the db backups """
+
+    with cd('py-db-backup'):
+        # user input
+        if not config_file:
+            config_file = prompt(green('Please specify the config file name:'),
+                                 default='config.ini')
+        db_name = prompt(green('Please specify the database name to backup:'))
+
+        # initial config file
+        cmd = 'cp config.ini.default {}'.format(config_file)
+        run(cmd)
+
+        # replace db name
+        before = "^name = .*"
+        after = "name = {}".format(db_name)
+        sed(config_file, before, after, backup='')
+
+        config_file_path = blue('{}/{}'.format(run('pwd', quiet=True),
+                                               config_file))
+        print green('If you want to backup on Amazon S3, please set the '
+                    'credentials directly on: {}'.format(config_file_path))
+
+
+@task
+def register_db_backup(cron_user='magnet', config_file=None):
+    """ Registers a daily db backup on cron """
+
+    script_path = run('pwd', quiet=True)
+    script_path = '{}/{}'.format(script_path, 'py-db-backup')
+    cron_task = 'cd {} && ./{}'.format(script_path, 'backup-db.py')
+    cron_name = 'backup-db'
+
+    if config_file:
+        # add the config file argument to cron command
+        cron_task = '{} -c {}'.format(cron_task, config_file)
+        # add suffix to cron task name based on config_file
+        cron_name = '{}-{}'.format(cron_name, os.path.splitext(config_file)[0])
+
+    print(green('Registering cron task at midnight'))
+    cron.add_task(cron_name, '@midnight', cron_user, cron_task)
+
+    # change cron task owner to root
+    cmd = 'chown root:root {}/{}'.format('/etc/cron.d', cron_name)
+    sudo(cmd)
+
+
+@task
+def add_db_backups(cron_user='magnet', config_file=None):
+    """ Installs and configures py-db-backup and registers on cron """
+
+    install_db_backups_manager()
+    configure_db_backups_manager(config_file)
+    register_db_backup(cron_user, config_file)
