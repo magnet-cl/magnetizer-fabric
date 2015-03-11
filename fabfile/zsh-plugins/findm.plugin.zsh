@@ -13,7 +13,6 @@ function findm(){
     do
         case $s in 
             --django)
-                exclude+='-not -name "*.pyc"'
                 exclude+="-not -path \"./.env/*\""
                 exclude+='-not -path "./node_modules/*"'
                 exclude+='-not -path "./base/static/bower_components/*"'
@@ -37,8 +36,8 @@ function findm(){
         esac
     done
 
-    if [ $look_for_extension = false ] ; then
-        eval "find .  $params -name \"*$query*\" $exclude"
+    if [ $look_for_extension=false ] ; then
+        eval "find .  $params -name \"$query\" $exclude"
     else
         eval "find .  $params -name \"*.$query\" $exclude"
     fi
