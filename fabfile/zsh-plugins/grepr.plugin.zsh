@@ -1,11 +1,11 @@
-# find files by name using find -name
+# grep recursive through all
 # Example:
-#   findm --exclude=\*.{sh,py,js,css} -Ir "test" *
+#   grep --exclude=\*.{sh,py,js,css} -Ir "test" *
 
-function findm(){
+function grepr(){
+    fuzzy=false
     query=false
-    exclude=()
-    look_for_extension=false
+    params=()
 
     # go through all parametres, to separate parameters from the query
     # string
@@ -13,15 +13,23 @@ function findm(){
     do
         case $s in 
             --django)
-                exclude+='-not -name "*.pyc"'
-                exclude+="-not -path \"./.env/*\""
-                exclude+='-not -path "./node_modules/*"'
-                exclude+='-not -path "./base/static/bower_components/*"'
-                exclude+='-not -path "./fixtures/*"'
-                exclude+='-not -path "./CACHE/*"'
+                params+="--exclude-dir=\.env"
+                params+="--exclude-dir=node_modules"
+                params+="--exclude-dir=bower_components"
+                params+="--exclude-dir=fixtures"
+                params+="--exclude-dir=CACHE"
                 ;;
-            -e)
-                look_for_extension=true
+            --em)
+                params+="--exclude-dir=migrations"
+                ;;
+            --es)
+                params+="--exclude-dir=static"
+                ;;
+            --ev)
+                params+="--exclude-dir=vendor"
+                ;;
+            --fu)
+                fuzzy=true
                 ;;
             -*)
                 # this is a parameter for grepr
@@ -37,9 +45,10 @@ function findm(){
         esac
     done
 
-    if [ $look_for_extension = false ] ; then
-        eval "find .  $params -name \"*$query*\" $exclude"
-    else
-        eval "find .  $params -name \"*.$query\" $exclude"
+    if [ $fuzzy != false ] ; then
+        query=$(echo $query | sed 's/\( \)/.*/g')
+        echo $query
     fi
+
+    grep $params -Inr "$query" *
 }
