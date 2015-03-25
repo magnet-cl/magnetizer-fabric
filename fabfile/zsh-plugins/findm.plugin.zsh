@@ -37,7 +37,7 @@ function findm(){
     done
 
     if [ $look_for_extension=false ] ; then
-        eval "find .  $params -name \"$query\" $exclude"
+        eval "find .  $params -name \"$query*\" $exclude"
     else
         eval "find .  $params -name \"*.$query\" $exclude"
     fi
