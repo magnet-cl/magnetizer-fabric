@@ -23,13 +23,13 @@ def install():
 
 
 @task
-def create_user():
+def create_user(user=env.user):
     """
     Creates a role for the user given through fabric.
 
     """
-    cmd = "sudo -u postgres createuser -s {}".format(env.user)
+    cmd = "sudo -u postgres createuser -s {}".format(user)
     sudo(cmd)
 
-    cmd = "sudo -u postgres createdb -O {} '{}'".format(env.user, env.user)
+    cmd = "sudo -u postgres createdb -O {} '{}'".format(user, user)
     sudo(cmd)
