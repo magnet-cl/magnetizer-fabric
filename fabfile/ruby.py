@@ -49,7 +49,9 @@ def install():
 
 @task
 def install_rvm():
-    run('gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3')
+    # mpapis public key https://rvm.io/rvm/install
+    key = '409B6B1796C275462A1703113804BB82D39DC0E3'
+    run('gpg --keyserver hkp://keys.gnupg.net --recv-keys {}'.format(key))
     cmd = '\curl -sSL https://get.rvm.io | bash -s stable'
     run(cmd)
 
