@@ -7,13 +7,13 @@ sudo apt-get install -y python-dev
 sudo apt-get install -y python-pip
 
 # update pip
-sudo pip install -U pip
+sudo -H pip install -U pip
 
 # update setuptools
-sudo pip install -U setuptools
+sudo -H pip install -U setuptools
 
 # fabric installation through pip
-sudo pip install -U fabric fabtools
+sudo -H pip install -U fabric fabtools
 
 # list the available commands
 fab -l
