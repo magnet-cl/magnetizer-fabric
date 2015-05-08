@@ -1,16 +1,17 @@
 """ tasks related to the configuration of virtual servers """
+from fabric.api import env
+from fabric.api import run
+from fabric.api import task
+from fabric.colors import blue
+
 from fabfile import admin
 from fabfile import node
 from fabfile import postgresql
 from fabfile import ruby
 from fabfile import ssh
+from fabfile import utils
 from fabfile import vim
 from fabfile import zsh
-
-from fabric.api import env
-from fabric.api import run
-from fabric.api import task
-from fabric.colors import blue
 
 # limit fabric namespace
 __all__ = ['init', 'install_utils', 'muni_setup']
@@ -79,6 +80,10 @@ def install_utils(admin_user='magnet'):
 
     print(blue('nodejs installation'))
     node.install()
+
+    print(blue('curl, htop'))
+    utils.deb.install('curl')
+    utils.deb.install('htop')
 
 
 @task
