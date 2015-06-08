@@ -1,5 +1,6 @@
 # rails applications
 /home/magnet/*/shared/log/*.log {
+    su magnet magnet
     weekly
     size 5M
     missingok
