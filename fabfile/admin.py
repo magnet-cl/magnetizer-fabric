@@ -1,4 +1,11 @@
+# -*- coding: utf-8 -*-
+
+# standard library
+import os
+
+# fabric
 from fabric.api import cd
+from fabric.api import env
 from fabric.api import prompt
 from fabric.api import put
 from fabric.api import run
@@ -9,14 +16,14 @@ from fabric.colors import green
 from fabric.colors import red
 from fabric.contrib.files import exists as path_exists
 from fabric.contrib.files import sed
+from fabric.contrib.files import upload_template
 
+# fabtools
 from fabtools import cron
 from fabtools import service
 from fabtools.deb import update_index
 from fabtools.user import create
 from fabtools.user import exists
-
-import os
 
 from fabfile import utils
 from fabfile.git import git_clone
@@ -348,3 +355,58 @@ def add_db_backups(cron_user='magnet', config_file=None):
     install_db_backups_manager()
     configure_db_backups_manager(config_file)
     register_db_backup(cron_user, config_file)
+
+
+@task
+def install_remote_syslog(version='0.13', port='58173'):
+    """ Installs and configures remote_syslog to send events to papertrail """
+
+    package_name = 'remote_syslog_linux_amd64.tar.gz'
+    folder = 'remote_syslog'
+
+    url = ('https://github.com/papertrail/remote_syslog2/releases/download/'
+           'v{}/{}')
+    url = url.format(version, package_name)
+
+    print(blue('Downloading remote syslog'))
+    cmd = 'wget {} -O {}'.format(url, package_name)
+    run(cmd)
+
+    print(blue('Unpacking remote syslog'))
+    cmd = 'tar xvf {}'.format(package_name)
+    run(cmd)
+
+    print(blue('Installing remote syslog'))
+    cmd = 'cp {}/remote_syslog /usr/local/bin/'.format(folder)
+    sudo(cmd)
+
+    print(blue('Uploading config file'))
+    config_file = 'remote_syslog.yml'
+    config_file_path = '{}/templates/{}'.format(ROOT_FOLDER, config_file)
+    target_dir = '/etc/'
+    context = {
+        'user': env.user,
+        'port': port,
+    }
+    upload_template(config_file_path, target_dir, context=context,
+                    use_sudo=True)
+
+    # change config file owner to root
+    cmd = 'chown root:root {}{}'.format(target_dir, config_file)
+    sudo(cmd)
+
+    print(blue('Registering at system startup'))
+    upstart_file = 'remote_syslog.conf'
+    upstart_file_path = '{}/templates/{}'.format(ROOT_FOLDER, upstart_file)
+    upstart_dir = '/etc/init/'
+    put(upstart_file_path, upstart_dir, use_sudo=True, mode=0644)
+
+    # change config file owner to root
+    cmd = 'chown root:root {}{}'.format(upstart_dir, upstart_file)
+    sudo(cmd)
+
+    service.start('remote_syslog')
+
+    print(blue('Cleaning installation files'))
+    cmd = 'rm -rf {} {}'.format(folder, package_name)
+    run(cmd)
