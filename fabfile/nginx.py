@@ -29,7 +29,7 @@ def install_passenger():
         print('13.10 -> ' + green('Saucy', True) + ' Salamander')
         print('14.04 -> ' + green('Trusty', True) + ' Thar')
     p_t = 'What version are you deploying to? (only first name needed)'
-    version = prompt(p_t, default='Precise')
+    version = prompt(p_t, default='Trusty')
     version = version.lower()
 
     # ubuntu 12.04 (precise)
