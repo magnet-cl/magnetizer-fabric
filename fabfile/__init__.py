@@ -36,6 +36,9 @@ assert redis
 from fabfile import vps
 assert vps
 
+from fabfile import java
+assert java
+
 """ Fabric global configuration """
 
 from fabric.api import env
