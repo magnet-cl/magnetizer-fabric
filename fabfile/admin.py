@@ -248,7 +248,7 @@ def install_ntp():
 
 
 @task
-def full_upgrade():
+def full_upgrade(ask_confirmation=False):
     """
     Upgrades installed packages to their most recent version, removing or
     installing packages as necessary.
@@ -259,6 +259,10 @@ def full_upgrade():
 
     # full upgrade
     cmd = 'aptitude full-upgrade'
+
+    if not ask_confirmation:
+        cmd = '{} -y'.format(cmd)
+
     sudo(cmd)
 
 

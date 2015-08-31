@@ -46,7 +46,7 @@ def init(admin_user='magnet'):
     ssh.reload_configuration()
 
     print(blue('upgrade installed packages'))
-    admin.full_upgrade()
+    admin.full_upgrade(ask_confirmation=True)
 
     print(blue('timezone configuration'))
     admin.configure_timezone()
@@ -97,7 +97,7 @@ def muni_setup():
     ssh.generate_config_file()
 
     print(blue('upgrade installed packages'))
-    admin.full_upgrade()
+    admin.full_upgrade(ask_confirmation=True)
 
     print(blue('NTP installation and configuration'))
     admin.install_ntp()
