@@ -248,7 +248,7 @@ def install_ntp():
 
 
 @task
-def full_upgrade(ask_confirmation=False):
+def full_upgrade(ask_confirmation=True):
     """
     Upgrades installed packages to their most recent version, removing or
     installing packages as necessary.
