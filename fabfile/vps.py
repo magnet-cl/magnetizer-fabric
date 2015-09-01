@@ -14,7 +14,7 @@ from fabfile import vim
 from fabfile import zsh
 
 # limit fabric namespace
-__all__ = ['init', 'install_utils', 'muni_setup']
+__all__ = ['init', 'install_utils', 'muni_setup', 'wordpress_setup']
 
 
 @task
@@ -84,6 +84,7 @@ def install_utils(admin_user='magnet'):
     print(blue('curl, htop'))
     utils.deb.install('curl')
     utils.deb.install('htop')
+    utils.deb.install('git')
 
 
 @task
@@ -118,3 +119,25 @@ def muni_setup():
 
     print(blue('install zsh muni flavor'))
     zsh.install_flavor('muni')
+
+
+@task
+def wordpress_setup():
+    """ Installs utilities on the target VPS with a Wordpress flavor"""
+
+    print(blue('initial setup'))
+    init()
+
+    print(blue('github and bitbucket ssh handshake'))
+    ssh.services_handshake()
+
+    print(blue('zsh installation'))
+    zsh.install()
+
+    print(blue('vim installation'))
+    vim.install()
+
+    print(blue('git', 'curl, htop'))
+    utils.deb.install('git')
+    utils.deb.install('curl')
+    utils.deb.install('htop')
