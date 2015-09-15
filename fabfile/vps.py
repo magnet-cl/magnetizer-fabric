@@ -57,6 +57,9 @@ def init(admin_user='magnet'):
     print(blue('add swap partition'))
     admin.add_swap()
 
+    print(blue('generate SSH key'))
+    ssh.generate_key()
+
 
 @task
 def install_utils(admin_user='magnet'):
