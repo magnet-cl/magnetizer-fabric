@@ -171,10 +171,10 @@ def install_plugins(*plugins):
 def configure_plugins():
     plugins = []
 
-    recommended_plugins = (['git', 'github', 'git-flow', 'heroku', 'pip',
-                            'autojump', 'command-not-found', 'debian',
-                            'encode64', 'vagrant', 'ruby', 'colored-man',
-                            'grepr', 'mclone', 'cdenv', 'findm'])
+    recommended_plugins = (['git', 'github', 'git-flow', 'pip', 'autojump',
+                            'command-not-found', 'debian', 'encode64',
+                            'ruby', 'colored-man', 'grepr', 'mclone', 'cdenv',
+                            'findm', 'history-substring-search', 'capistrano'])
     recommended_plugins.sort()
     for plugin in recommended_plugins:
         if confirm('Would you like to use the %s plugin?' % plugin):
