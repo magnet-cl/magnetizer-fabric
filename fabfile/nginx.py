@@ -1,8 +1,13 @@
-from fabric.api import task, sudo
+# fabric
+from fabric.api import sudo
+from fabric.api import task
 from fabric.colors import green
 from fabric.contrib.files import uncomment
 from fabric.operations import prompt
+
+# fabtools
 from fabtools import deb
+from fabtools import service
 
 from fabfile import utils
 
@@ -49,3 +54,11 @@ def install_passenger():
     print(green('Activating passenger'))
     uncomment('/etc/nginx/nginx.conf', 'passenger_root', use_sudo=True)
     uncomment('/etc/nginx/nginx.conf', 'passenger_ruby', use_sudo=True)
+
+
+@task
+def enable_gzip():
+    """ Enables gzip compression """
+
+    uncomment('/etc/nginx/nginx.conf', 'gzip_types', use_sudo=True)
+    service.reload('nginx')
