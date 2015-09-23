@@ -108,6 +108,9 @@ def muni_setup():
 
     install_utils(run('whoami'))
 
+    print(blue('install vim-gtk'))
+    utils.deb.install('vim-gtk')
+
     print(blue('install zsh theme: powerline'))
     zsh.install_theme('powerline')
 
