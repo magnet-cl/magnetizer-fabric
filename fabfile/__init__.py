@@ -39,6 +39,9 @@ assert vps
 from fabfile import java
 assert java
 
+from fabfile import docker
+assert docker
+
 """ Fabric global configuration """
 
 from fabric.api import env
