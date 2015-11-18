@@ -14,7 +14,7 @@ from fabfile import utils
 
 
 @task
-def install_docker():
+def install():
     # add pgp key
     print(green('Adding PGP key'))
     deb.add_apt_key(keyid='58118E89F3A912897C070ADBF76221572C52609D',
