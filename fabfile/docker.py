@@ -1,6 +1,7 @@
 # fabric
 from fabric.api import env
 from fabric.api import run
+from fabric.api import sudo
 from fabric.api import task
 from fabric.colors import green
 from fabric.contrib.files import append
@@ -13,7 +14,7 @@ from fabfile import utils
 
 
 @task
-def install_docker():
+def install():
     # add pgp key
     print(green('Adding PGP key'))
     deb.add_apt_key(keyid='58118E89F3A912897C070ADBF76221572C52609D',
@@ -37,4 +38,5 @@ def install_docker():
 
     # add current user to docker group
     current_user = env.user
-    user.modify(current_user, extra_groups=['docker'])
+    cmd = "gpasswd -a {} docker".format(current_user)
+    sudo(cmd)
