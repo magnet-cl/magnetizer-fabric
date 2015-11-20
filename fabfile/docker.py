@@ -46,4 +46,4 @@ def install():
     cmd = "gpasswd -a {} docker".format(current_user)
     sudo(cmd)
     print(green("User {} added to docker group.".format(current_user)))
-    print(red("Remember to log out and back in to use it.")
+    print(red("Remember to log out and back in to use it."))
