@@ -37,6 +37,10 @@ def install():
     # install docker.io
     utils.deb.install('docker-engine')
 
+    # install docker compose
+    cmd = 'pip install -U docker-compose'
+    sudo(cmd)
+
     # add current user to docker group
     current_user = env.user
     cmd = "gpasswd -a {} docker".format(current_user)
