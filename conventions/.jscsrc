@@ -46,8 +46,7 @@
         "checkRedundantReturns": true,
         "requireReturnTypes": true,
         "checkTypes": true,
-        "checkRedundantAccess": true,
-        "requireNewlineAfterDescription": true
+        "checkRedundantAccess": true
     },
     "maximumLineLength": {
         "value": 80,
