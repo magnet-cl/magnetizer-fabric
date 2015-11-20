@@ -4,6 +4,7 @@ from fabric.api import run
 from fabric.api import sudo
 from fabric.api import task
 from fabric.colors import green
+from fabric.colors import red
 from fabric.contrib.files import append
 
 # fabtools
@@ -36,7 +37,13 @@ def install():
     # install docker.io
     utils.deb.install('docker-engine')
 
+    # install docker compose
+    cmd = 'pip install -U docker-compose'
+    sudo(cmd)
+
     # add current user to docker group
     current_user = env.user
     cmd = "gpasswd -a {} docker".format(current_user)
     sudo(cmd)
+    print(green("User {} added to docker group.".format(current_user)))
+    print(red("Remember to log out and back in to use it.")
