@@ -35,6 +35,7 @@
     },
     "disallowSpacesInsideArrayBrackets": true,
     "disallowSpacesInsideParentheses": true,
+    "disallowTrailingComma": true,
     "disallowTrailingWhitespace": true,
     "disallowYodaConditions": true,
     "jsDoc": {
@@ -135,9 +136,6 @@
     "requireSpacesInForStatement": true,
     "requireSpacesInFunctionExpression": {
         "beforeOpeningCurlyBrace": true
-    },
-    "requireTrailingComma": {
-        "ignoreSingleLine": true
     },
     "safeContextKeyword": "_this",
     "validateIndentation": 2,
