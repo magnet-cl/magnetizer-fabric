@@ -42,6 +42,10 @@ assert java
 from fabfile import docker
 assert docker
 
+from fabfile import webpay
+assert webpay
+
+
 """ Fabric global configuration """
 
 from fabric.api import env
