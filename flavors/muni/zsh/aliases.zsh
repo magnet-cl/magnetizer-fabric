@@ -1,10 +1,5 @@
 alias g='git status'
 
-function gpp(){
-    git smart-pull
-    git push 
-}
-
 alias gup='git smart-pull'
 alias grepd='grepr --django'
 alias grepf='grepd --fu'
