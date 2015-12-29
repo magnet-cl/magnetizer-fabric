@@ -23,7 +23,13 @@ def generate_key(output_file='.ssh/id_rsa'):
 
 @task
 def add_authorized_key(pub_key_file='.ssh/id_rsa.pub', key_name=None):
-    """ Adds local ssh pub key to remote authorized keys. """
+    """
+    Adds local ssh pub key to remote authorized keys.
+
+    Example: Add muni.pub key on keygen to magnet time server
+
+        $ fab ssh.add_authorized_key:key_name=muni.pub -H time
+    """
     mkdir_ssh()
 
     if key_name:
