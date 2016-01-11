@@ -5,7 +5,7 @@ server {
     root /usr/share/nginx/html;
     index index.html index.htm;
 
-    server_name localhost
+    server_name localhost;
 
     location / {
         try_files $uri $uri/ =404;
