@@ -18,6 +18,7 @@ function grepr(){
                 params+="--exclude-dir=bower_components"
                 params+="--exclude-dir=fixtures"
                 params+="--exclude-dir=CACHE"
+                params+="--exclude=*.sql"
                 ;;
             --em)
                 params+="--exclude-dir=migrations"
