@@ -19,6 +19,7 @@ function grepr(){
                 params+="--exclude-dir=fixtures"
                 params+="--exclude-dir=CACHE"
                 params+="--exclude=*.sql"
+                params+="--exclude=*.log"
                 ;;
             --em)
                 params+="--exclude-dir=migrations"
