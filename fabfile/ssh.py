@@ -1,12 +1,19 @@
+# -*- coding: utf-8 -*-
+
+# fabric
 from fabric.api import local
 from fabric.api import put
 from fabric.api import run
 from fabric.api import task
+from fabric.api import sudo
 from fabric.colors import green
 from fabric.contrib.files import append
 from fabric.contrib.files import contains
 from fabric.contrib.files import sed
+
+# fabtools
 from fabtools import service
+from fabtools.deb import update_index
 
 import os
 
@@ -137,6 +144,19 @@ def services_handshake():
 
     for ser in services:
         run('ssh-keyscan -t rsa {} >> ~/.ssh/known_hosts'.format(ser))
+
+
+@task
+def upgrade_server():
+    """ Helper method to upgrade the SSH server """
+
+    # update apt index
+    update_index(quiet=False)
+
+    cmd = 'apt-get install --only-upgrade openssh-server'
+    sudo(cmd)
+
+    print(green('SSH server successfully upgraded.'))
 
 
 def mkdir_ssh():
