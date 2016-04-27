@@ -1,4 +1,5 @@
 from fabric.api import cd
+from fabric.api import put
 from fabric.api import run
 from fabric.api import task
 from fabric.colors import green
@@ -136,3 +137,7 @@ def set_js_linter():
 
     print(green('Setting jscs as the default linter on vim.'))
     sed('.vim/vimrc', before, after)
+
+    print(green('Uploading configuration file'))
+    config_path = 'conventions/.jscsrc'
+    put(config_path)
