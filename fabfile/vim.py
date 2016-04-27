@@ -1,9 +1,12 @@
 from fabric.api import cd
 from fabric.api import run
 from fabric.api import task
-from fabric.colors import green, red
+from fabric.colors import green
+from fabric.colors import red
 from fabric.contrib.files import exists
+from fabric.contrib.files import sed
 
+from fabtools.deb import is_installed
 from fabtools.deb import update_index
 from fabtools.python import install as py_install
 from fabtools.python import is_installed as py_is_installed
@@ -37,11 +40,13 @@ def install_dependencies():
     # python flake+pep8
     if not py_is_installed('flake8'):
         py_install('flake8', use_sudo=True)
-    # google closure linter
-    if not py_is_installed('closure-linter'):
-        closure_url = ('http://closure-linter.googlecode.com/files/'
-                       'closure_linter-latest.tar.gz')
-        py_install(closure_url, use_sudo=True)
+
+    # js linter
+    if is_installed('nodejs'):
+        cmd = 'sudo -H npm -g install jscs'
+        run(cmd)
+    else:
+        print(red('npm not installed. Re-run this task after installing npm'))
 
 
 @task
@@ -119,3 +124,15 @@ def update():
     # plugins update
     cmd = 'vim +NeoBundleUpdate +qa!'
     run(cmd)
+
+
+@task
+def set_js_linter():
+    """ Sets the standard JS linter on syntastic """
+
+    # patterns
+    before = '^let g:syntastic_javascript_checkers.*$'
+    after = 'let g:syntastic_javascript_checkers = ["jscs"]'
+
+    print(green('Setting jscs as the default linter on vim.'))
+    sed('.vim/vimrc', before, after)

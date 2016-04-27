@@ -180,7 +180,7 @@ def list_authorized_keys(remote_keys=None):
 
 @task
 def get_authorized_keys(remote_keys_path=None):
-    """ Gets the authorized keys file into '.tmp_authorized_keys' """
+    """ Gets the authorized keys file """
     if not remote_keys_path:
         remote_keys_path = '~/.ssh/authorized_keys'
 
