@@ -74,15 +74,15 @@ def install_utils(admin_user='magnet'):
     print(blue('zsh installation'))
     zsh.install()
 
+    print(blue('nodejs installation'))
+    node.install()
+
     print(blue('vim installation'))
     vim.install()
 
     print(blue('postgreSQL installation and role creation'))
     postgresql.install()
     postgresql.create_user()
-
-    print(blue('nodejs installation'))
-    node.install()
 
     print(blue('curl, htop'))
     utils.deb.install('curl')
