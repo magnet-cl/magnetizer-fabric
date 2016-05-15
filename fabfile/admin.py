@@ -414,3 +414,16 @@ def install_remote_syslog(version='0.13', port='58173'):
     print(blue('Cleaning installation files'))
     cmd = 'rm -rf {} {}'.format(folder, package_name)
     run(cmd)
+
+
+@task
+def upgrade_timezone_data():
+    """ Upgrades timezone data deb package """
+
+    # update apt index
+    update_index(quiet=False)
+
+    cmd = 'apt-get install --only-upgrade tzdata'
+    sudo(cmd)
+
+    print(green('Timezone data successfully upgraded.'))
