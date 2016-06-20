@@ -10,7 +10,7 @@ def install():
     """ Installs node """
 
     print(green('Running script from NodeSource'))
-    cmd = 'curl -sL https://deb.nodesource.com/setup | bash -'
+    cmd = 'curl -sL https://deb.nodesource.com/setup_4.x | bash -'
     sudo(cmd)
 
     print(green('Installing nodejs'))
