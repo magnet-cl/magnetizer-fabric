@@ -36,6 +36,9 @@ def init(admin_user='magnet'):
     print(blue('disable root login over ssh'))
     ssh.disable_root_login()
 
+    print(blue('set log level to verbose'))
+    ssh.set_log_level()
+
     print(blue('change environment user to the admin_user'))
     env.user = admin_user
 
