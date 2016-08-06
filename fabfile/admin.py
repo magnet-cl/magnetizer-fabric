@@ -14,6 +14,7 @@ from fabric.api import task
 from fabric.colors import blue
 from fabric.colors import green
 from fabric.colors import red
+from fabric.contrib.files import append
 from fabric.contrib.files import exists as path_exists
 from fabric.contrib.files import sed
 from fabric.contrib.files import upload_template
@@ -145,6 +146,21 @@ def add_swap(size='2G'):
 
 
 @task
+def adjust_swappiness(swappiness=10):
+    try:
+        parsed_value = int(swappiness)
+    except ValueError:
+        print(red('Invalid parameter: {}'.format(swappiness)))
+        exit()
+    else:
+        if parsed_value not in range(0, 101):
+            print(red('Not in range: [0-100]'))
+            exit()
+
+    print(green('Adjusting swappiness permanently'))
+
+
+@task
 def fix_shellshock():
     """ Upgrades bash in order to avoid the 'shellshock' vulnerability. """
 
@@ -256,6 +272,9 @@ def full_upgrade(ask_confirmation=True):
     """
     # update apt index
     update_index(quiet=False)
+
+    # install aptitude
+    utils.deb.install('aptitude')
 
     # full upgrade
     cmd = 'aptitude full-upgrade'
@@ -427,3 +446,11 @@ def upgrade_timezone_data():
     sudo(cmd)
 
     print(green('Timezone data successfully upgraded.'))
+
+
+@task
+def set_default_locale(locale='en_US.UTF-8'):
+    locale_setup = 'LC_ALL="{}"'.format(locale)
+    append('/etc/environment', locale_setup, use_sudo=True)
+
+    print(green('Default locale set to {}').format(locale))
