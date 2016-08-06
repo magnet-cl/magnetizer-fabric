@@ -63,6 +63,9 @@ def init(admin_user='magnet'):
     print(blue('generate SSH key'))
     ssh.generate_key()
 
+    print(blue('set default locale'))
+    admin.set_default_locale()
+
 
 @task
 def install_utils(admin_user='magnet'):
