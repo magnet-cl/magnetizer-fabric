@@ -157,7 +157,13 @@ def adjust_swappiness(swappiness=10):
             print(red('Not in range: [0-100]'))
             exit()
 
+    print(green('Swappiness set to: {}'.format(swappiness)))
+    cmd = 'sysctl vm.swappiness={}'.format(swappiness)
+    sudo(cmd)
+
     print(green('Adjusting swappiness permanently'))
+    swappiness_setting = 'vm.swappiness={}'.format(swappiness)
+    append('/etc/sysctl.conf', swappiness_setting, use_sudo=True)
 
 
 @task
