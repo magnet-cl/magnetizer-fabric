@@ -74,6 +74,11 @@ def install_utils(admin_user='magnet'):
     print(blue('set target user: {}'.format(admin_user)))
     env.user = admin_user
 
+    print(blue('curl, htop, git'))
+    utils.deb.install('curl')
+    utils.deb.install('htop')
+    utils.deb.install('git')
+
     print(blue('github and bitbucket ssh handshake'))
     ssh.services_handshake()
 
@@ -89,11 +94,6 @@ def install_utils(admin_user='magnet'):
     print(blue('postgreSQL installation and role creation'))
     postgresql.install()
     postgresql.create_user()
-
-    print(blue('curl, htop'))
-    utils.deb.install('curl')
-    utils.deb.install('htop')
-    utils.deb.install('git')
 
 
 @task
