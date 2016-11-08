@@ -17,6 +17,7 @@ from fabric.colors import red
 from fabric.contrib.files import append
 from fabric.contrib.files import contains
 from fabric.contrib.files import sed
+from fabric.contrib.files import exists as path_exists
 
 # fabtools
 from fabtools import service
@@ -57,6 +58,9 @@ def add_authorized_key(pub_key_file='.ssh/id_rsa.pub', key_name=None):
     else:
         pub_key = open('%s/%s' % (os.path.expanduser('~'), pub_key_file))
         append('~/.ssh/authorized_keys', pub_key)
+
+    if not path_exists('~/.ssh/authorized_keys'):
+        raise Exception("authorized_keys_not_created")
 
 
 @task

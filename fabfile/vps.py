@@ -18,13 +18,16 @@ __all__ = ['init', 'install_utils', 'muni_setup', 'wordpress_setup']
 
 
 @task
-def init(admin_user='magnet'):
+def init(admin_user='magnet', initial_user='root'):
     """ Initial tasks for the setup of the VPS """
 
-    print(blue('set user to root'))
-    env.user = 'root'
+    print(blue('set user to {}'.format(initial_user)))
+    env.user = initial_user
 
-    print(blue('add the magnet user with sudo permissions'))
+    print(blue("add public ssh key to magnet's authorized keys"))
+    ssh.add_authorized_key()
+
+    print(blue('add the {} user with sudo permissions'.format(admin_user)))
     admin.add_user(admin_user, 'sudo')
 
     print(blue('allow sudoers without password'))
@@ -36,7 +39,7 @@ def init(admin_user='magnet'):
     print(blue('disable root login over ssh'))
     ssh.disable_root_login()
 
-    print(blue('change environment user to the admin_user'))
+    print(blue('change environment user to '.format(admin_user)))
     env.user = admin_user
 
     print(blue("add public ssh key to magnet's authorized keys"))
