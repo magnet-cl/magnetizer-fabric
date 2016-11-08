@@ -39,6 +39,9 @@ def init(admin_user='magnet', initial_user='root'):
     print(blue('disable root login over ssh'))
     ssh.disable_root_login()
 
+    print(blue('set log level to verbose'))
+    ssh.set_log_level()
+
     print(blue('change environment user to '.format(admin_user)))
     env.user = admin_user
 
@@ -63,6 +66,9 @@ def init(admin_user='magnet', initial_user='root'):
     print(blue('generate SSH key'))
     ssh.generate_key()
 
+    print(blue('set default locale'))
+    admin.set_default_locale()
+
 
 @task
 def install_utils(admin_user='magnet'):
@@ -70,6 +76,11 @@ def install_utils(admin_user='magnet'):
 
     print(blue('set target user: {}'.format(admin_user)))
     env.user = admin_user
+
+    print(blue('curl, htop, git'))
+    utils.deb.install('curl')
+    utils.deb.install('htop')
+    utils.deb.install('git')
 
     print(blue('github and bitbucket ssh handshake'))
     ssh.services_handshake()
@@ -86,11 +97,6 @@ def install_utils(admin_user='magnet'):
     print(blue('postgreSQL installation and role creation'))
     postgresql.install()
     postgresql.create_user()
-
-    print(blue('curl, htop'))
-    utils.deb.install('curl')
-    utils.deb.install('htop')
-    utils.deb.install('git')
 
 
 @task

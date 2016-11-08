@@ -246,3 +246,17 @@ def is_key_authorized(key_file, remote_keys):
             return True
         else:
             return False
+
+
+@task
+def set_log_level(level='VERBOSE'):
+    """ Sets the ssh server log level """
+    configuration_file = '/etc/ssh/sshd_config'
+
+    # patterns
+    before = '^LogLevel .*$'
+    after = 'LogLevel {}'.format(level)
+
+    sed(configuration_file, before, after, use_sudo=True)
+
+    print(green('Log level set to: {}'.format(level)))
