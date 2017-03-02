@@ -24,11 +24,15 @@ def init(admin_user='magnet', initial_user='root'):
     print(blue('set user to {}'.format(initial_user)))
     env.user = initial_user
 
-    print(blue("add public ssh key to magnet's authorized keys"))
+    print(blue('add public ssh key to {}'.format(initial_user)))
     ssh.add_authorized_key()
 
-    print(blue('add the {} user with sudo permissions'.format(admin_user)))
+    print(blue('add user {} with sudo permissions'.format(admin_user)))
     admin.add_user(admin_user, 'sudo')
+
+    print(blue('append authorized keys of {} to {}'.format(
+        initial_user, admin_user)))
+    ssh.copy_authorized_keys(admin_user)
 
     print(blue('allow sudoers without password'))
     admin.sudo_without_password()
@@ -42,7 +46,7 @@ def init(admin_user='magnet', initial_user='root'):
     print(blue('set log level to verbose'))
     ssh.set_log_level()
 
-    print(blue('change environment user to '.format(admin_user)))
+    print(blue('change environment user to {}'.format(admin_user)))
     env.user = admin_user
 
     print(blue("add public ssh key to magnet's authorized keys"))
