@@ -260,3 +260,27 @@ def set_log_level(level='VERBOSE'):
     sed(configuration_file, before, after, use_sudo=True)
 
     print(green('Log level set to: {}'.format(level)))
+
+
+@task
+def copy_authorized_keys(target_user):
+    """ Copies the authorized keys of the current user to the target user """
+
+    print(green('Checking if the target user exists.'))
+    if run('id -u {}'.format(target_user), warn_only=True).failed:
+        print(red('User does not exist.'))
+        return
+
+    print(green(
+        'Creating ssh directory with proper permissions if not present.'))
+    cmd = 'mkdir -p -m 0700 ~{}/.ssh'.format(target_user)
+    sudo(cmd)
+
+    print(green('Appending authorized keys.'))
+    cmd = 'cat ~/.ssh/authorized_keys >> ~{}/.ssh/authorized_keys'.format(
+        target_user)
+    sudo(cmd)
+
+    print(green('Setting permissions.'))
+    cmd = 'chown -R {u}:{u} ~{u}/.ssh'.format(u=target_user)
+    sudo(cmd)
