@@ -81,10 +81,11 @@ def install_utils(admin_user='magnet'):
     print(blue('set target user: {}'.format(admin_user)))
     env.user = admin_user
 
-    print(blue('curl, htop, git'))
+    print(blue('curl, htop, git, tig'))
     utils.deb.install('curl')
     utils.deb.install('htop')
     utils.deb.install('git')
+    utils.deb.install('tig')
 
     print(blue('github and bitbucket ssh handshake'))
     ssh.services_handshake()
