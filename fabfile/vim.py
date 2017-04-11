@@ -7,7 +7,6 @@ from fabric.colors import red
 from fabric.contrib.files import exists
 from fabric.contrib.files import sed
 
-from fabtools.deb import is_installed
 from fabtools.deb import update_index
 from fabtools.python import install as py_install
 from fabtools.python import is_installed as py_is_installed
@@ -26,10 +25,10 @@ def install_dependencies():
     # ctags, better grep, python flake, C/C++ omnicompletion
     plugins = ['exuberant-ctags', 'ack-grep', 'pyflakes', 'clang']
     for plugin in plugins:
-        utils.deb.install(plugin)
+        utils.os_commands.install(plugin)
 
     # install pip if is not available
-    utils.deb.install('python-pip')
+    utils.os_commands.install('python-pip')
 
     # update pip through pip
     py_install('pip', use_sudo=True, upgrade=True)
@@ -43,7 +42,7 @@ def install_dependencies():
         py_install('flake8', use_sudo=True)
 
     # js linter
-    if is_installed('nodejs'):
+    if utils.os_commands.is_installed('nodejs'):
         cmd = 'sudo -H npm -g install jscs'
         run(cmd)
     else:

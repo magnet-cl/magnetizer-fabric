@@ -18,18 +18,16 @@ ROOT_FOLDER = dirname(abspath(__file__))
 
 
 
-def install_dependencies():
-    """ Installs and dependencies """
+
+@task
+def install():
+    """ Installs and sets zsh as default shell """
     # update apt index
     update_index(quiet=False)
 
     # install zsh
     utils.os_commands.install('zsh')
 
-
-@task
-def install():
-    """ Installs and sets zsh as default shell """
     # set as default shell for the user
     print(green('Re-enter your password to set zsh as default.'))
     with settings(hide('warnings'), warn_only=True):
