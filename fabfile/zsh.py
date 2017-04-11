@@ -24,7 +24,7 @@ def install_dependencies():
     update_index(quiet=False)
 
     # install zsh
-    utils.os.install('zsh')
+    utils.os_commands.install('zsh')
 
 
 @task
@@ -133,7 +133,7 @@ def install_theme(theme=None):
             download_font("Ubuntu Mono derivative Powerline Italic.ttf")
             download_font("Ubuntu Mono derivative Powerline.ttf")
 
-        utils.os.install('fontconfig')
+        utils.os_commands.install('fontconfig')
         print(green('Updating fonts Cache'))
         run("fc-cache -vf %s" % font_folder)
 
@@ -169,7 +169,7 @@ def install_plugins(*plugins):
         sed(plugins_file, '\)', ' {})'.format(' '.join(plugins_to_install)))
 
     if install_autojump:
-        utils.os.install('autojump')
+        utils.os_commands.install('autojump')
 
 
 @task

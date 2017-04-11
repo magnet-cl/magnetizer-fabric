@@ -1,11 +1,11 @@
 import platform
-from fabfile.utils import osx
+from fabfile.utils import darwin
 from fabfile.utils import deb
 
 
 def get_handler():
     if platform.system().lower() == 'darwin':
-        return osx
+        return darwin
     else:
         # assume debian
         return deb
