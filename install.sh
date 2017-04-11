@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
 # pre-requisites installation
-sudo apt-get update
-sudo apt-get install -y openssh-server
-sudo apt-get install -y python-dev
-sudo apt-get install -y python-pip
-sudo apt-get install -y aptitude
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    sudo apt-get update
+    sudo apt-get install -y openssh-server
+    sudo apt-get install -y python-dev
+    sudo apt-get install -y python-pip
+    sudo apt-get install -y aptitude
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew install python
+fi
 
 # update pip
 sudo -H pip install -U pip
