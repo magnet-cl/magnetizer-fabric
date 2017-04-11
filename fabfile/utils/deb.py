@@ -23,6 +23,6 @@ def update_index():
     deb.update_index()
 
 
-def is_installed(package):
-    deb.is_installed(package)
+def is_installed(pkg_name):
+    deb.is_installed(pkg_name)
 
