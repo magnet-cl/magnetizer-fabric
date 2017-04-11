@@ -1,3 +1,4 @@
+import platform
 from fabric.api import run
 
 from fabfile.utils import deb
@@ -17,4 +18,5 @@ def git_pull():
 
 def git_install():
     """ Utility method that installs git if is not available. """
-    deb.install('git')
+    if platform.system().lower() == 'linux':
+        deb.install('git')
