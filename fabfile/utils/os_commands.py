@@ -13,14 +13,14 @@ def get_handler():
 
 def install(*args, **kwargs):
     handler = get_handler()
-    handler.install(*args, **kwargs)
+    return handler.install(*args, **kwargs)
 
 
 def update_index(*args, **kwargs):
     handler = get_handler()
-    handler.update_index(*args, **kwargs)
+    return handler.update_index(*args, **kwargs)
 
 
 def is_installed(*args, **kwargs):
     handler = get_handler()
-    handler.is_installed(*args, **kwargs)
+    return handler.is_installed(*args, **kwargs)
