@@ -17,7 +17,7 @@ from fabfile import utils
 @task
 def install_dependencies():
     # install vim
-    utils.deb.install('vim')
+    utils.os_commands.install('vim')
 
     # install required packages by plugins
     print(green('Installing plugins dependencies.'))
