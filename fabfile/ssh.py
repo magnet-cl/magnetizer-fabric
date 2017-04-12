@@ -37,7 +37,8 @@ def generate_key(output_file='.ssh/id_rsa'):
 @task
 def add_authorized_key(pub_key_file='.ssh/id_rsa.pub', key_name=None):
     """
-    Adds local ssh pub key to remote authorized keys.
+    Adds local ssh pub key to remote authorized keys. To use a public key from
+    keygen pass the key_name attribute.
 
     Example: Add muni.pub key on keygen to magnet time server
 
@@ -58,6 +59,44 @@ def add_authorized_key(pub_key_file='.ssh/id_rsa.pub', key_name=None):
     else:
         pub_key = open('%s/%s' % (os.path.expanduser('~'), pub_key_file))
         append('~/.ssh/authorized_keys', pub_key)
+
+    if not path_exists('~/.ssh/authorized_keys'):
+        raise Exception("authorized_keys_not_created")
+
+
+@task
+def remove_authorized_key(pub_key_file='.ssh/id_rsa.pub', key_name=None):
+    """
+    Removes local ssh pub key to remote authorized keys. To use a public key
+    from keygen pass the key_name attribute.
+
+    Example: Remove muni.pub key on keygen to magnet time server
+
+        $ fab ssh.remove_authorized_key:key_name=muni.pub -H time
+    """
+    mkdir_ssh()
+
+    if key_name:
+        repo = 'git@bitbucket.org/magnet-cl/keygen.git'
+
+        local('git archive --remote=ssh://{} master {} | tar -x'.format(
+            repo, key_name)
+        )
+
+        pub_key = open(key_name)
+    else:
+        pub_key = open('%s/%s' % (os.path.expanduser('~'), pub_key_file))
+
+    # obtain the first line
+    pub_key = pub_key.readline()
+
+    # escape regular expression special characters
+    pub_key = re.escape(pub_key)
+
+    run("sed -i.bak '/{}/d' ~/.ssh/authorized_keys".format(pub_key))
+
+    if key_name:
+        local('rm {}'.format(key_name))
 
     if not path_exists('~/.ssh/authorized_keys'):
         raise Exception("authorized_keys_not_created")
