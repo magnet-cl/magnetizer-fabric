@@ -7,7 +7,6 @@ from fabric.colors import red
 from fabric.contrib.files import exists
 from fabric.contrib.files import sed
 
-from fabtools.deb import update_index
 from fabtools.python import install as py_install
 from fabtools.python import is_installed as py_is_installed
 
@@ -53,7 +52,7 @@ def install_dependencies():
 def install():
     """ Installs and configures vim """
     # update apt index
-    update_index(quiet=False)
+    utils.os_commands.update_index(quiet=False)
 
     install_dependencies()
 

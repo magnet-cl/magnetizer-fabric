@@ -19,8 +19,8 @@ def install(package, upgrade=False):
         sudo(cmd)
 
 
-def update_index():
-    deb.update_index()
+def update_index(*args, **kwargs):
+    deb.update_index(*args, **kwargs)
 
 
 def is_installed(pkg_name):

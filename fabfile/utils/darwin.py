@@ -19,7 +19,7 @@ def install(package, upgrade=False):
         run(cmd)
 
 
-def update_index():
+def update_index(*args, **kwargs):
     cmd = 'brew update'
     run(cmd)
 
