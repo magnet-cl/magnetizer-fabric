@@ -10,6 +10,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew install python
+    brew install wget
 
     # Enable remote login on osx
     sudo systemsetup -setremotelogin on
