@@ -36,3 +36,5 @@ nosetests.xml
 
 # ssh
 authorized_keys
+
+.DS_Store
