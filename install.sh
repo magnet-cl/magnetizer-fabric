@@ -12,6 +12,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     sudo apt-get install -y python-dev
     sudo apt-get install -y python-pip
     sudo apt-get install -y aptitude
+    sudo apt-get install -y libssl-dev
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
