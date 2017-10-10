@@ -17,13 +17,11 @@ from fabfile import utils
 ROOT_FOLDER = dirname(abspath(__file__))
 
 
-
-
 @task
 def install():
     """ Installs and sets zsh as default shell """
     # update apt index
-    update_index(quiet=False)
+    utils.os_commands.update_index(quiet=False)
 
     # install zsh
     utils.os_commands.install('zsh')
