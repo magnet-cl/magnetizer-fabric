@@ -42,9 +42,9 @@ def install_dependencies():
     if not py_is_installed('flake8'):
         py_install('flake8', use_sudo=True)
 
-    # js linter
+    # js linters
     if is_installed('nodejs'):
-        cmd = 'sudo -H npm -g install jscs'
+        cmd = 'sudo -H npm -g install jscs jshint'
         run(cmd)
     else:
         print(red('npm not installed. Re-run this task after installing npm'))
@@ -128,16 +128,23 @@ def update():
 
 
 @task
-def set_js_linter():
-    """ Sets the standard JS linter on syntastic """
+def set_js_linters():
+    """Set standard JS linters on syntastic."""
+    if is_installed('nodejs'):
+        cmd = 'sudo -H npm -g install jscs jshint'
+        run(cmd)
+    else:
+        print(red('npm not installed. Re-run this task after installing npm'))
 
     # patterns
     before = '^let g:syntastic_javascript_checkers.*$'
-    after = 'let g:syntastic_javascript_checkers = ["jscs"]'
+    after = "let g:syntastic_javascript_checkers = ['jscs', 'jshint']"
 
-    print(green('Setting jscs as the default linter on vim.'))
+    print(green('Setting jscs and jshint as default linters on vim.'))
     sed('.vim/vimrc', before, after)
 
-    print(green('Uploading configuration file'))
+    print(green('Uploading configuration files'))
     config_path = 'conventions/.jscsrc'
+    put(config_path)
+    config_path = 'conventions/.jshintrc'
     put(config_path)
