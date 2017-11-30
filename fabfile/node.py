@@ -6,11 +6,12 @@ from fabfile import utils
 
 
 @task
-def install():
-    """ Installs node """
+def install(version='8'):
+    """Install node."""
 
     print(green('Running script from NodeSource'))
-    cmd = 'curl -sL https://deb.nodesource.com/setup_6.x | bash -'
+    cmd = 'curl -sL https://deb.nodesource.com/setup_{}.x | bash -'
+    cmd = cmd.format(version)
     sudo(cmd)
 
     print(green('Installing nodejs'))
