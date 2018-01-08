@@ -21,6 +21,12 @@ from fabfile import zsh
 
 ROOT_FOLDER = os.path.dirname(__file__)
 
+#
+# limit fabric namespace
+__all__ = [
+    'initial_setup', 'install', 'configure_nginx', 'enable_ssl'
+]
+
 
 @task
 def initial_setup():
