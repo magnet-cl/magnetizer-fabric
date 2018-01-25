@@ -45,6 +45,11 @@ assert docker
 from fabfile import webpay
 assert webpay
 
+from fabfile import odoo
+assert odoo
+
+from fabfile import certbot
+assert certbot
 
 """ Fabric global configuration """
 
