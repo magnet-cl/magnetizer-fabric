@@ -55,8 +55,11 @@ def install_dependencies():
         node_pkg_name = 'nodejs'
     else:
         node_pkg_name = 'node'
+
     if utils.os_commands.is_installed(node_pkg_name):
-        cmd = '{}npm -g install jscs jshint'.format('sudo -H ' if use_sudo else '')
+        cmd = '{}npm -g install jscs jshint'.format(
+            'sudo -H ' if use_sudo else ''
+        )
         run(cmd)
     else:
         print(red('npm not installed. Re-run this task after installing npm'))
@@ -149,7 +152,7 @@ def update():
 @task
 def set_js_linters():
     """Set standard JS linters on syntastic."""
-    if is_installed('nodejs'):
+    if utils.os_commands.is_installed('nodejs'):
         cmd = 'sudo -H npm -g install jscs jshint'
         run(cmd)
     else:
@@ -157,7 +160,7 @@ def set_js_linters():
 
     # patterns
     before = '^let g:syntastic_javascript_checkers.*$'
-    after = "let g:syntastic_javascript_checkers = ['jscs', 'jshint']"
+    after = "let g:syntastic_javascript_checkers = ['jscs', 'jshint', 'eslint']"
 
     print(green('Setting jscs and jshint as default linters on vim.'))
     sed('.vim/vimrc', before, after)
