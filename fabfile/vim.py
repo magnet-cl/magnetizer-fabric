@@ -138,7 +138,7 @@ def set_js_linters():
 
     # patterns
     before = '^let g:syntastic_javascript_checkers.*$'
-    after = "let g:syntastic_javascript_checkers = ['jscs', 'jshint']"
+    after = 'let g:syntastic_javascript_checkers = ["jscs", "jshint"]'
 
     print(green('Setting jscs and jshint as default linters on vim.'))
     sed('.vim/vimrc', before, after)
