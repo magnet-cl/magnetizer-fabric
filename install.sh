@@ -26,7 +26,7 @@ print_green 'update setuptools'
 sudo -H pip install -U setuptools
 
 print_green 'fabric installation through pip'
-sudo -H pip install -U fabric fabtools
+sudo -H pip install -U "fabric<2.0.0" fabtools
 
 print_green 'list the available commands'
 fab -l
