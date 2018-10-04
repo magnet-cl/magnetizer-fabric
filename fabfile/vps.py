@@ -102,15 +102,14 @@ def install_utils(admin_user='magnet'):
     print(blue('nodejs installation'))
     node.install()
 
-    print(blue('yarn installation'))
-    node.install_yarn()
-
     print(blue('vim installation'))
     vim.install()
 
     print(blue('postgreSQL installation and role creation'))
     postgresql.install()
-    postgresql.create_user()
+
+    if platform.system().lower() != 'darwin':
+        postgresql.create_user()
 
 
 @task

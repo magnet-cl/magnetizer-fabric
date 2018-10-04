@@ -1,3 +1,7 @@
+# standard library
+import platform
+
+# fabric
 from fabric.api import env
 from fabric.api import sudo
 from fabric.api import task
@@ -14,12 +18,14 @@ def install():
 
     """
     # update apt index
-    deb.update_index(quiet=False)
+    utils.os_commands.update_index(quiet=False)
 
     print(green('Installing PostgreSQL and its development packages.'))
-    utils.deb.install('postgresql')
-    utils.deb.install('postgresql-contrib')
-    utils.deb.install('libpq-dev')
+    utils.os_commands.install('postgresql')
+
+    if platform.system().lower() != 'darwin':
+        utils.os_commands.install('postgresql-contrib')
+        utils.os_commands.install('libpq-dev')
 
 
 @task
