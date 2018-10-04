@@ -109,7 +109,7 @@ def add_swap(size='2G'):
 
     def check_swap():
         # check if the system already has a swap partition
-        swap_partitions = run('swapon -s | wc -l')
+        swap_partitions = sudo('swapon -s | wc -l')
         if int(swap_partitions) > 1:
             return True
 
