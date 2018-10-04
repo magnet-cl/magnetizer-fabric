@@ -1,4 +1,7 @@
 """ tasks related to the configuration of virtual servers """
+# standard library
+import platform
+
 from fabric.api import env
 from fabric.api import run
 from fabric.api import task
@@ -82,10 +85,13 @@ def install_utils(admin_user='magnet'):
     env.user = admin_user
 
     print(blue('curl, htop, git, tig'))
-    utils.deb.install('curl')
-    utils.deb.install('htop')
-    utils.deb.install('git')
-    utils.deb.install('tig')
+
+    if platform.system().lower() != 'darwin':
+        utils.os_commands.install('curl')
+        utils.os_commands.install('git')
+
+    utils.os_commands.install('htop')
+    utils.os_commands.install('tig')
 
     print(blue('github and bitbucket ssh handshake'))
     ssh.services_handshake()
@@ -120,22 +126,17 @@ def muni_setup():
     print(blue('upgrade installed packages'))
     admin.full_upgrade(ask_confirmation=False)
 
-    print(blue('NTP installation and configuration'))
-    admin.install_ntp()
-
     install_utils(run('whoami'))
 
-    print(blue('install vim-gtk'))
-    utils.deb.install('vim-gtk')
+    if platform.system().lower() != 'darwin':
+        print(blue('NTP installation and configuration'))
+        admin.install_ntp()
+
+        print(blue('install vim-gtk'))
+        utils.os_commands.install('vim-gtk')
 
     print(blue('install zsh theme: powerline'))
     zsh.install_theme('powerline')
-
-    print(blue('install ruby'))
-    ruby.install()
-
-    print(blue('install rails'))
-    ruby.install_rails()
 
     print(blue('install git-smart'))
     run('gem install git-smart')
