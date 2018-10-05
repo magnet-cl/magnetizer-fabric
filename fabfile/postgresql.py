@@ -3,10 +3,10 @@ import platform
 
 # fabric
 from fabric.api import env
+from fabric.api import run
 from fabric.api import sudo
 from fabric.api import task
 from fabric.colors import green
-from fabtools import deb
 
 from fabfile import utils
 
@@ -23,7 +23,9 @@ def install():
     print(green('Installing PostgreSQL and its development packages.'))
     utils.os_commands.install('postgresql')
 
-    if platform.system().lower() != 'darwin':
+    if platform.system().lower() == 'darwin':
+        run('brew services start postgresql')
+    else:
         utils.os_commands.install('postgresql-contrib')
         utils.os_commands.install('libpq-dev')
 
