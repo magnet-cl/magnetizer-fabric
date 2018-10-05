@@ -19,6 +19,8 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     sudo apt update
     sudo apt install pipenv
 
+    # TODO install pyenv
+
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 
     print_green "Enable remote login on osx"
@@ -45,6 +47,11 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     if [[ -z "${LC_ALL}" ]]; then
         print_green "LC_ALL environment varialbe is not set. Required for pipenv" 
         echo "export LC_ALL=en_US.UTF-8" >> ~/.bash_profile
+    fi
+    
+    if [[ -z "${PYENV_ROOT}" ]]; then
+        print_green "PYENV_ROOT environment varialbe is not set. Required for pipenv" 
+        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
     fi
 
     source ~/.bash_profile
