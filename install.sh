@@ -52,6 +52,9 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     if [[ -z "${PYENV_ROOT}" ]]; then
         print_green "PYENV_ROOT environment varialbe is not set. Required for pipenv" 
         echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+       
+        print_green "Also, include pyenv init on bash_profile" 
+        echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
     fi
 
     source ~/.bash_profile
