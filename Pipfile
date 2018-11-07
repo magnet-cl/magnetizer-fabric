@@ -6,7 +6,7 @@ name = "pypi"
 [dev-packages]
 
 [packages]
-fabric = "==1.14"
+"Fabric3" = "==1.14.post1"
 fabtools = "==0.20"
 
 [requires]
