@@ -51,6 +51,9 @@ assert odoo
 from fabfile import certbot
 assert certbot
 
+from fabfile import pyenv
+assert pyenv
+
 """ Fabric global configuration """
 
 from fabric.api import env
