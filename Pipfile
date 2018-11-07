@@ -8,6 +8,7 @@ name = "pypi"
 [packages]
 "Fabric3" = "==1.14.post1"
 fabtools = "==0.20"
+click = "==7.0"
 
 [requires]
 python_version = "2.7"
