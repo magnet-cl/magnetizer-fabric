@@ -1,5 +1,18 @@
 # django applications
 /home/magnet/logs/*.log {
+    su magnet magnet
+    weekly
+    size 5M
+    missingok
+    rotate 16
+    compress
+    delaycompress
+    notifempty
+    copytruncate
+}
+
+/home/magnet/*/logs/production/*.log {
+    su magnet magnet
     weekly
     size 5M
     missingok
