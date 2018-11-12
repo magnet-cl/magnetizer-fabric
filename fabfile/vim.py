@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from fabric.api import cd
 from fabric.api import put
 from fabric.api import run
@@ -136,11 +138,20 @@ def set_js_linters():
     else:
         print(red('npm not installed. Re-run this task after installing npm'))
 
-    # patterns
     before = '^let g:syntastic_javascript_checkers.*$'
-    after = 'let g:syntastic_javascript_checkers = ["jscs", "jshint"]'
+    after = ("let g:syntastic_javascript_checkers = "
+             "['eslint', 'jscs', 'jshint']")
+    print(green('Setting JS linters on vim.'))
+    sed('.vim/vimrc', before, after)
 
-    print(green('Setting jscs and jshint as default linters on vim.'))
+    before = '^let g:syntastic_javascript_eslint_exec .*$'
+    after = "let g:syntastic_javascript_eslint_exec = 'eslint'"
+    print(green('Setting default eslint exec.'))
+    sed('.vim/vimrc', before, after)
+
+    before = '^let g:syntastic_javascript_eslint_exe .*$'
+    after = "let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'"
+    print(green('Setting custom eslint exe.'))
     sed('.vim/vimrc', before, after)
 
     print(green('Uploading configuration files'))
