@@ -7,8 +7,10 @@ name = "pypi"
 
 [packages]
 "Fabric3" = "==1.14.post1"
-fabtools = "==0.20"
 click = "==7.0"
+sh = "==1.12.14"
+"e1839a8" = {path = ".", editable = true}
+master = {git = "https://github.com/magnet-cl/fabtools", editable = true}
 
 [requires]
 python_version = "2.7"
