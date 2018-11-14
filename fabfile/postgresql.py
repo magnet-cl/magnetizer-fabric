@@ -20,6 +20,7 @@ def install():
     utils.deb.install('postgresql')
     utils.deb.install('postgresql-contrib')
     utils.deb.install('libpq-dev')
+    utils.deb.install('pg-activity')
 
 
 @task
