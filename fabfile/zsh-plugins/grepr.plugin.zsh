@@ -25,7 +25,7 @@ function grepr(){
                 params+="--exclude-dir=migrations"
                 ;;
             --py)
-                params+="--include=\*.py"
+                params+="--include=*.py"
                 ;;
             --es)
                 params+="--exclude-dir=static"
