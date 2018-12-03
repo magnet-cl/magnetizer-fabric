@@ -1,4 +1,5 @@
 from distutils.util import strtobool
+from fabfile.utils import os_commands
 
 
 def arg_to_bool(arg):

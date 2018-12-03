@@ -19,15 +19,24 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     sudo apt update
     sudo apt install pipenv
 
+    # TODO install pyenv
+
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    # Check to see if Homebrew is installed, and install it if it is not
+
+    print_green "Enable remote login on osx"
+    sudo systemsetup -setremotelogin on
+
+    print_green "Check to see if Homebrew is installed, and install it if it is not"
     command -v brew >/dev/null 2>&1 || { echo >&2 "Installing Homebrew Now"; \
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; }
 
-    # install pyenv to install python 2.7
+    print_green "Installing wget" 
+    brew install wget
+
+    print_green "Install pyenv to install python 2.7"
     brew install pyenv
 
-    # install pipenv
+    print_green "Install pipenv"
     brew install pipenv
 
     if [[ -z "${LANG}" ]]; then
@@ -38,6 +47,14 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     if [[ -z "${LC_ALL}" ]]; then
         print_green "LC_ALL environment varialbe is not set. Required for pipenv" 
         echo "export LC_ALL=en_US.UTF-8" >> ~/.bash_profile
+    fi
+    
+    if [[ -z "${PYENV_ROOT}" ]]; then
+        print_green "PYENV_ROOT environment varialbe is not set. Required for pipenv" 
+        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+       
+        print_green "Also, include pyenv init on bash_profile" 
+        echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
     fi
 
     source ~/.bash_profile

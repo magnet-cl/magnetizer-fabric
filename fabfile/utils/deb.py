@@ -1,6 +1,6 @@
 from fabric.api import sudo
 from fabtools.deb import install as deb_install
-from fabtools.deb import is_installed
+from fabtools import deb
 
 
 def install(package, upgrade=False):
@@ -17,3 +17,12 @@ def install(package, upgrade=False):
     if upgrade:
         cmd = 'apt-get install --only-upgrade {}'.format(package)
         sudo(cmd)
+
+
+def update_index(*args, **kwargs):
+    deb.update_index(*args, **kwargs)
+
+
+def is_installed(pkg_name):
+    deb.is_installed(pkg_name)
+

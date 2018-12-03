@@ -1,9 +1,10 @@
+import platform
+
 from fabric.api import task, run, env, put, prompt, cd
 from fabric.colors import green, red
 from fabric.context_managers import settings, hide
 from fabric.contrib.files import upload_template, exists, sed, contains
 from fabric.contrib.console import confirm
-from fabtools.deb import update_index
 from os import listdir
 from os.path import join
 from os.path import abspath
@@ -20,10 +21,10 @@ ROOT_FOLDER = dirname(abspath(__file__))
 def install():
     """ Installs and sets zsh as default shell """
     # update apt index
-    update_index(quiet=False)
+    utils.os_commands.update_index(quiet=False)
 
     # install zsh
-    utils.deb.install('zsh')
+    utils.os_commands.install('zsh')
 
     # set as default shell for the user
     print(green('Re-enter your password to set zsh as default.'))
@@ -128,7 +129,7 @@ def install_theme(theme=None):
             download_font("Ubuntu Mono derivative Powerline Italic.ttf")
             download_font("Ubuntu Mono derivative Powerline.ttf")
 
-        utils.deb.install('fontconfig')
+        utils.os_commands.install('fontconfig')
         print(green('Updating fonts Cache'))
         run("fc-cache -vf %s" % font_folder)
 
@@ -164,7 +165,7 @@ def install_plugins(*plugins):
         sed(plugins_file, '\)', ' {})'.format(' '.join(plugins_to_install)))
 
     if install_autojump:
-        utils.deb.install('autojump')
+        utils.os_commands.install('autojump')
 
 
 @task
@@ -172,9 +173,13 @@ def configure_plugins():
     plugins = []
 
     recommended_plugins = (['git', 'github', 'git-flow', 'pip', 'autojump',
-                            'command-not-found', 'debian', 'encode64',
+                            'command-not-found', 'encode64',
                             'colored-man', 'grepr', 'mclone', 'cdenv',
                             'findm', 'history-substring-search'])
+
+    if platform.system().lower() == 'linux':
+        recommended_plugins.append('debian')
+
     recommended_plugins.sort()
     for plugin in recommended_plugins:
         if confirm('Would you like to use the %s plugin?' % plugin):
