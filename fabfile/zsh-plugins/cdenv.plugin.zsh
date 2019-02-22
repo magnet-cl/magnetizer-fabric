@@ -7,19 +7,45 @@ function cd() {
     GIT_DIR=`git rev-parse --git-dir 2> /dev/null`
     if [[ $? == 0 ]]
     then
-        if [[ -f $GIT_DIR/../.env/bin/activate ]]
+        if [[ -f $GIT_DIR/../Pipfile ]]
         then
-            . $GIT_DIR/../.env/bin/activate
-        else
-            if [[ $VIRTUAL_ENV != "" ]]
+            if [[ $PIPENV_ACTIVE != "1" ]]
             then
-                deactivate
+                if [[ $VIRTUAL_ENV != "" ]]
+                then
+                    deactivate
+                fi
+
+                VENV=`pipenv --venv`
+
+                . $VENV/bin/activate
+                # pipenv shell
+            fi
+        else
+            if [[ $PIPENV_ACTIVE == "1" ]]
+            then
+                exit
+            fi
+            if [[ -f $GIT_DIR/../.env/bin/activate ]]
+            then
+                . $GIT_DIR/../.env/bin/activate
+            else
+                if [[ $VIRTUAL_ENV != "" ]]
+                then
+                    deactivate
+                fi
             fi
         fi
     else
         if [[ $VIRTUAL_ENV != "" ]]
         then
-            deactivate
+            if [[ $PIPENV_ACTIVE == "1" ]]
+            then
+                CURRENT_FOLDER=PWD
+                exit
+            else
+                deactivate
+            fi
         fi
     fi
 
