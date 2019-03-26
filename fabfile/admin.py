@@ -23,6 +23,7 @@ from fabric.contrib.files import upload_template
 # fabtools
 from fabtools import cron
 from fabtools import service
+from fabtools.deb import update_index
 from fabtools.user import create
 from fabtools.user import exists
 
@@ -280,7 +281,7 @@ def full_upgrade(ask_confirmation=True):
     utils.os_commands.update_index(quiet=False)
 
     if platform.system().lower() == 'darwin':
-        return 
+        return
 
     # install aptitude
     utils.deb.install('aptitude')
