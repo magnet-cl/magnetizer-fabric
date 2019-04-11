@@ -17,7 +17,7 @@ from fabfile import utils
 def install(version='--lts'):
     """Install Node.js with NVM. Defaults to latest LTS."""
 
-    if platform.system() == 'Linux':
+    if run('uname -o', quiet=True) == 'GNU/Linux':
         print(green('Adding support to compile and install native addons'))
         utils.deb.install('build-essential')
 
