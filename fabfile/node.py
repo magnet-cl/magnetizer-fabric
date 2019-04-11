@@ -5,7 +5,8 @@ import platform
 from fabric.api import sudo
 from fabric.api import run
 from fabric.api import task
-from fabric.colors import green
+from fabric.colors import green, yellow, cyan
+from fabric.contrib.files import exists
 
 from fabtools import deb
 
@@ -13,37 +14,47 @@ from fabfile import utils
 
 
 @task
-def install(version='8'):
-    """Install node."""
+def install(version='--lts'):
+    """Install Node.js with NVM. Defaults to latest LTS."""
 
-    if platform.system().lower() == 'darwin':
-        # TODO: check that NVM is not installed
+    if platform.system() == 'Linux':
+        print(green('Adding support to compile and install native addons'))
+        utils.deb.install('build-essential')
 
-        # TODO: if NVM not installed, install it
-        cmd = (
-            'curl -o- '
-            'https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh '
-            '| bash'
-        )
-        run(cmd)
+    # NVM updates itself if it's already installed,
+    # so no need to check if already installed.
 
-        # TODO: reload bash_profile or zshrc 
-        run('source ~/.zshrc')
+    script_file = '__nvm_install.sh'
 
-        run('nvm install {}'.format(version))
+    download_install_script = (
+        'wget -q '      # assume OS X has already installed wget
+        '-O {0} '
+        'https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh '
+        '&& chmod +x {0}'
+    ).format(script_file)
 
-        return
+    print(green('Installing NVM'))
+    run(download_install_script)
+    run('./' + script_file)
 
-    print(green('Running script from NodeSource'))
-    cmd = 'curl -sL https://deb.nodesource.com/setup_{}.x | bash -'
-    cmd = cmd.format(version)
-    sudo(cmd)
+    # NVM is now instaled. But Fabric runs commands with Bash, so NVM source
+    # string is only in .bashrc
+    if exists('~/.zshrc'):
+        # Add source string to .zshrc too
+        run('PROFILE=~/.zshrc ./' + script_file)
+    run('rm ' + script_file)
 
-    print(green('Installing nodejs'))
-    utils.deb.install('nodejs', upgrade=True)
-
-    print(green('Adding support to compile and install native addons'))
-    utils.deb.install('build-essential')
+    # run('source ~/.bashrc')
+    #   Doesn't work because the default .bashrc contains code that "If not
+    #   running interactively, don't do anything".
+    #   So manually load it:
+    load_nvm = 'export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh"'
+    # run(load_nvm)
+    #   Works but it's not persisted to the next run, so run both at the same
+    #   time:
+    print(green('Installing Node {} with NVM'.format(version)))
+    run('{} && nvm install {}'.format(load_nvm, version))
+    print(yellow('You must restart open terminals (or source .*rc) to activate ' + cyan('nvm')))
 
 
 @task
