@@ -35,7 +35,7 @@ def generate_key(output_file='.ssh/id_rsa'):
 
 
 @task
-def add_authorized_key(pub_key_file='.ssh/id_rsa.pub', key_name=None):
+def add_authorized_key(key_name=None, pub_key_file='.ssh/id_rsa.pub'):
     """
     Adds local ssh pub key to remote authorized keys. To use a public key from
     keygen pass the key_name attribute.
