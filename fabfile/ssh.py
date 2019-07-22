@@ -53,8 +53,12 @@ def add_authorized_key(key_name=None, pub_key_file='.ssh/id_rsa.pub'):
             repo, key_name)
         )
 
-        pub_key = open(key_name)
-        append('~/.ssh/authorized_keys', pub_key)
+        pub_key = open(key_name).read()[:-1]
+        line_found = run(
+            'grep "{}" {} | wc -l'.format(pub_key, '~/.ssh/authorized_keys')
+        )
+        if line_found == '0':
+            run('echo "{}" >> {}'.format(pub_key, '~/.ssh/authorized_keys'))
         local('rm {}'.format(key_name))
     else:
         pub_key = open('%s/%s' % (os.path.expanduser('~'), pub_key_file))
