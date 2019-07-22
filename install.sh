@@ -15,9 +15,9 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     sudo apt-get install -y libssl-dev
 
     sudo apt install software-properties-common python-software-properties
-    sudo add-apt-repository ppa:pypa/ppa
-    sudo apt update
-    sudo apt install pipenv
+    sudo -H pip install fabric3
+    sudo -H pip install git+https://github.com/magnet-cl/fabtools.git
+    sudo -H pip install --user pipenv
 
     # TODO install pyenv
 
@@ -30,7 +30,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     command -v brew >/dev/null 2>&1 || { echo >&2 "Installing Homebrew Now"; \
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; }
 
-    print_green "Installing wget" 
+    print_green "Installing wget"
     brew install wget
 
     print_green "Install pyenv to install python 2.7"
@@ -40,20 +40,20 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     brew install pipenv
 
     if [[ -z "${LANG}" ]]; then
-        print_green "LANG environment varialbe is not set. Required for pipenv" 
+        print_green "LANG environment varialbe is not set. Required for pipenv"
         echo "export LANG=en_US.UTF-8" >> ~/.bash_profile
     fi
 
     if [[ -z "${LC_ALL}" ]]; then
-        print_green "LC_ALL environment varialbe is not set. Required for pipenv" 
+        print_green "LC_ALL environment varialbe is not set. Required for pipenv"
         echo "export LC_ALL=en_US.UTF-8" >> ~/.bash_profile
     fi
-    
+
     if [[ -z "${PYENV_ROOT}" ]]; then
-        print_green "PYENV_ROOT environment varialbe is not set. Required for pipenv" 
+        print_green "PYENV_ROOT environment varialbe is not set. Required for pipenv"
         echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
-       
-        print_green "Also, include pyenv init on bash_profile" 
+
+        print_green "Also, include pyenv init on bash_profile"
         echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
     fi
 
