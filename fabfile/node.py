@@ -18,21 +18,7 @@ def install(version='12'):
     """Install Node.js"""
 
     if platform.system().lower() == 'darwin':
-        # TODO: check that NVM is not installed
-
-        # TODO: if NVM not installed, install it
-        cmd = (
-            'curl -o- '
-            'https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh '
-            '| bash'
-        )
-        run(cmd)
-
-        # TODO: reload bash_profile or zshrc
-        run('source ~/.zshrc')
-
-        run('nvm install {}'.format(version))
-
+        print(yellow('Please use node.nvm_install task.'))
         return
 
     print(green('Running script from NodeSource'))
