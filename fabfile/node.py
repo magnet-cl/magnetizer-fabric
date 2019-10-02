@@ -14,8 +14,8 @@ from fabfile import utils
 
 
 @task
-def install(version='8'):
-    """Install node."""
+def install(version='12'):
+    """Install Node.js"""
 
     if platform.system().lower() == 'darwin':
         # TODO: check that NVM is not installed
