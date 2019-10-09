@@ -14,7 +14,27 @@ from fabfile import utils
 
 
 @task
-def install(version='--lts'):
+def install(version='12'):
+    """Install Node.js"""
+
+    if platform.system().lower() == 'darwin':
+        print(yellow('Please use node.nvm_install task.'))
+        return
+
+    print(green('Running script from NodeSource'))
+    cmd = 'curl -sL https://deb.nodesource.com/setup_{}.x | bash -'
+    cmd = cmd.format(version)
+    sudo(cmd)
+
+    print(green('Installing nodejs'))
+    utils.deb.install('nodejs', upgrade=True)
+
+    print(green('Adding support to compile and install native addons'))
+    utils.deb.install('build-essential')
+
+
+@task
+def nvm_install(version='--lts'):
     """Install Node.js with NVM. Defaults to latest LTS."""
 
     if run('uname -o', quiet=True) == 'GNU/Linux':

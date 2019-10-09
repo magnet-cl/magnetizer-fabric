@@ -78,7 +78,8 @@ provided.
     * admin.add_swap: Adds a swap partition to the system.
     * docker.install: Installs Docker.
     * nginx.install_passenger: Installs nginx with passenger support.
-    * node.install: Installs Node.js with NVM.
+    * node.install: Installs Node.js.
+    * node.nvm_install: Installs Node.js with NVM.
     * postgresql.install: Installs PostgreSQL and its development packages.
     * ruby.install: Installs Ruby.
     * ruby.install_rails: Installs Ruby on Rails.
